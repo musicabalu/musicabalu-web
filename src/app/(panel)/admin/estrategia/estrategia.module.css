@@ -1,0 +1,24 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background-color: transparent;
+  color: #333;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 0;
+  background-color: transparent;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.htmlWrapper {
+  /* Some resets for the injected html to fit nicely */
+  width: 100%;
+}
+
+.htmlWrapper img {
+  max-width: 100%;
+  height: auto;
+}

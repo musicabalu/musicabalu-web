@@ -1,0 +1,149 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Modelos necesarios para NextAuth.js
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String
+  type               String
+  provider           String
+  providerAccountId  String
+  refresh_token      String?
+  access_token       String?
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String?
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  
+  // Campos personalizados para Musicabalú
+  role          String    @default("familia") // familia, educador, admin
+  stripeId      String?   @unique // ID del cliente en Stripe
+  hasActiveSub  Boolean   @default(false)
+  
+  accounts      Account[]
+  sessions      Session[]
+  orders        Order[]   // Compras de la Tienda
+  enrollments   Enrollment[] // Inscripciones a clases
+}
+
+model Order {
+  id            String    @id @default(cuid())
+  userId        String
+  stripeSessionId String  @unique // Referencia del pago en Stripe
+  productId     String    // Identificador del producto (ej. 'audio_relajacion_largo')
+  productName   String    // Nombre del producto
+  productType   String    // 'digital' o 'physical'
+  amountTotal   Int       // En céntimos
+  currency      String    @default("eur")
+  status        String    // 'completed', 'pending', 'refunded'
+  shippingData  String?   // JSON con la dirección de envío si es físico
+  createdAt     DateTime  @default(now())
+
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Product {
+  id            String    @id @default(cuid())
+  name          String
+  description   String
+  price         Int       // En céntimos
+  type          String    // 'digital', 'physical_kit', 'printful_merch'
+  imageUrl      String?
+  stripePriceId String?   @unique
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Activity {
+  id           String   @id @default(cuid())
+  titulo       String
+  edades       String
+  categoria    String
+  descripcion  String
+  libro_origen String
+  isFree       Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model ContentPill {
+  id                  String   @id @default(cuid())
+  tipo                String
+  teoria_mlt          String
+  aplicacion_practica String
+  libro_origen        String
+  isFree              Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+model Group {
+  id          String       @id @default(cuid())
+  name        String       // Ej. "Martes 17:00"
+  schedule    String       // Horario de la clase
+  capacity    Int          @default(15) // Límite de alumnos
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  enrollments Enrollment[]
+}
+
+model Enrollment {
+  id              String   @id @default(cuid())
+  childName       String
+  childBirthDate  String?  // Fecha de nacimiento del niñ@
+  parentName      String
+  phone           String
+  email           String
+  paymentMethod   String   // 'stripe' o 'efectivo'
+  paymentFrequency String? // 'mensual' o 'trimestral'
+  status          String   @default("pending") // 'pending', 'active', 'cancelled'
+  attendanceData  String?  @default("{}") // JSON stringificado de asistencia
+  
+  groupId         String
+  group           Group    @relation(fields: [groupId], references: [id])
+  
+  userId          String?
+  user            User?    @relation(fields: [userId], references: [id])
+  
+  acceptedTerms   Boolean  @default(false)
+  acceptedComms   Boolean  @default(false)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

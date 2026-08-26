@@ -1,0 +1,114 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 20px;
+}
+
+.groupCard {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-top: 4px solid #00B2E3;
+}
+
+.groupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 10px;
+}
+
+.groupTitle {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.capacityBadge {
+  background: #f0fdf4;
+  color: #166534;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid #bbf7d0;
+}
+
+.enrollmentList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.enrollmentItem {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 12px;
+  position: relative;
+}
+
+.childName {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0 0 4px 0;
+}
+
+.parentInfo {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0 0 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.badgeStripe {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.badgeEfectivo {
+  background: #fce7f3;
+  color: #9d174d;
+}
+
+.badgeFreq {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.waBtn {
+  display: inline-flex;
+  align-items: center;
+  background-color: #25D366;
+  color: white;
+  text-decoration: none;
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-weight: bold;
+  gap: 4px;
+}
+
+.waBtn:hover {
+  background-color: #128C7E;
+}

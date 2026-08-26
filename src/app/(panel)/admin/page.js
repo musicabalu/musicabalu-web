@@ -1,0 +1,115 @@
+import { PrismaClient } from '@prisma/client';
+import Link from 'next/link';
+import styles from './dashboard.module.css';
+
+const prisma = new PrismaClient();
+export const dynamic = 'force-dynamic';
+
+export default async function AdminDashboard() {
+  // 1. Obtener métricas
+  const groups = await prisma.group.findMany({
+    include: {
+      enrollments: {
+        where: { status: 'active' }
+      }
+    }
+  });
+
+  const orders = await prisma.order.findMany({
+    where: { status: 'completed' }
+  });
+
+  const enrollments = await prisma.enrollment.findMany({
+    where: { status: 'active' }
+  });
+
+  // 2. Cálculos
+  const totalCapacity = groups.reduce((acc, g) => acc + g.capacity, 0);
+  const totalEnrolled = enrollments.length;
+  const availableSpots = totalCapacity - totalEnrolled;
+  const occupancyRate = totalCapacity > 0 ? Math.round((totalEnrolled / totalCapacity) * 100) : 0;
+
+  const totalStoreRevenue = orders.reduce((acc, order) => acc + order.amountTotal, 0) / 100;
+
+  const paymentStripe = enrollments.filter(e => e.paymentMethod === 'stripe').length;
+  const paymentEfectivo = enrollments.filter(e => e.paymentMethod === 'efectivo').length;
+
+  return (
+    <div className={styles.container}>
+      <header className={styles.header}>
+        <h1 className={styles.title}>Panel de Control Global</h1>
+        <p className={styles.subtitle}>Visión general de Musicabalú</p>
+      </header>
+
+      {/* Tarjetas de Métricas Principales */}
+      <div className={styles.statsGrid}>
+        <div className={styles.statCard}>
+          <h3 className={styles.statTitle}>Alumnos Activos</h3>
+          <p className={styles.statValue}>{totalEnrolled}</p>
+          <p className={styles.statDetail}>Plazas libres globales: {availableSpots}</p>
+        </div>
+
+        <div className={styles.statCard}>
+          <h3 className={styles.statTitle}>Ocupación Media</h3>
+          <p className={styles.statValue}>{occupancyRate}%</p>
+          <p className={styles.statDetail}>De {totalCapacity} plazas totales ofertadas</p>
+        </div>
+
+        <div className={styles.statCard}>
+          <h3 className={styles.statTitle}>Métodos de Pago</h3>
+          <p className={styles.statValue} style={{ fontSize: '1.8rem', marginTop: '10px' }}>
+            💳 {paymentStripe} <span style={{fontSize: '1rem', color: '#888', fontWeight: 'normal'}}>Stripe</span>
+          </p>
+          <p className={styles.statValue} style={{ fontSize: '1.8rem' }}>
+            💵 {paymentEfectivo} <span style={{fontSize: '1rem', color: '#888', fontWeight: 'normal'}}>Efectivo</span>
+          </p>
+        </div>
+
+        <Link href="/admin/ventas" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'translateY(-2px)' } }}>
+            <h3 className={styles.statTitle}>Ventas Tienda</h3>
+            <p className={styles.statValue}>{totalStoreRevenue.toLocaleString('es-ES', { style: 'currency', currency: 'EUR' })}</p>
+            <p className={styles.statDetail}>{orders.length} pedidos completados (Click para ver detalles)</p>
+          </div>
+        </Link>
+        
+      </div>
+
+      {/* Desglose de Grupos */}
+      <h2 className={styles.sectionTitle}>Estado de los Grupos</h2>
+      <div className={styles.groupsGrid}>
+        {groups.map(group => {
+          const enrolled = group.enrollments.length;
+          const percentage = Math.round((enrolled / group.capacity) * 100);
+          const isFull = enrolled >= group.capacity;
+
+          return (
+            <Link key={group.id} href={`/admin/grupos/${group.id}`} style={{ textDecoration: 'none' }}>
+              <div className={styles.groupCard}>
+                <h3 className={styles.groupName}>{group.name}</h3>
+              <p className={styles.groupSchedule}>🕒 {group.schedule}</p>
+              
+              <div className={styles.progressBar}>
+                <div 
+                  className={styles.progressFill} 
+                  style={{ 
+                    width: `${Math.min(percentage, 100)}%`,
+                    backgroundColor: isFull ? '#ef4444' : 'var(--color-cyan)'
+                  }}
+                ></div>
+              </div>
+              
+              <div className={styles.groupStats}>
+                <span>{enrolled} / {group.capacity} plazas</span>
+                <span className={`${styles.badge} ${isFull ? styles.badgeFull : styles.badgeOpen}`}>
+                  {isFull ? 'COMPLETO' : 'DISPONIBLE'}
+                </span>
+              </div>
+            </div>
+          </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}

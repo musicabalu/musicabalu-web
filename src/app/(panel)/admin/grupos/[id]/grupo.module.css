@@ -1,0 +1,164 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 30px;
+  border-bottom: 4px solid var(--color-cyan);
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--color-dark);
+  margin: 0 0 10px 0;
+}
+
+.subtitle {
+  color: var(--color-text-light);
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.studentCard {
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+@media(min-width: 768px) {
+  .studentCard {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.studentInfo {
+  flex: 1;
+}
+
+.childName {
+  font-size: 1.3rem;
+  color: var(--color-dark);
+  margin: 0 0 5px 0;
+}
+
+.ageBadge {
+  display: inline-block;
+  background-color: var(--color-cyan-light);
+  color: var(--color-cyan);
+  padding: 3px 8px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+.parentInfo {
+  color: var(--color-text-light);
+  font-size: 0.95rem;
+  margin: 0 0 10px 0;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.waBtn {
+  background-color: #25D366;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: transform 0.2s;
+}
+
+.waBtn:hover {
+  transform: scale(1.05);
+}
+
+.emailBtn {
+  background-color: #f3f4f6;
+  color: #4b5563;
+  padding: 8px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.attendanceSection {
+  background-color: #f8fafc;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.attendanceHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.monthSelector {
+  padding: 5px 10px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.weeksGrid {
+  display: flex;
+  gap: 10px;
+}
+
+.weekBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.weekLabel {
+  font-size: 0.75rem;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  border: 2px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  transition: all 0.2s;
+}
+
+.checkboxChecked {
+  background-color: var(--color-cyan);
+  border-color: var(--color-cyan);
+  color: white;
+}
