@@ -13,12 +13,119 @@ export default function Home() {
       <Header />
 
       <main className={styles.main}>
-        {/* SECCIÓN AUTORIDAD Y MÉTODO */}
-        <section className={styles.methodSection} style={{ paddingTop: '6rem' }}>
-          <div className={styles.methodGrid}>
-            <div className={styles.methodText}>
-              <h2 className={styles.sectionTitle}>No sólo son canciones. <br/>Es conexión.</h2>
-              <p>
+        {/* DESKTOP LAYOUT (Antiguo, sin el círculo) */}
+        <div className={styles.desktopOnly}>
+          <section className={styles.methodSection} style={{ paddingTop: '6rem' }}>
+            <div className={styles.methodGrid}>
+              <div className={styles.methodText}>
+                <h2 className={styles.sectionTitle}>No sólo son canciones. <br/>Es conexión.</h2>
+                <p>
+                  <strong>Desde 2017 llevamos música a familias con peques en Murcia aplicando la MLT.</strong><br/><br/>
+                  Durante los primeros 3 años de vida, el cerebro de tu bebé absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
+                </p>
+                <ul className={styles.methodList}>
+                  <li>
+                    <span className={styles.checkIcon}>✨</span>
+                    <div className={styles.methodListText}>
+                      <strong>Patrones tonales y rítmicos:</strong> Nos ayudan a decir nuestras primeras "palabras musicales".
+                    </div>
+                  </li>
+                  <li>
+                    <span className={styles.checkIcon}>🧠</span>
+                    <div className={styles.methodListText}>
+                      <strong>Repertorio variado en modos y métricas:</strong> Que enriquece al máximo su escucha y amplía su vocabulario musical.
+                    </div>
+                  </li>
+                  <li>
+                    <span className={styles.checkIcon}>💞</span>
+                    <div className={styles.methodListText}>
+                      <strong>Vínculo seguro:</strong> Un espacio con cero exigencias para mirarnos a los ojos y jugar juntos.
+                    </div>
+                  </li>
+                </ul>
+              </div>
+              <div className={styles.methodImageWrapper}>
+                <Image 
+                  src="/imagenes/clases/foto clases 17.jpg" 
+                  alt="Clase presencial de Musicabalú" 
+                  width={500} 
+                  height={500} 
+                  className={styles.homePhoto} 
+                  priority
+                />
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.hero} style={{ minHeight: 'auto', padding: '4rem 2rem' }}>
+            <div className={styles.heroBg}></div>
+            <div className={styles.heroContent}>
+              <h1 className={`${styles.heroTitle} ${styles.heroTitlePink}`}>
+                Conecta con tu bebé a través de <span className={styles.highlight}>la música</span>
+              </h1>
+              <p className={styles.heroSubtitle}>
+                Descubre la Educación Musical Temprana basada en neurociencia para potenciar su desarrollo cerebral, motriz y emocional mientras jugáis.
+              </p>
+              <div className={styles.heroActions}>
+                <Link href="/presencial" className={styles.primaryCta}>
+                  Ven a clase en Murcia
+                </Link>
+                <Link href="/regalo" className={styles.secondaryCta}>
+                  Audio de relajación GRATIS
+                </Link>
+              </div>
+              <div className={styles.heroMetrics}>
+                <span>+80 familias activas</span>
+                <span className={styles.dotSeparator}>•</span>
+                <span>Teoría del Aprendizaje Musical (MLT)</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* MOBILE LAYOUT (Nuevo flujo, sin el círculo) */}
+        <div className={styles.mobileOnly}>
+          <section className={styles.hero} style={{ minHeight: 'auto', padding: '6rem 2rem 4rem 2rem' }}>
+            <div className={styles.heroBg}></div>
+            <div className={styles.heroContent}>
+              <h1 className={`${styles.heroTitle} ${styles.heroTitlePink}`}>
+                Conecta con tu bebé a través de <span className={styles.highlight}>la música</span>
+              </h1>
+
+              <div style={{ margin: "40px auto", maxWidth: "800px", position: "relative" }}>
+                <Image 
+                  src="/imagenes/clases/foto clases 17.jpg" 
+                  alt="Clase presencial de Musicabalú" 
+                  width={800} 
+                  height={500} 
+                  style={{ borderRadius: "24px", objectFit: "cover", width: "100%", height: "auto", boxShadow: "0 20px 40px rgba(0,0,0,0.1)", position: "relative", zIndex: 1 }} 
+                  priority
+                />
+              </div>
+
+              <p className={styles.heroSubtitle}>
+                Descubre la Educación Musical Temprana basada en neurociencia para potenciar su desarrollo cerebral, motriz y emocional mientras jugáis.
+              </p>
+              <div className={styles.heroActions}>
+                <Link href="/presencial" className={styles.primaryCta}>
+                  Ven a clase en Murcia
+                </Link>
+                <Link href="/regalo" className={styles.secondaryCta}>
+                  Audio de relajación GRATIS
+                </Link>
+              </div>
+              <div className={styles.heroMetrics}>
+                <span>+80 familias activas</span>
+                <span className={styles.dotSeparator}>•</span>
+                <span>Teoría del Aprendizaje Musical (MLT)</span>
+              </div>
+            </div>
+          </section>
+
+          <section className={styles.methodSection} style={{ padding: '0 2rem 4rem 2rem' }}>
+            <div style={{ maxWidth: "800px", margin: "0 auto" }}>
+              <h2 className={styles.sectionTitle} style={{ textAlign: "center" }}>No sólo son canciones. <br/>Es conexión.</h2>
+              <p style={{ fontSize: "1.1rem", lineHeight: "1.6", color: "var(--color-text-light)", marginBottom: "30px", textAlign: "center" }}>
                 <strong>Desde 2017 llevamos música a familias con peques en Murcia aplicando la MLT.</strong><br/><br/>
                 Durante los primeros 3 años de vida, el cerebro de tu bebé absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
               </p>
@@ -43,48 +150,11 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className={styles.methodImageWrapper}>
-              <div className={styles.decorativeCircle}></div>
-              <Image 
-                src="/imagenes/clases/foto clases 17.jpg" 
-                alt="Clase presencial de Musicabalú" 
-                width={500} 
-                height={500} 
-                className={styles.homePhoto} 
-                priority
-              />
-            </div>
-          </div>
-        </section>
-
-        {/* HERO SECTION - GANCHO EMOCIONAL */}
-        <section className={styles.hero} style={{ minHeight: 'auto', padding: '4rem 2rem' }}>
-          <div className={styles.heroBg}></div>
-          <div className={styles.heroContent}>
-            <h1 className={`${styles.heroTitle} ${styles.heroTitlePink}`}>
-              Conecta con tu bebé a través de <span className={styles.highlight}>la música</span>
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Descubre la Educación Musical Temprana basada en neurociencia para potenciar su desarrollo cerebral, motriz y emocional mientras jugáis.
-            </p>
-            <div className={styles.heroActions}>
-              <Link href="/presencial" className={styles.primaryCta}>
-                Ven a clase en Murcia
-              </Link>
-              <Link href="/regalo" className={styles.secondaryCta}>
-                Audio de relajación GRATIS
-              </Link>
-            </div>
-            <div className={styles.heroMetrics}>
-              <span>+80 familias activas</span>
-              <span className={styles.dotSeparator}>•</span>
-              <span>Teoría del Aprendizaje Musical (MLT)</span>
-            </div>
-          </div>
-        </section>
+          </section>
+        </div>
 
         {/* SECCIÓN RESEÑAS */}
-        <section className={styles.reviewsSection} style={{ padding: "0 2rem", maxWidth: "1200px", margin: "0 auto" }}>
+        <section className={styles.reviewsSection} style={{ padding: "0 2rem 4rem 2rem", maxWidth: "1200px", margin: "0 auto" }}>
           <GoogleReviews reviews={REVIEWS} variant="slider" />
         </section>
 

@@ -144,6 +144,21 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
       
       addBtnWrapper.appendChild(addBtn);
       ul.parentNode.insertBefore(addBtnWrapper, ul.nextSibling);
+
+      // Restore custom order if saved
+      const savedOrderJson = localStorage.getItem(`order_ul_${ulIndex}`);
+      if (savedOrderJson) {
+        try {
+          const savedOrder = JSON.parse(savedOrderJson);
+          const allLis = Array.from(ul.querySelectorAll('li'));
+          savedOrder.forEach(id => {
+            const li = allLis.find(l => (l.dataset.storageKey === id || l.dataset.taskId === id));
+            if (li) {
+              ul.appendChild(li);
+            }
+          });
+        } catch(e) {}
+      }
     });
 
     function setupLiDOM(li, textContentHtml, isChecked, onModify, isBaseline) {
@@ -175,6 +190,34 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
       actionsDiv.style.opacity = '0';
       actionsDiv.style.transition = 'opacity 0.2s';
       
+      const upBtn = document.createElement('button');
+      upBtn.innerHTML = '⬆️';
+      upBtn.style.background = 'none';
+      upBtn.style.border = 'none';
+      upBtn.style.cursor = 'pointer';
+      upBtn.title = 'Mover arriba';
+      upBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (li.previousElementSibling) {
+          li.parentNode.insertBefore(li, li.previousElementSibling);
+          onModify();
+        }
+      });
+      
+      const downBtn = document.createElement('button');
+      downBtn.innerHTML = '⬇️';
+      downBtn.style.background = 'none';
+      downBtn.style.border = 'none';
+      downBtn.style.cursor = 'pointer';
+      downBtn.title = 'Mover abajo';
+      downBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (li.nextElementSibling) {
+          li.parentNode.insertBefore(li.nextElementSibling, li);
+          onModify();
+        }
+      });
+      
       const editBtn = document.createElement('button');
       editBtn.innerHTML = '✏️';
       editBtn.style.background = 'none';
@@ -205,6 +248,8 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
         }
       });
       
+      actionsDiv.appendChild(upBtn);
+      actionsDiv.appendChild(downBtn);
       actionsDiv.appendChild(editBtn);
       actionsDiv.appendChild(delBtn);
       
@@ -292,6 +337,8 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
         }
       });
       
+      const order = lis.map(li => li.dataset.storageKey || li.dataset.taskId);
+      localStorage.setItem(`order_ul_${ulIndex}`, JSON.stringify(order));
       localStorage.setItem(`new_tasks_ul_${ulIndex}`, JSON.stringify(newTasks));
     });
     

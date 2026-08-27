@@ -7,22 +7,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Modelos necesarios para NextAuth.js
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -36,50 +34,46 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String       @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?      @unique
   emailVerified DateTime?
   image         String?
-  
-  // Campos personalizados para Musicabalú
-  role          String    @default("familia") // familia, educador, admin
-  stripeId      String?   @unique // ID del cliente en Stripe
-  hasActiveSub  Boolean   @default(false)
-  
+  role          String       @default("familia")
+  stripeId      String?      @unique
+  hasActiveSub  Boolean      @default(false)
   accounts      Account[]
+  enrollments   Enrollment[]
+  orders        Order[]
   sessions      Session[]
-  orders        Order[]   // Compras de la Tienda
-  enrollments   Enrollment[] // Inscripciones a clases
 }
 
 model Order {
-  id            String    @id @default(cuid())
-  userId        String
-  stripeSessionId String  @unique // Referencia del pago en Stripe
-  productId     String    // Identificador del producto (ej. 'audio_relajacion_largo')
-  productName   String    // Nombre del producto
-  productType   String    // 'digital' o 'physical'
-  amountTotal   Int       // En céntimos
-  currency      String    @default("eur")
-  status        String    // 'completed', 'pending', 'refunded'
-  shippingData  String?   // JSON con la dirección de envío si es físico
-  createdAt     DateTime  @default(now())
-
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+  userId          String
+  stripeSessionId String   @unique
+  productId       String
+  productName     String
+  productType     String
+  amountTotal     Int
+  currency        String   @default("eur")
+  status          String
+  shippingData    String?
+  createdAt       DateTime @default(now())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Product {
-  id            String    @id @default(cuid())
+  id            String   @id @default(cuid())
   name          String
   description   String
-  price         Int       // En céntimos
-  type          String    // 'digital', 'physical_kit', 'printful_merch'
+  price         Int
+  type          String
   imageUrl      String?
-  stripePriceId String?   @unique
-  isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  stripePriceId String?  @unique
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 
 model VerificationToken {
@@ -115,35 +109,31 @@ model ContentPill {
 
 model Group {
   id          String       @id @default(cuid())
-  name        String       // Ej. "Martes 17:00"
-  schedule    String       // Horario de la clase
-  capacity    Int          @default(15) // Límite de alumnos
+  name        String
+  schedule    String
+  capacity    Int          @default(15)
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   enrollments Enrollment[]
 }
 
 model Enrollment {
-  id              String   @id @default(cuid())
-  childName       String
-  childBirthDate  String?  // Fecha de nacimiento del niñ@
-  parentName      String
-  phone           String
-  email           String
-  paymentMethod   String   // 'stripe' o 'efectivo'
-  paymentFrequency String? // 'mensual' o 'trimestral'
-  status          String   @default("pending") // 'pending', 'active', 'cancelled'
-  attendanceData  String?  @default("{}") // JSON stringificado de asistencia
-  
-  groupId         String
-  group           Group    @relation(fields: [groupId], references: [id])
-  
-  userId          String?
-  user            User?    @relation(fields: [userId], references: [id])
-  
-  acceptedTerms   Boolean  @default(false)
-  acceptedComms   Boolean  @default(false)
-  
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id               String   @id @default(cuid())
+  childName        String
+  childBirthDate   String?
+  parentName       String
+  phone            String
+  email            String
+  paymentMethod    String
+  paymentFrequency String?
+  status           String   @default("pending")
+  attendanceData   String?  @default("{}")
+  groupId          String
+  userId           String?
+  acceptedTerms    Boolean  @default(false)
+  acceptedComms    Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  group            Group    @relation(fields: [groupId], references: [id])
+  user             User?    @relation(fields: [userId], references: [id])
 }

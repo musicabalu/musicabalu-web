@@ -3,13 +3,34 @@
 import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
+
+function CartAutoOpener() {
+  const { setIsCartOpen } = useCart();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams && searchParams.get("openCart") === "true") {
+      setIsCartOpen(true);
+    }
+  }, [searchParams, setIsCartOpen]);
+
+  return null;
+}
 
 export default function CartDrawer() {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal, cartCount } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [checkoutError, setCheckoutError] = useState(null);
 
-  if (!isCartOpen) return null;
+  if (!isCartOpen) {
+    return (
+      <Suspense fallback={null}>
+        <CartAutoOpener />
+      </Suspense>
+    );
+  }
 
   const handleCheckout = async () => {
     setIsProcessing(true);
@@ -23,12 +44,16 @@ export default function CartDrawer() {
       if (data.url) {
         window.location.href = data.url;
       } else if (data.error) {
-        alert(data.error);
+        if (res.status === 401 || data.error.toLowerCase().includes("iniciar sesión") || data.error.toLowerCase().includes("registrar")) {
+          setCheckoutError("auth_required");
+        } else {
+          setCheckoutError(data.error);
+        }
         setIsProcessing(false);
       }
     } catch (error) {
       console.error(error);
-      alert("Error al conectar con la pasarela de pago.");
+      setCheckoutError("Error al conectar con la pasarela de pago.");
       setIsProcessing(false);
     }
   };
@@ -37,6 +62,9 @@ export default function CartDrawer() {
 
   return (
     <>
+      <Suspense fallback={null}>
+        <CartAutoOpener />
+      </Suspense>
       <div 
         style={{
           position: "fixed",
@@ -144,6 +172,25 @@ export default function CartDrawer() {
                 ) : (
                   <>🚚 <strong>Envío Gratis a partir de 55€</strong><br/>Añade <strong>{((5500 - cartTotal) / 100).toFixed(2).replace('.', ',')} €</strong> más para no pagar gastos de envío (4,90€).</>
                 )}
+              </div>
+            )}
+            
+            {checkoutError === 'auth_required' && (
+              <div style={{ padding: "15px", marginBottom: "15px", backgroundColor: "var(--color-yellow)", border: "1px solid var(--color-border)", borderRadius: "8px", color: "var(--color-dark)", fontSize: "0.95rem", textAlign: "center", boxShadow: "0 4px 6px rgba(0,0,0,0.05)" }}>
+                <p style={{ marginBottom: "12px", fontWeight: "bold" }}>Debes registrarte o iniciar sesión para poder comprar.</p>
+                <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+                  <Link href={`/login?callbackUrl=${encodeURIComponent('/tienda?openCart=true')}`} className="btn btn-dark" onClick={() => setIsCartOpen(false)} style={{ padding: "8px 15px", fontSize: "0.85rem", flex: 1 }}>
+                    Entrar
+                  </Link>
+                  <Link href={`/login?callbackUrl=${encodeURIComponent('/tienda?openCart=true')}`} className="btn btn-cyan" onClick={() => setIsCartOpen(false)} style={{ padding: "8px 15px", fontSize: "0.85rem", flex: 1 }}>
+                    Registrarse
+                  </Link>
+                </div>
+              </div>
+            )}
+            {checkoutError && checkoutError !== 'auth_required' && (
+              <div style={{ padding: "10px", marginBottom: "15px", backgroundColor: "#f8d7da", border: "1px solid #f5c6cb", borderRadius: "8px", color: "#721c24", fontSize: "0.9rem", textAlign: "center" }}>
+                {checkoutError}
               </div>
             )}
             

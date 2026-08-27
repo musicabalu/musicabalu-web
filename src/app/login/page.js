@@ -17,14 +17,16 @@ function LoginForm() {
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
-      router.push("/dashboard");
+      const callback = searchParams.get("callbackUrl") || "/dashboard";
+      router.push(callback);
     }
-  }, [sessionStatus, router]);
+  }, [sessionStatus, router, searchParams]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     if (sessionStatus === "authenticated") {
-      router.push("/dashboard");
+      const callback = searchParams.get("callbackUrl") || "/dashboard";
+      router.push(callback);
       return;
     }
     

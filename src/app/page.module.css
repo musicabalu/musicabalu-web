@@ -4,6 +4,14 @@
   min-height: 100vh;
 }
 
+.desktopOnly {
+  display: block;
+}
+
+.mobileOnly {
+  display: none;
+}
+
 /* HERO SECTION */
 .hero {
   position: relative;
@@ -367,6 +375,9 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .desktopOnly { display: none !important; }
+  .mobileOnly { display: block !important; }
+
   .heroTitle { font-size: 2.8rem; }
   .methodGrid { grid-template-columns: 1fr; }
   .methodImageWrapper { height: 350px; }

@@ -53,7 +53,7 @@ export default async function Tienda() {
             Materiales pedagógicos, descargables y merchandising para llevar la experiencia Musicabalú a tu casa.
           </p>
           <div style={{ backgroundColor: 'var(--color-cyan-light)', color: 'var(--color-dark)', padding: '10px 20px', borderRadius: '30px', display: 'inline-block', fontSize: '0.9rem', border: '1px solid var(--color-cyan)' }}>
-            🚚 Los gastos de envío (4,90€) para productos físicos se añadirán al finalizar tu compra.
+            🚚 <strong>Envío GRATIS</strong> en pedidos físicos superiores a 55€ (pedidos inferiores: +4,90€).
           </div>
 
 
