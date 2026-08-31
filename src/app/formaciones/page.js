@@ -20,7 +20,7 @@ export default function Formaciones() {
             Una formación diseñada para personas <strong>sin conocimientos musicales</strong> que quieren usar la música de verdad en el día a día del aula o de casa.
           </p>
           <div className={styles.heroActions}>
-            <a href="mailto:musicabalu@gmail.com?subject=Información Formación Recursos Musicales" className={styles.primaryBtn}>
+            <a href="mailto:hola@musicabalu.com?subject=Información Formación Recursos Musicales" className={styles.primaryBtn}>
               Solicitar Información
             </a>
           </div>
@@ -75,7 +75,7 @@ export default function Formaciones() {
               <div className={styles.cardIcon}>🎵</div>
               <h4>El Paso a Paso</h4>
               <ul className={styles.checkList}>
-                <li><span className={styles.checkIcon}>✅</span> Materiales que funcionan (Instrumentos, pañuelos, etc.)</li>
+                <li><span className={styles.checkIcon}>✅</span> Análisis de materiales que funcionan</li>
                 <li><span className={styles.checkIcon}>✅</span> Repertorio modal y rítmico (No solo en Do Mayor)</li>
                 <li><span className={styles.checkIcon}>✅</span> Gestión del espacio y la atención de los niños</li>
               </ul>
@@ -97,7 +97,7 @@ export default function Formaciones() {
         <section className={styles.actionSection}>
           <h2>¿Te vienes a la próxima edición?</h2>
           <p>Escríbenos para conocer las próximas fechas disponibles para educadores o grupos de familias.</p>
-          <a href="mailto:musicabalu@gmail.com?subject=Información Formación Recursos Musicales" className={styles.primaryBtnDark}>
+          <a href="mailto:hola@musicabalu.com?subject=Información Formación Recursos Musicales" className={styles.primaryBtnDark}>
             Contactar ahora
           </a>
         </section>

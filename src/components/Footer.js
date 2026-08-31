@@ -15,7 +15,7 @@ export default function Footer() {
         </div>
       </div>
       <div style={{ textAlign: "center", marginTop: "20px", fontSize: "0.85rem", color: "var(--color-text-light)", opacity: 0.7 }}>
-        Contacto: 633715302 | musicabalu@gmail.com
+        Contacto: 633715302 | hola@musicabalu.com
       </div>
     </footer>
   );

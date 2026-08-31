@@ -83,7 +83,7 @@ export async function POST(request) {
             // Email al administrador
             await transport.sendMail({
               from: process.env.EMAIL_FROM,
-              to: "musicabalu@gmail.com",
+              to: "hola@musicabalu.com",
               subject: "💰 Nueva Venta en la Tienda",
               text: `Se ha vendido: ${metadata.productName || "Producto"} por ${(session.amount_total / 100).toFixed(2)}€\n\nComprador: ${session.customer_details?.email}\nStripe ID: ${session.id}`
             });

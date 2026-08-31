@@ -387,7 +387,7 @@ export default function ProductDetailClient({ product }) {
           color: "var(--color-text-light)",
           textAlign: "center"
         }}>
-          ¿Te surge cualquier pregunta sobre este producto? No dudes en escribirnos a <a href="mailto:musicabalu@gmail.com" style={{ textDecoration: "underline", color: "var(--color-dark)" }}>musicabalu@gmail.com</a>
+          ¿Te surge cualquier pregunta sobre este producto? No dudes en escribirnos a <a href="mailto:hola@musicabalu.com" style={{ textDecoration: "underline", color: "var(--color-dark)" }}>hola@musicabalu.com</a>
         </div>
       </div>
     </div>

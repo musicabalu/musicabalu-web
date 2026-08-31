@@ -131,44 +131,46 @@ export default async function DashboardPage({ searchParams }) {
               </Link>
             )}
 
-            {/* 2. Canciones */}
-            <Link href="/comunidad/canciones" style={{ textDecoration: 'none' }}>
-              <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-pink)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
-                <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
-                  <span>🎵 Canciones</span>
-                  {!(hasActiveSub || isPresential) && <span style={{fontSize: '1rem'}}>🔒</span>}
-                </h2>
-                <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
-                  Música para cantar y bailar en familia.
-                </p>
-              </section>
-            </Link>
+            {/* Sección Comunidad (Solo visible si tienen acceso activo o presencial) */}
+            {(hasActiveSub || isPresential) && (
+              <>
+                {/* 2. Canciones */}
+                <Link href="/comunidad/canciones" style={{ textDecoration: 'none' }}>
+                  <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-pink)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
+                    <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
+                      <span>🎵 Canciones</span>
+                    </h2>
+                    <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                      Música para cantar y bailar en familia.
+                    </p>
+                  </section>
+                </Link>
 
-            {/* 3. Recitados */}
-            <Link href="/comunidad/recitados" style={{ textDecoration: 'none' }}>
-              <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-cyan)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
-                <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
-                  <span>🗣️ Recitados</span>
-                  {!(hasActiveSub || isPresential) && <span style={{fontSize: '1rem'}}>🔒</span>}
-                </h2>
-                <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
-                  Juegos rítmicos y vocales sin melodía.
-                </p>
-              </section>
-            </Link>
+                {/* 3. Recitados */}
+                <Link href="/comunidad/recitados" style={{ textDecoration: 'none' }}>
+                  <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-cyan)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
+                    <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
+                      <span>🗣️ Recitados</span>
+                    </h2>
+                    <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                      Juegos rítmicos y vocales sin melodía.
+                    </p>
+                  </section>
+                </Link>
 
-            {/* 4. Píldoras y FAQs */}
-            <Link href="/comunidad/pildoras" style={{ textDecoration: 'none' }}>
-              <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-yellow)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
-                <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
-                  <span>💊 Píldoras y FAQs</span>
-                  {!(hasActiveSub || isPresential) && <span style={{fontSize: '1rem'}}>🔒</span>}
-                </h2>
-                <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
-                  Respuestas rápidas y consejos prácticos.
-                </p>
-              </section>
-            </Link>
+                {/* 4. Píldoras y FAQs */}
+                <Link href="/comunidad/pildoras" style={{ textDecoration: 'none' }}>
+                  <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-yellow)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
+                    <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
+                      <span>💊 Píldoras y FAQs</span>
+                    </h2>
+                    <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                      Respuestas rápidas y consejos prácticos.
+                    </p>
+                  </section>
+                </Link>
+              </>
+            )}
 
             {/* 5. Formaciones (B2B) */}
             {isB2B && (
@@ -184,7 +186,7 @@ export default async function DashboardPage({ searchParams }) {
               </Link>
             )}
 
-            {/* 6. Historial de compras */}
+            {/* 6. Historial de compras (Oculto hasta 1 Octubre) 
             <Link href="/dashboard/compras" style={{ textDecoration: 'none' }}>
               <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-text-light)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
                 <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
@@ -202,6 +204,7 @@ export default async function DashboardPage({ searchParams }) {
                 </div>
               </section>
             </Link>
+            */}
           </>
         )}
       </div>

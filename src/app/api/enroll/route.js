@@ -33,7 +33,7 @@ export async function POST(request) {
 
     // 2. Comprobar si existe en Stripe o crearlo
     let stripeCustomerId = user.stripeId;
-    if (!stripeCustomerId && paymentMethod === 'stripe') {
+    if ((!stripeCustomerId || stripeCustomerId === "") && (paymentMethod === 'stripe' || !skipStripeMatricula)) {
       const customer = await stripe.customers.create({
         email: user.email,
         name: user.name,
@@ -69,19 +69,35 @@ export async function POST(request) {
     // --- FASE 6: ENVÍO DE EMAILS ---
     // Usamos Nodemailer para mandar el resguardo y la bienvenida
     try {
-      if (process.env.GMAIL_USER && process.env.GMAIL_PASS) {
+      if ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS)) {
         const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'https://musicabalu.com';
-        const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: process.env.GMAIL_USER,
-            pass: process.env.GMAIL_PASS
-          }
-        });
+        
+        let transporter;
+        if (process.env.SMTP_USER) {
+          transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'ssl0.ovh.net',
+            port: parseInt(process.env.SMTP_PORT || '465'),
+            secure: true,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS
+            }
+          });
+        } else {
+          transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.GMAIL_USER,
+              pass: process.env.GMAIL_PASS
+            }
+          });
+        }
+        
+        const senderEmail = process.env.SMTP_USER || process.env.GMAIL_USER;
 
         // 1. Correo de Resguardo
         await transporter.sendMail({
-          from: `"Musicabalú" <${process.env.GMAIL_USER}>`,
+          from: `"Musicabalú" <${senderEmail}>`,
           to: email,
           subject: 'Resguardo de Inscripción - Musicabalú',
           html: `<p>Hola ${parentName},</p>
@@ -127,23 +143,23 @@ export async function POST(request) {
 
         // 2. Correo de Bienvenida (El Gancho)
         await transporter.sendMail({
-          from: `"Musicabalú" <${process.env.GMAIL_USER}>`,
+          from: `"Musicabalú" <${senderEmail}>`,
           to: email,
           subject: 'Bienvenida a la familia Musicabalú 🎵 (Tus accesos)',
           html: `<p>Hola ${parentName},</p>
                  <p>¡Qué alegría darte la bienvenida a nuestra pequeña familia! Estoy deseando que podamos vivir juntos momentos inolvidables con la música como hilo conductor.</p>
                  <p>Como familia presencial, tienes acceso 100% gratuito a nuestra plataforma digital ("La Comunidad Musicabalú"). En ella no sólo encontrarás todas nuestras canciones, sino que he preparado un rincón exclusivo para ti llamado <strong>"Mi Clase Presencial"</strong>.</p>
-                 <p>Es vital que, antes de venir a la primera clase, entres y leas las indicaciones previas (qué ropa traer, cómo comportarse en el aula, la importancia del silencio...). ¡Tranqui, se lee en 2 minutos y nos ayuda muchísimo a todos!</p>
+                 <p>Es necesario que, antes de venir a la primera clase, entres y leas las indicaciones previas (qué ropa traer, cómo comportarse en el aula, la importancia del silencio...). ¡Tranqui, se lee en 2 minutos y nos ayuda muchísimo a todos!</p>
                  <p><strong>Tus Datos de Acceso:</strong></p>
                  <ul>
                    <li><strong>Link:</strong> www.musicabalu.com/login</li>
                    <li><strong>Email:</strong> ${email}</li>
                  </ul>
-                 <p><em>⚠️ Nota Importante: Podrás acceder a la plataforma y a todos estos contenidos a partir del <strong>15 de septiembre</strong>. ¡Te avisaré cuando esté todo listo!</em></p>
+                 <p><em>⚠️ Nota Importante: Puedes acceder ya a la plataforma, pero todos los contenidos de audio estarán disponibles a partir del <strong>16 de septiembre</strong>. ¡Te avisaré cuando esté todo listo!</em></p>
                  <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>`
         });
       } else {
-        console.warn('Faltan credenciales GMAIL_USER o GMAIL_PASS. Emails no enviados.');
+        console.warn('Faltan credenciales SMTP_USER o GMAIL_USER. Emails no enviados.');
       }
     } catch (emailError) {
       console.error('Error enviando correos:', emailError);
@@ -218,7 +234,7 @@ export async function POST(request) {
       // Precio fijo de matrícula: 25€
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card', 'sepa_debit'],
-        customer: stripeCustomerId,
+        ...(stripeCustomerId ? { customer: stripeCustomerId } : {}),
         line_items: [
           {
             price_data: {

@@ -55,7 +55,7 @@ export default async function MiClasePage() {
         <h2 style={{ color: 'var(--color-dark, #2C3333)', margin: '0 0 1rem 0', fontSize: '1.5rem', fontWeight: '800' }}>👩‍🏫 Tu Grupo: {enrollment.group.name} {enrollment.group.schedule}</h2>
         <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
           <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>🕒 Horario:</strong> {enrollment.group.schedule}</p>
-          <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>👶 Alumno/a:</strong> {enrollment.childName}</p>
+          <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>👶 Peque:</strong> {enrollment.childName}</p>
         </div>
       </div>
 

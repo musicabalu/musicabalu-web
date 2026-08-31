@@ -46,7 +46,12 @@ export default async function RecitadosPage() {
       <BibliotecaTabs isPresential={isPresential} role={role} />
 
       <div style={{ paddingBottom: '120px' }}>
-        <AudioList tracks={tracks} hasFullAccess={hasFullAccess} />
+        <div style={{ textAlign: 'center', padding: '4rem 2rem', backgroundColor: 'white', borderRadius: '16px', border: '2px dashed var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>
+          <span style={{ fontSize: '3rem' }}>🚧</span>
+          <h2 style={{ marginTop: '1rem', color: 'var(--color-dark)', fontWeight: 'bold' }}>Lo tenemos casi a punto</h2>
+          <p style={{ color: 'var(--color-text-light)', marginTop: '0.5rem', fontSize: '1.1rem' }}>Enseguida lo tendrás disponible.</p>
+        </div>
+        {/* <AudioList tracks={tracks} hasFullAccess={hasFullAccess} /> */}
       </div>
     </div>
   );

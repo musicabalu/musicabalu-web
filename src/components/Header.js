@@ -21,9 +21,9 @@ export default function Header() {
         <Link href="/conocenos" className={styles.navLink}>Conócenos</Link>
         <Link href="/presencial" className={styles.navLink}>Clases</Link>
         <Link href="/formaciones" className={styles.navLink}>Formaciones</Link>
+        {/* Oculto hasta 1 oct 
         <Link href="/tienda" className={styles.navLink}>Tienda</Link>
         
-        {/* Icono del Carrito */}
         <button 
           onClick={() => setIsCartOpen(true)}
           style={{ 
@@ -43,10 +43,11 @@ export default function Header() {
             </span>
           )}
         </button>
+        */}
 
         {session ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <Link href="/dashboard" className="btn btn-cyan" suppressHydrationWarning>Inicio</Link>
+            <Link href="/dashboard" className="btn btn-cyan" suppressHydrationWarning>Mi Panel</Link>
             <button onClick={() => signOut({ callbackUrl: "/" })} className="btn btn-ghost" style={{ padding: "0.5rem 1rem", fontSize: "0.85rem" }} suppressHydrationWarning>
               Salir
             </button>

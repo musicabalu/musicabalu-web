@@ -93,9 +93,6 @@ export default function Conocenos() {
             <Link href="/presencial" className={styles.primaryBtn}>
               Ver Clases en Murcia
             </Link>
-            <Link href="/regalo" className={styles.secondaryBtn}>
-              Descargar Audio Gratis
-            </Link>
           </div>
         </section>
       </main>

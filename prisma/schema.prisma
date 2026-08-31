@@ -43,6 +43,7 @@ model User {
   stripeId      String?      @unique
   hasActiveSub  Boolean      @default(false)
   accounts      Account[]
+  activityLogs  ActivityLog[]
   enrollments   Enrollment[]
   orders        Order[]
   sessions      Session[]
@@ -136,4 +137,13 @@ model Enrollment {
   updatedAt        DateTime @updatedAt
   group            Group    @relation(fields: [groupId], references: [id])
   user             User?    @relation(fields: [userId], references: [id])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String
+  action    String
+  details   String?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

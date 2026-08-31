@@ -2,10 +2,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { PrismaClient } from "@prisma/client";
 import ProductCard from "@/components/ProductCard";
+import { redirect } from "next/navigation";
+
 const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export default async function Tienda() {
+  redirect("/");
   const dbProducts = await prisma.product.findMany({
     where: { isActive: true },
     orderBy: { createdAt: "asc" },

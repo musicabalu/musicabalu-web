@@ -93,7 +93,7 @@ export default function Presencial() {
                 <li>Una sesión semanal (40-45 min).</li>
               </ul>
               <div className={styles.contactNotice}>
-                <p>Escríbenos para consultar horarios, precios y huecos disponibles al 633715302 o a musicabalu@gmail.com.</p>
+                <p>Escríbenos para consultar horarios, precios y huecos disponibles al 633715302 o a hola@musicabalu.com.</p>
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@ export default function Presencial() {
 
         <section className={styles.actionSection}>
           <div className={styles.ctaGroup}>
-            <a href="mailto:musicabalu@gmail.com?subject=Información Clases Presenciales EMPI" className={styles.primaryBtn}>
+            <a href="mailto:hola@musicabalu.com?subject=Información Clases Presenciales EMPI" className={styles.primaryBtn}>
               Consultar disponibilidad
             </a>
           </div>

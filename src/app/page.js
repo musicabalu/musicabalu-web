@@ -70,9 +70,6 @@ export default function Home() {
                 <Link href="/presencial" className={styles.primaryCta}>
                   Ven a clase en Murcia
                 </Link>
-                <Link href="/regalo" className={styles.secondaryCta}>
-                  Audio de relajación GRATIS
-                </Link>
               </div>
               <div className={styles.heroMetrics}>
                 <span>+80 familias activas</span>
@@ -109,9 +106,6 @@ export default function Home() {
               <div className={styles.heroActions}>
                 <Link href="/presencial" className={styles.primaryCta}>
                   Ven a clase en Murcia
-                </Link>
-                <Link href="/regalo" className={styles.secondaryCta}>
-                  Audio de relajación GRATIS
                 </Link>
               </div>
               <div className={styles.heroMetrics}>
@@ -158,7 +152,7 @@ export default function Home() {
           <GoogleReviews reviews={REVIEWS} variant="slider" />
         </section>
 
-        {/* SECCIÓN EL CLUB MUSICABALÚ: SUSCRIPCIÓN DIGITAL */}
+        {/* SECCIÓN EL CLUB MUSICABALÚ: SUSCRIPCIÓN DIGITAL (Oculta hasta el 1 de Octubre)
         <section className={styles.digitalSection}>
           <div className={styles.digitalContent}>
             <h2 className={styles.sectionTitleYellow}>Comunidad Musicabalú</h2>
@@ -190,6 +184,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        */}
       </main>
 
       {/* FOOTER */}

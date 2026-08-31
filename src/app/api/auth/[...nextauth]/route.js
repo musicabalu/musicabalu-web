@@ -80,6 +80,26 @@ export const authOptions = {
       return session;
     },
   },
+  events: {
+    async signIn({ user }) {
+      if (user && user.email) {
+        try {
+          const dbUser = await prisma.user.findUnique({ where: { email: user.email } });
+          if (dbUser) {
+            await prisma.activityLog.create({
+              data: {
+                userId: dbUser.id,
+                action: 'INICIO_SESION',
+                details: 'Entró a la plataforma'
+              }
+            });
+          }
+        } catch (e) {
+          console.error("Error logging signin", e);
+        }
+      }
+    }
+  }
 };
 
 const handler = NextAuth(authOptions);

@@ -23,16 +23,19 @@ export default function ClientLayout({ children, user, hasFullAccess, isPresenti
   const pathname = usePathname();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  // El menú siempre muestra Inicio
+  // El menú siempre muestra Inicio y enlaces públicos
   const navItems = [
-    { name: 'Inicio', path: '/dashboard', icon: '🏠' }
+    { name: 'Inicio', path: '/dashboard', icon: '🏠' },
+    { name: 'Conócenos', path: '/conocenos', icon: '👋' },
+    { name: 'Clases', path: '/presencial', icon: '👶' },
+    { name: 'Formaciones (Info)', path: '/formaciones', icon: '🏫' }
   ];
 
-  // Si es presencial, mostramos Comunidad Musicabalú. Si no, Biblioteca Familiar.
+  // Si es presencial, mostramos Comunidad Musicabalú. Si tiene suscripción, Biblioteca Familiar.
   if (isPresential || role === 'admin') {
     // Nota: El admin ve Comunidad Musicabalú para tener acceso a Mi Clase
     navItems.push({ name: 'Comunidad Musicabalú', path: '/comunidad/mi-clase', icon: '❤️' });
-  } else {
+  } else if (hasFullAccess) {
     navItems.push({ name: 'Biblioteca Familiar', path: '/comunidad/canciones', icon: '❤️' });
   }
 
@@ -46,6 +49,7 @@ export default function ClientLayout({ children, user, hasFullAccess, isPresenti
     navItems.push({ name: 'Administrador', path: '/admin', icon: '⚙️' });
     navItems.push({ name: 'Cronograma', path: '/admin/cronograma', icon: '📅' });
     navItems.push({ name: 'Plan Estratégico', path: '/admin/estrategia', icon: '📈' });
+    navItems.push({ name: 'Actividad', path: '/admin/actividad', icon: '📊' });
     navItems.push({ name: 'Auditoría', path: '/admin/auditoria', icon: '🧹' });
   }
 

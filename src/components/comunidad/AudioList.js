@@ -14,6 +14,15 @@ export default function AudioList({ tracks, hasFullAccess }) {
       return;
     }
     setCurrentIndex(index);
+    
+    // Registrar actividad
+    if (tracks[index]) {
+      fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'REPRODUCIR_AUDIO', details: tracks[index].title })
+      }).catch(e => console.error(e));
+    }
   };
 
   const handleNext = () => {
