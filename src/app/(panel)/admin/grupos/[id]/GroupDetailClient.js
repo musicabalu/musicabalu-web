@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import styles from './grupo.module.css';
 
 // Helper: Calcular edad
@@ -82,6 +83,10 @@ export default function GroupDetailClient({ group }) {
 
   return (
     <div className={styles.container}>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
+      
       <div className={styles.header}>
         <h1 className={styles.title}>{group.name}</h1>
         <p className={styles.subtitle}>🕒 {group.schedule} &bull; {group.enrollments.length} alumnos activos</p>

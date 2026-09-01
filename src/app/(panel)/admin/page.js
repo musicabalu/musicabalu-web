@@ -74,6 +74,35 @@ export default async function AdminDashboard() {
         </Link>
         
       </div>
+      
+      {/* Herramientas de Gestión */}
+      <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
+      <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+        <Link href="/admin/actividad" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📊 Actividad</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Registro de acciones de usuarios</p>
+          </div>
+        </Link>
+        <Link href="/admin/cronograma" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📅 Cronograma</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Planificación de tareas</p>
+          </div>
+        </Link>
+        <Link href="/admin/estrategia" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📈 Estrategia</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Plan de negocio a largo plazo</p>
+          </div>
+        </Link>
+        <Link href="/admin/auditoria" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>🧹 Auditoría</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Mantenimiento del sistema</p>
+          </div>
+        </Link>
+      </div>
 
       {/* Desglose de Grupos */}
       <h2 className={styles.sectionTitle}>Estado de los Grupos</h2>

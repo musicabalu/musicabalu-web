@@ -50,11 +50,9 @@ export default async function VentasDashboard() {
         <p className={styles.subtitle}>Listado completo de pedidos</p>
       </header>
 
-      <div style={{ marginBottom: '20px' }}>
-        <Link href="/admin" style={{ color: 'var(--color-cyan)', textDecoration: 'none', fontWeight: 'bold' }}>
-          ← Volver al panel de control
-        </Link>
-      </div>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
 
       <div style={{ background: '#fff', borderRadius: '12px', padding: '20px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
         {allSales.length === 0 ? (

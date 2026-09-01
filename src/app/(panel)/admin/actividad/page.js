@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import Link from 'next/link';
 import styles from '../dashboard.module.css';
 
 const prisma = new PrismaClient();
@@ -20,6 +21,10 @@ export default async function ActividadPage() {
 
   return (
     <div className={styles.container}>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
+      
       <header className={styles.header}>
         <h1 className={styles.title}>Actividad Reciente</h1>
         <p className={styles.subtitle}>Registro de acciones de los usuarios en la plataforma</p>

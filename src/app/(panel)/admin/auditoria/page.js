@@ -24,11 +24,9 @@ export default async function AuditoriaDashboard() {
         <p className={styles.subtitle}>Herramientas para mantener la plataforma sana</p>
       </header>
 
-      <div style={{ marginBottom: '20px' }}>
-        <Link href="/admin" style={{ color: 'var(--color-cyan)', textDecoration: 'none', fontWeight: 'bold' }}>
-          ← Volver al panel de control
-        </Link>
-      </div>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
 
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
         <div className={styles.statCard}>

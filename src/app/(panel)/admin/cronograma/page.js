@@ -1,5 +1,6 @@
 import CronogramaClient from './CronogramaClient';
 import { cronogramaHtml } from './cronogramaData';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,5 +30,12 @@ export default async function CronogramaPage() {
     .estrategia-doc .alert-title { font-weight: bold; color: #166534; font-size: 1.1rem; margin-bottom: 10px; }
   `;
 
-  return <CronogramaClient styles={styles} body={htmlContent} />;
+  return (
+    <div style={{ padding: '0 20px 20px 20px' }}>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
+      <CronogramaClient styles={styles} body={htmlContent} />
+    </div>
+  );
 }

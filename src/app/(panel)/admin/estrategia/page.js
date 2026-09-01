@@ -1,5 +1,6 @@
 import EstrategiaClient from './EstrategiaClient';
 import { estrategiaHtml } from './estrategiaData';
+import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,5 +32,12 @@ export default async function EstrategiaPage() {
   const bodyMatch = htmlContent.match(/<div class="page">([\s\S]*?)<\/div><!-- \/page -->/);
   const body = bodyMatch ? bodyMatch[1] : '';
 
-  return <EstrategiaClient styles={styles} body={body} />;
+  return (
+    <div style={{ padding: '0 20px 20px 20px' }}>
+      <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
+        <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+      </Link>
+      <EstrategiaClient styles={styles} body={body} />
+    </div>
+  );
 }
