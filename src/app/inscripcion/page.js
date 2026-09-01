@@ -54,8 +54,18 @@ export default function InscripcionPage() {
     setError('');
 
     // Validaciones personalizadas
-    if (new Date(formData.childBirthDate) < new Date('2022-01-01')) {
+    const birthDate = new Date(formData.childBirthDate);
+    const today = new Date();
+    
+    if (birthDate < new Date('2022-01-01')) {
       setError('La fecha de nacimiento del peque no puede ser anterior al año 2022.');
+      setLoading(false);
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (birthDate > today) {
+      setError('La fecha de nacimiento no puede ser en el futuro.');
       setLoading(false);
       window.scrollTo(0, 0);
       return;
@@ -126,7 +136,7 @@ export default function InscripcionPage() {
             </div>
             <div className={styles.inputGroup}>
               <label>Fecha de Nacimiento</label>
-              <input type="date" name="childBirthDate" required min="2022-01-01" value={formData.childBirthDate} onChange={handleChange} />
+              <input type="date" name="childBirthDate" required min="2022-01-01" max={new Date().toISOString().split("T")[0]} value={formData.childBirthDate} onChange={handleChange} />
             </div>
           </div>
 

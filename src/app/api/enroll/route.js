@@ -66,10 +66,23 @@ export async function POST(request) {
       }
     });
 
-    // --- FASE 6: ENVÍO DE EMAILS ---
-    // Usamos Nodemailer para mandar el resguardo y la bienvenida
+    // Registrar actividad de inscripción
     try {
-      if ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS)) {
+      await prisma.activityLog.create({
+        data: {
+          userId: user.id,
+          action: skipStripeMatricula ? 'Inscripción Especial (Activa)' : 'Inscripción Iniciada (Pendiente)',
+          details: `Grupo ID: ${groupId} | Peque: ${childName} | Pago mensual: ${paymentMethod}`
+        }
+      });
+    } catch (logErr) {
+      console.error('Error al registrar ActivityLog de inscripción:', logErr);
+    }
+
+    // --- FASE 6: ENVÍO DE EMAILS (SOLO SI SALTA STRIPE) ---
+    // Si van a Stripe, los emails se envían en el Webhook al confirmar el pago.
+    try {
+      if (skipStripeMatricula && ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS))) {
         const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_SITE_URL || 'https://musicabalu.com';
         
         let transporter;
@@ -158,6 +171,8 @@ export async function POST(request) {
                  <p><em>⚠️ Nota Importante: Puedes acceder ya a la plataforma, pero todos los contenidos de audio estarán disponibles a partir del <strong>16 de septiembre</strong>. ¡Te avisaré cuando esté todo listo!</em></p>
                  <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>`
         });
+      } else if (!skipStripeMatricula) {
+        console.log('Emails de resguardo y bienvenida delegados al webhook de Stripe.');
       } else {
         console.warn('Faltan credenciales SMTP_USER o GMAIL_USER. Emails no enviados.');
       }
@@ -170,9 +185,9 @@ export async function POST(request) {
     let googleContactsStatus = 'No se intentó';
     let googleContactsError = '';
 
-    // --- FASE 4: GOOGLE CONTACTS API (CON ETIQUETAS) ---
+    // --- FASE 4: GOOGLE CONTACTS API (CON ETIQUETAS) - SOLO SI SALTA STRIPE ---
     try {
-      if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN) {
+      if (skipStripeMatricula && process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN) {
         const oauth2Client = new google.auth.OAuth2(
           process.env.GOOGLE_CLIENT_ID,
           process.env.GOOGLE_CLIENT_SECRET
@@ -225,6 +240,8 @@ export async function POST(request) {
         });
         googleContactsStatus = '✅ Creado con éxito';
         console.log(`✅ Contacto añadido a Google Contacts: ${contactName} con la etiqueta ${labelName}`);
+      } else if (!skipStripeMatricula) {
+        console.log('Google Contacts se gestionará en el Webhook de Stripe.');
       } else {
         googleContactsStatus = '⚠️ Faltan credenciales en .env';
         console.warn('⚠️ No se ha guardado en Google Contacts porque falta el GOOGLE_REFRESH_TOKEN en el .env');
@@ -235,9 +252,9 @@ export async function POST(request) {
       console.error('❌ Error sincronizando con Google Contacts:', googleError);
     }
     
-    // --- FASE 5: ENVÍO DE EMAIL AL ADMINISTRADOR ---
+    // --- FASE 5: ENVÍO DE EMAIL AL ADMINISTRADOR - SOLO SI SALTA STRIPE ---
     try {
-      if ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS)) {
+      if (skipStripeMatricula && ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS))) {
         let transporter;
         if (process.env.SMTP_USER) {
           transporter = nodemailer.createTransport({
@@ -280,6 +297,8 @@ export async function POST(request) {
                  ${googleContactsError ? `<p style="color:red;"><strong>Error Google:</strong> ${googleContactsError}</p>` : ''}
                  <p><small>Este es un mensaje automático del sistema Musicabalú.</small></p>`
         });
+      } else if (!skipStripeMatricula) {
+        console.log('Email a admin se enviará desde el Webhook de Stripe.');
       }
     } catch (adminEmailError) {
       console.error('Error enviando correo a administrador:', adminEmailError);

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './grupo.module.css';
+import { useRouter } from 'next/navigation';
 
 // Helper: Calcular edad
 function calculateAge(birthDateString) {
@@ -45,6 +46,8 @@ export default function GroupDetailClient({ group }) {
   });
 
   const [currentMonth, setCurrentMonth] = useState('2026-09');
+  const [isDeleting, setIsDeleting] = useState(false);
+  const router = useRouter();
 
   const toggleAttendance = async (enrollmentId, weekIndex) => {
     // Clonar estado actual
@@ -81,6 +84,27 @@ export default function GroupDetailClient({ group }) {
     }
   };
 
+  const deleteEnrollment = async (enrollmentId, childName) => {
+    if (!window.confirm(`¿Estás seguro de que quieres eliminar la inscripción de ${childName}? Esta acción no se puede deshacer.`)) {
+      return;
+    }
+    
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/admin/enrollments/${enrollmentId}`, {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        router.refresh(); // Recarga la página para actualizar la lista
+      } else {
+        alert('Error al eliminar la inscripción');
+      }
+    } catch (e) {
+      alert('Error de conexión');
+    }
+    setIsDeleting(false);
+  };
+
   return (
     <div className={styles.container}>
       <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', marginBottom: '1.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
@@ -89,7 +113,28 @@ export default function GroupDetailClient({ group }) {
       
       <div className={styles.header}>
         <h1 className={styles.title}>{group.name}</h1>
-        <p className={styles.subtitle}>🕒 {group.schedule} &bull; {group.enrollments.length} alumnos activos</p>
+        <p className={styles.subtitle}>🕒 {group.schedule} &bull; {group.enrollments.length} alumnos matriculados</p>
+      </div>
+
+      <div style={{ marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '1rem', background: 'white', padding: '1rem 1.5rem', borderRadius: '12px', boxShadow: 'var(--shadow-sm)' }}>
+        <h2 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--color-dark)' }}>Ver asistencia de:</h2>
+        <select 
+          className={styles.monthSelector}
+          value={currentMonth}
+          onChange={(e) => setCurrentMonth(e.target.value)}
+          style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '1rem', flex: 1, maxWidth: '250px' }}
+        >
+          <option value="2026-09">Septiembre 2026</option>
+          <option value="2026-10">Octubre 2026</option>
+          <option value="2026-11">Noviembre 2026</option>
+          <option value="2026-12">Diciembre 2026</option>
+          <option value="2027-01">Enero 2027</option>
+          <option value="2027-02">Febrero 2027</option>
+          <option value="2027-03">Marzo 2027</option>
+          <option value="2027-04">Abril 2027</option>
+          <option value="2027-05">Mayo 2027</option>
+          <option value="2027-06">Junio 2027</option>
+        </select>
       </div>
 
       <div>
@@ -103,7 +148,10 @@ export default function GroupDetailClient({ group }) {
             return (
               <div key={e.id} className={styles.studentCard}>
                 <div className={styles.studentInfo}>
-                  <h3 className={styles.childName}>{e.childName}</h3>
+                  <h3 className={styles.childName}>
+                    {e.childName} 
+                    {e.status === 'pending' && <span style={{ fontSize: '0.75rem', background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', marginLeft: '10px', verticalAlign: 'middle' }}>PENDIENTE</span>}
+                  </h3>
                   <p style={{ color: 'var(--color-text-light)', fontSize: '0.9rem', margin: '0 0 5px 0' }}>
                     🎂 Nacimiento: {e.childBirthDate ? new Date(e.childBirthDate).toLocaleDateString('es-ES') : 'Desconocida'} 
                     <span className={styles.ageBadge}>{ageText}</span>
@@ -120,28 +168,19 @@ export default function GroupDetailClient({ group }) {
                     >
                       💬 WhatsApp
                     </a>
+                    <button 
+                      onClick={() => deleteEnrollment(e.id, e.childName)}
+                      disabled={isDeleting}
+                      style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#fee2e2', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
+                    >
+                      🗑️ Eliminar
+                    </button>
                   </div>
                 </div>
 
                 <div className={styles.attendanceSection}>
                   <div className={styles.attendanceHeader}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Asistencia</span>
-                    <select 
-                      className={styles.monthSelector}
-                      value={currentMonth}
-                      onChange={(e) => setCurrentMonth(e.target.value)}
-                    >
-                      <option value="2026-09">Septiembre</option>
-                      <option value="2026-10">Octubre</option>
-                      <option value="2026-11">Noviembre</option>
-                      <option value="2026-12">Diciembre</option>
-                      <option value="2027-01">Enero</option>
-                      <option value="2027-02">Febrero</option>
-                      <option value="2027-03">Marzo</option>
-                      <option value="2027-04">Abril</option>
-                      <option value="2027-05">Mayo</option>
-                      <option value="2027-06">Junio</option>
-                    </select>
+                    <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Asistencia {currentMonth.split('-')[1]}/{currentMonth.split('-')[0]}</span>
                   </div>
                   
                   <div className={styles.weeksGrid}>

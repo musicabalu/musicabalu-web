@@ -55,8 +55,18 @@ export default function VeteranosInscripcionPage() {
     setError('');
 
     // Validaciones personalizadas
-    if (new Date(formData.childBirthDate) < new Date('2022-01-01')) {
+    const birthDate = new Date(formData.childBirthDate);
+    const today = new Date();
+
+    if (birthDate < new Date('2022-01-01')) {
       setError('La fecha de nacimiento del peque no puede ser anterior al año 2022.');
+      setLoading(false);
+      window.scrollTo(0, 0);
+      return;
+    }
+
+    if (birthDate > today) {
+      setError('La fecha de nacimiento no puede ser en el futuro.');
       setLoading(false);
       window.scrollTo(0, 0);
       return;
@@ -113,7 +123,7 @@ export default function VeteranosInscripcionPage() {
 
         <div style={{ backgroundColor: '#e2f0d9', color: '#385723', padding: '15px', borderRadius: '10px', marginBottom: '25px', fontSize: '0.9rem', border: '1px solid #c5e0b4' }}>
           <p style={{ marginBottom: '10px' }}><strong>✅ Acceso Especial:</strong> Utilizando este enlace confirmarás tu plaza sin pasar por la pasarela de pago, ya que ya has abonado tu matrícula presencialmente. ¡Gracias!</p>
-          <p style={{ marginBottom: '10px' }}><strong>Antes de matricular es necesario consultar con Musicabalú (hola@musicabalu.com / 633715302) para confirmar que hay plazas disponibles y concretar el grupo de inscripción.</strong> Una vez cumplimentado te llegará una copia a tu email. Puedes guardarla para conservar datos de pago, calendario y demás funcionamiento del curso. Si no te ha llegado la copia, por favor coméntanoslo :)</p>
+          <p style={{ marginBottom: '10px' }}>Una vez cumplimentado este formulario te llegará una copia a tu email. Puedes guardarla para conservar datos de pago, calendario y demás funcionamiento del curso. Si no te ha llegado la copia, por favor coméntanoslo :)</p>
           <p style={{ margin: 0 }}>🎁 <strong>¡NUEVO! Bonus exclusivo para alumnos presenciales:</strong> Al matricularte en las clases presenciales, tu familia tendrá acceso 100% gratuito a La Comunidad Musicabalú (nuestra plataforma digital valorada en 5,90€/mes) durante el tiempo que sigas con nosotros. Tendréis a un clic nuestra biblioteca de canciones y recitados originales, y consejos en vídeo para integrar la música en vuestras rutinas de casa. (Nota: Te daremos acceso a la plataforma utilizando el mismo email que nos indiques en este formulario).</p>
         </div>
 
@@ -128,7 +138,7 @@ export default function VeteranosInscripcionPage() {
             </div>
             <div className={styles.inputGroup}>
               <label>Fecha de Nacimiento</label>
-              <input type="date" name="childBirthDate" required min="2022-01-01" value={formData.childBirthDate} onChange={handleChange} />
+              <input type="date" name="childBirthDate" required min="2022-01-01" max={new Date().toISOString().split("T")[0]} value={formData.childBirthDate} onChange={handleChange} />
             </div>
           </div>
 

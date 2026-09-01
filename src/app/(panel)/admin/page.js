@@ -10,7 +10,7 @@ export default async function AdminDashboard() {
   const groups = await prisma.group.findMany({
     include: {
       enrollments: {
-        where: { status: 'active' }
+        where: { status: { in: ['active', 'pending'] } }
       }
     }
   });
@@ -20,7 +20,7 @@ export default async function AdminDashboard() {
   });
 
   const enrollments = await prisma.enrollment.findMany({
-    where: { status: 'active' }
+    where: { status: { in: ['active', 'pending'] } }
   });
 
   // 2. Cálculos

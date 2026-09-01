@@ -119,16 +119,30 @@ export default async function DashboardPage({ searchParams }) {
           <>
             {/* 1. Mi Clase (Solo presenciales) */}
             {isPresential && (
-              <Link href="/comunidad/mi-clase" style={{ textDecoration: 'none' }}>
-                <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-green)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
-                  <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
-                    👩‍🏫 Mi Clase
-                  </h2>
-                  <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
-                    Información y pautas de tu grupo presencial.
-                  </p>
-                </section>
-              </Link>
+              <>
+                <Link href="/comunidad/mi-clase" style={{ textDecoration: 'none' }}>
+                  <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-green)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
+                    <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
+                      👩‍🏫 Mi Clase
+                    </h2>
+                    <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                      Información y pautas de tu grupo presencial.
+                    </p>
+                  </section>
+                </Link>
+
+                {/* 1.5 Calendario (Solo presenciales) */}
+                <Link href="/comunidad/calendario" style={{ textDecoration: 'none' }}>
+                  <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-yellow)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
+                    <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
+                      📅 Calendario
+                    </h2>
+                    <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                      Calendario escolar del curso actual.
+                    </p>
+                  </section>
+                </Link>
+              </>
             )}
 
             {/* Sección Comunidad (Solo visible si tienen acceso activo o presencial) */}
@@ -204,7 +218,21 @@ export default async function DashboardPage({ searchParams }) {
                 </div>
               </section>
             </Link>
-            */}
+            {/* 7. Mensaje para usuarios sin acceso (Cuenta gratuita / Sin clase presencial) */}
+            {!isPresential && !hasActiveSub && !isB2B && (
+              <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-cyan)", height: '100%' }}>
+                <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
+                  🧸 La Comunidad Musicabalú
+                </h2>
+                <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
+                  ¡Hola! Tu cuenta está lista, pero en estos momentos estamos preparando los últimos detalles de nuestra plataforma digital. 
+                  Muy pronto abriremos las suscripciones para que puedas disfrutar de toda nuestra música y recursos pedagógicos desde casa.
+                </p>
+                <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#edf2f7', borderRadius: '8px', fontSize: '0.85rem', color: '#4a5568', textAlign: 'center' }}>
+                  ⏳ Próximamente...
+                </div>
+              </section>
+            )}
           </>
         )}
       </div>

@@ -12,7 +12,7 @@ export default async function GroupPage({ params }) {
     where: { id },
     include: {
       enrollments: {
-        where: { status: 'active' },
+        where: { status: { in: ['active', 'pending'] } },
         orderBy: { childName: 'asc' }
       }
     }

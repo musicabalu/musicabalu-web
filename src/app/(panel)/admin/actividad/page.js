@@ -9,6 +9,13 @@ export default async function ActividadPage() {
   let logs = [];
   try {
     logs = await prisma.activityLog.findMany({
+      where: {
+        user: {
+          email: {
+            notIn: ['musicabalu@gmail.com', 'hola@musicabalu.com']
+          }
+        }
+      },
       orderBy: { createdAt: 'desc' },
       take: 50,
       include: {
