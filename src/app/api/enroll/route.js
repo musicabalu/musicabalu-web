@@ -166,6 +166,10 @@ export async function POST(request) {
       // No bloqueamos la inscripción si falla el email
     }
 
+    // Variable para capturar el estado de Google Contacts
+    let googleContactsStatus = 'No se intentó';
+    let googleContactsError = '';
+
     // --- FASE 4: GOOGLE CONTACTS API (CON ETIQUETAS) ---
     try {
       if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN) {
@@ -219,13 +223,66 @@ export async function POST(request) {
             ]
           }
         });
+        googleContactsStatus = '✅ Creado con éxito';
         console.log(`✅ Contacto añadido a Google Contacts: ${contactName} con la etiqueta ${labelName}`);
       } else {
+        googleContactsStatus = '⚠️ Faltan credenciales en .env';
         console.warn('⚠️ No se ha guardado en Google Contacts porque falta el GOOGLE_REFRESH_TOKEN en el .env');
       }
     } catch (googleError) {
+      googleContactsStatus = '❌ Error al crear contacto';
+      googleContactsError = googleError.message || String(googleError);
       console.error('❌ Error sincronizando con Google Contacts:', googleError);
-      // No bloqueamos la inscripción si falla Google Contacts
+    }
+    
+    // --- FASE 5: ENVÍO DE EMAIL AL ADMINISTRADOR ---
+    try {
+      if ((process.env.SMTP_USER && process.env.SMTP_PASS) || (process.env.GMAIL_USER && process.env.GMAIL_PASS)) {
+        let transporter;
+        if (process.env.SMTP_USER) {
+          transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST || 'ssl0.ovh.net',
+            port: parseInt(process.env.SMTP_PORT || '465'),
+            secure: true,
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS
+            }
+          });
+        } else {
+          transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: process.env.GMAIL_USER,
+              pass: process.env.GMAIL_PASS
+            }
+          });
+        }
+        
+        const senderEmail = process.env.SMTP_USER || process.env.GMAIL_USER;
+        const adminEmail = process.env.GMAIL_USER || 'hola@musicabalu.com';
+
+        await transporter.sendMail({
+          from: `"Musicabalú Bot" <${senderEmail}>`,
+          to: adminEmail,
+          subject: `🟢 Nueva Inscripción: ${childName}`,
+          html: `<p>Se ha registrado una nueva inscripción en la plataforma.</p>
+                 <ul>
+                   <li><strong>Peque:</strong> ${childName} (Nacimiento: ${childBirthDate})</li>
+                   <li><strong>Madre/Padre:</strong> ${parentName}</li>
+                   <li><strong>Teléfono:</strong> ${phone}</li>
+                   <li><strong>Email:</strong> ${email}</li>
+                   <li><strong>Método de pago:</strong> ${paymentMethod} (${paymentFrequency})</li>
+                   <li><strong>Estado inicial:</strong> ${skipStripeMatricula ? 'Activa (Efectivo)' : 'Pendiente (Stripe)'}</li>
+                 </ul>
+                 <hr/>
+                 <p><strong>Estado Google Contacts:</strong> ${googleContactsStatus}</p>
+                 ${googleContactsError ? `<p style="color:red;"><strong>Error Google:</strong> ${googleContactsError}</p>` : ''}
+                 <p><small>Este es un mensaje automático del sistema Musicabalú.</small></p>`
+        });
+      }
+    } catch (adminEmailError) {
+      console.error('Error enviando correo a administrador:', adminEmailError);
     }
     
     // 4. Generar Stripe Checkout si NO se saltan la matrícula

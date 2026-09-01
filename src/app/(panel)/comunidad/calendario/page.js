@@ -53,9 +53,6 @@ export default async function CalendarioPage() {
             layout="responsive" 
           />
         </div>
-        <p style={{ marginTop: '1.5rem', color: '#64748b' }}>
-          Guarda esta imagen en tu móvil para tener siempre a mano los días lectivos y festivos.
-        </p>
       </div>
     </div>
   );
