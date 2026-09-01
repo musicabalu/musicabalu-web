@@ -16,7 +16,7 @@ const quicksand = Quicksand({
 
 export const metadata = {
   title: "Musicabalú | Educación Musical para la Primera Infancia",
-  description: "Plataforma líder en educación musical temprana (0 a 3 años) basada en la Teoría del Aprendizaje Musical de E. Gordon.",
+  description: "Plataforma de educación musical temprana (0 a 3 años) basada en la Teoría del Aprendizaje Musical de E. Gordon.",
 };
 
 export default function RootLayout({ children }) {
