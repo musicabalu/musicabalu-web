@@ -353,7 +353,8 @@
   .title { font-size: 2.5rem; }
   .content { margin-top: 0; padding: 2rem 1rem; }
   .textContent, .infoCard, .socialLinks { text-align: center; }
-  .detailsList li { display: inline-block; text-align: left; }
+  .detailsList { display: inline-block; text-align: left; }
+  .detailsList li { display: block; margin-bottom: 0.8rem; }
   .footerContent { flex-direction: column; gap: 2rem; text-align: center; }
   .header { padding: 1.5rem 2rem; }
 }
