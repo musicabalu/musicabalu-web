@@ -98,7 +98,7 @@ export default async function AdminDashboard() {
         </Link>
         <Link href="/admin/auditoria" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🧹 Auditoría</h3>
+            <h3 className={styles.statTitle}>🧹 Auditoría y Limpieza</h3>
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Mantenimiento del sistema</p>
           </div>
         </Link>

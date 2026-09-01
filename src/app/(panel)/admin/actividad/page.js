@@ -36,7 +36,8 @@ export default async function ActividadPage() {
             No hay actividad registrada o la tabla aún no se ha creado.
           </p>
         ) : (
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div style={{ overflowX: 'auto', width: '100%' }}>
+            <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #edf2f7' }}>
                 <th style={{ padding: '1rem', color: '#4a5568' }}>Fecha</th>
@@ -75,6 +76,7 @@ export default async function ActividadPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

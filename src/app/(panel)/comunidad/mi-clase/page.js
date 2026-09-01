@@ -62,7 +62,7 @@ export default async function MiClasePage() {
       {/* Pautas y Normas de la Clase */}
       <section style={{ 
         background: 'var(--color-bg, #FFFFFF)', 
-        padding: '3rem', 
+        padding: 'clamp(1.5rem, 4vw, 3rem)', 
         borderRadius: '16px', 
         boxShadow: 'var(--shadow-sm)', 
         border: '1px solid var(--color-border, #E2E8F0)',
@@ -92,7 +92,7 @@ export default async function MiClasePage() {
         <div style={{ 
           background: 'var(--color-pink-light, #FDE8EE)', 
           border: '1px solid var(--color-pink, #F4436C)',
-          padding: '2rem', 
+          padding: 'clamp(1.5rem, 4vw, 2rem)', 
           borderRadius: '16px',
         }}>
           <h4 style={{ color: 'var(--color-pink, #F4436C)', margin: '0 0 1.25rem 0', fontSize: '1.2rem', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>

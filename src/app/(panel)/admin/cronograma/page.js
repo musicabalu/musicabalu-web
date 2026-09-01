@@ -18,7 +18,7 @@ export default async function CronogramaPage() {
 
   // Same basic scoping as strategy just in case
   let styles = `
-    .estrategia-doc.page { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 40px; }
+    .estrategia-doc.page { max-width: 1100px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: clamp(15px, 4vw, 40px); }
     .estrategia-doc h3 { color: var(--pink); margin-top: 30px; font-size: 1.3rem; border-bottom: 2px dashed #edf2f7; padding-bottom: 8px; }
     .estrategia-doc h4 { color: var(--cyan); margin-top: 20px; font-size: 1.1rem; }
     .estrategia-doc ul { padding-left: 0; margin-top: 15px; margin-bottom: 30px; }
