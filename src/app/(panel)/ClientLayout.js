@@ -44,13 +44,9 @@ export default function ClientLayout({ children, user, hasFullAccess, isPresenti
     navItems.push({ name: 'Mis Formaciones', path: '/formaciones/plataforma', icon: '🎓' });
   }
 
-  // Enlace a panel de administrador y subsecciones
+  // Enlace a panel de administrador
   if (role === 'admin') {
     navItems.push({ name: 'Administrador', path: '/admin', icon: '⚙️' });
-    navItems.push({ name: 'Cronograma', path: '/admin/cronograma', icon: '📅' });
-    navItems.push({ name: 'Plan Estratégico', path: '/admin/estrategia', icon: '📈' });
-    navItems.push({ name: 'Actividad', path: '/admin/actividad', icon: '📊' });
-    navItems.push({ name: 'Auditoría', path: '/admin/auditoria', icon: '🧹' });
   }
 
   // Admin tiene acceso total a todo (quita candados)

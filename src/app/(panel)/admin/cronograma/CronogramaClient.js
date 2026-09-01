@@ -167,6 +167,7 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
       li.style.display = 'flex';
       li.style.alignItems = 'flex-start';
       li.style.gap = '12px';
+      li.style.position = 'relative'; // so absolute actions stick to it
       
       const cb = document.createElement('input');
       cb.type = 'checkbox';
@@ -189,6 +190,13 @@ export default function CronogramaClient({ styles: htmlStyles, body }) {
       actionsDiv.style.gap = '10px';
       actionsDiv.style.opacity = '0';
       actionsDiv.style.transition = 'opacity 0.2s';
+      actionsDiv.style.position = 'absolute';
+      actionsDiv.style.right = '5px';
+      actionsDiv.style.top = '5px';
+      actionsDiv.style.background = 'rgba(248, 250, 252, 0.9)';
+      actionsDiv.style.padding = '4px 8px';
+      actionsDiv.style.borderRadius = '8px';
+      actionsDiv.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
       
       const upBtn = document.createElement('button');
       upBtn.innerHTML = '⬆️';
