@@ -27,33 +27,11 @@ export default async function RecuperacionesPage() {
         Política de Recuperación de Clases
       </h2>
       
-      <p style={{ fontSize: '1.1rem' }}>Buenos días queridas familias,</p>
-      
-      <p style={{ fontSize: '1.1rem' }}>
-        El arranque del curso me ha parecido espectacular 😍. He disfrutado mucho con todos los grupos. 
-        Espero que vosotros también, independientemente del punto en el que esté vuestro peque.
-      </p>
-
-      <p style={{ fontSize: '1.1rem' }}>
-        Aprovecho para comentaros algo sobre la <strong>POSIBILIDAD DE RECUPERAR CLASES PERDIDAS</strong>.
-      </p>
-
-      <div style={{ background: 'var(--color-yellow-light)', padding: '1.5rem', borderRadius: '12px', margin: '2rem 0', borderLeft: '4px solid var(--color-yellow)' }}>
-        <p style={{ margin: 0, fontSize: '1.1rem' }}>
-          😊🙏 Antes de nada, disculpad porque sé que puede ser un poco lioso. Es simplemente un intento de mejorar 
-          y ofrecer la posibilidad de que perdáis menos clases.
-        </p>
-        <p style={{ margin: '1rem 0 0 0', fontSize: '1.1rem', fontWeight: 600 }}>
-          El resumen: Avisadme (con el mayor tiempo posible) si no vais a poder venir. Tened en cuenta que es posible 
-          que podáis recuperar la clase, pero también que no haya hueco.
-        </p>
-      </div>
-
       <p style={{ fontSize: '1.1rem' }}>
         Como sabéis, en la inscripción viene recogido que:
       </p>
       <ul style={{ fontSize: '1.1rem', margin: '1rem 0 2rem 2rem' }}>
-        <li>Las clases en las que falta el alumno <strong>no se recuperan</strong> por obligación.</li>
+        <li>Las clases en las que falta el alumno <strong>no se recuperan por obligación</strong>.</li>
         <li>Las clases en las que falta el profesor <strong>sí se recuperan</strong> (se ofrecerá fecha).</li>
       </ul>
 
@@ -94,8 +72,8 @@ export default async function RecuperacionesPage() {
       </div>
 
       <div style={{ textAlign: 'center', marginTop: '3rem', padding: '2rem', background: '#F8FAFC', borderRadius: '12px' }}>
-        <h3 style={{ margin: '0 0 1rem 0', color: 'var(--color-dark)' }}>¿Vas a faltar esta semana?</h3>
-        <p style={{ marginBottom: '1.5rem' }}>Haz clic en el botón para avisarme por WhatsApp y entrar en la lista de espera de recuperación (si lo deseas).</p>
+        <h3 style={{ margin: '0 0 1rem 0', color: 'var(--color-dark)' }}>¿Vas a faltar?</h3>
+        <p style={{ marginBottom: '1.5rem' }}>Avísame para entrar en la lista de espera de recuperación (si lo deseas).</p>
         <a 
           href="https://wa.me/34633715302?text=Hola%20Javi,%20esta%20semana%20no%20podremos%20asistir%20a%20clase.%20Por%20favor,%20apúntanos%20en%20la%20lista%20de%20espera%20para%20intentar%20recuperarla.%20¡Gracias!" 
           target="_blank"
@@ -112,14 +90,12 @@ export default async function RecuperacionesPage() {
             boxShadow: '0 4px 6px rgba(37, 211, 102, 0.2)'
           }}
         >
-          💬 Avisar de falta por WhatsApp
+          💬 Avisar por WhatsApp
         </a>
       </div>
 
       <p style={{ fontSize: '1.1rem', marginTop: '3rem', textAlign: 'center' }}>
-        Un abrazo grande y muchas gracias por vuestra colaboración siempre.<br/>
-        ¡Nos vemos en clase!<br/>
-        <strong>Javi ❤️🎶</strong>
+        Muchas gracias por vuestra colaboración siempre ❤️🎶
       </p>
     </div>
   );
