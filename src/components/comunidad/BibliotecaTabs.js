@@ -21,6 +21,7 @@ export default function BibliotecaTabs({ isPresential, role }) {
   if (isComunidad) {
     tabs.unshift({ id: 'mi-clase', label: 'Mi Clase', path: '/comunidad/mi-clase', color: 'var(--color-green, #AADB1E)' });
     tabs.splice(1, 0, { id: 'calendario', label: 'Calendario', path: '/comunidad/calendario', color: 'var(--color-yellow)' });
+    tabs.splice(2, 0, { id: 'recuperaciones', label: 'Recuperaciones', path: '/comunidad/recuperaciones', color: '#fca5a5' });
   }
 
   return (
