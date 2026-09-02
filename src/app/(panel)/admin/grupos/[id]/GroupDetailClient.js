@@ -186,12 +186,7 @@ export default function GroupDetailClient({ group, allGroups }) {
                       >
                         📝 Notas
                       </button>
-                      <button 
-                        onClick={() => updateEnrollment(e.id, 'isEmpi', !e.isEmpi)}
-                        style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #c7d2fe', background: e.isEmpi ? '#e0e7ff' : '#ffffff', color: '#4338ca', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
-                      >
-                        {e.isEmpi ? '🎓 Quitar EMPI' : '🎓 Marcar EMPI'}
-                      </button>
+
                       <button 
                         onClick={() => deleteEnrollment(e.id, e.childName)}
                         disabled={isDeleting}
