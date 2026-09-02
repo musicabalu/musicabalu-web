@@ -18,11 +18,15 @@ export default async function GroupPage({ params }) {
     }
   });
 
+  const allGroups = await prisma.group.findMany({
+    orderBy: { createdAt: 'asc' }
+  });
+
   if (!group) return notFound();
 
   return (
     <div>
-      <GroupDetailClient group={group} />
+      <GroupDetailClient group={group} allGroups={allGroups} />
     </div>
   );
 }

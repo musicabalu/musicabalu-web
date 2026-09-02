@@ -31,7 +31,7 @@ const monthsList = [
   '2027-01', '2027-02', '2027-03', '2027-04', '2027-05', '2027-06'
 ];
 
-export default function GroupDetailClient({ group }) {
+export default function GroupDetailClient({ group, allGroups }) {
   // Estado inicial de asistencias
   const [attendance, setAttendance] = useState(() => {
     const initialState = {};
@@ -50,34 +50,19 @@ export default function GroupDetailClient({ group }) {
   const router = useRouter();
 
   const toggleAttendance = async (enrollmentId, weekIndex) => {
-    // Clonar estado actual
     const currentStudentAtt = attendance[enrollmentId] || {};
     const monthAtt = currentStudentAtt[currentMonth] || [false, false, false, false];
-    
-    // Modificar
     const newMonthAtt = [...monthAtt];
     newMonthAtt[weekIndex] = !newMonthAtt[weekIndex];
-    
-    const newStudentAtt = {
-      ...currentStudentAtt,
-      [currentMonth]: newMonthAtt
-    };
+    const newStudentAtt = { ...currentStudentAtt, [currentMonth]: newMonthAtt };
 
-    // Actualizar UI optimista
-    setAttendance(prev => ({
-      ...prev,
-      [enrollmentId]: newStudentAtt
-    }));
+    setAttendance(prev => ({ ...prev, [enrollmentId]: newStudentAtt }));
 
-    // Guardar en BD (Fetch silencioso)
     try {
       await fetch('/api/admin/attendance', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          enrollmentId,
-          attendanceData: JSON.stringify(newStudentAtt)
-        })
+        body: JSON.stringify({ enrollmentId, attendanceData: JSON.stringify(newStudentAtt) })
       });
     } catch (error) {
       console.error("Error guardando asistencia:", error);
@@ -85,24 +70,42 @@ export default function GroupDetailClient({ group }) {
   };
 
   const deleteEnrollment = async (enrollmentId, childName) => {
-    if (!window.confirm(`¿Estás seguro de que quieres eliminar la inscripción de ${childName}? Esta acción no se puede deshacer.`)) {
-      return;
-    }
-    
+    if (!window.confirm(`¿Estás seguro de que quieres eliminar la inscripción de ${childName}? Esta acción no se puede deshacer.`)) return;
     setIsDeleting(true);
     try {
-      const res = await fetch(`/api/admin/enrollments/${enrollmentId}`, {
-        method: 'DELETE'
-      });
-      if (res.ok) {
-        router.refresh(); // Recarga la página para actualizar la lista
-      } else {
-        alert('Error al eliminar la inscripción');
-      }
+      const res = await fetch(`/api/admin/enrollments/${enrollmentId}`, { method: 'DELETE' });
+      if (res.ok) router.refresh();
+      else alert('Error al eliminar la inscripción');
     } catch (e) {
       alert('Error de conexión');
     }
     setIsDeleting(false);
+  };
+
+  const updateEnrollment = async (enrollmentId, field, value) => {
+    try {
+      const res = await fetch(`/api/admin/enrollments/${enrollmentId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ [field]: value })
+      });
+      if (res.ok) {
+        if (field === 'groupId') alert('Alumno movido de grupo correctamente.');
+        router.refresh();
+      } else {
+        alert('Error al actualizar');
+      }
+    } catch (e) {
+      alert('Error de conexión');
+    }
+  };
+
+  const handleEditNotes = (enrollment) => {
+    const currentNotes = enrollment.notes || '';
+    const newNotes = window.prompt(`Notas para ${enrollment.childName}:`, currentNotes);
+    if (newNotes !== null && newNotes !== currentNotes) {
+      updateEnrollment(enrollment.id, 'notes', newNotes);
+    }
   };
 
   return (
@@ -146,56 +149,90 @@ export default function GroupDetailClient({ group }) {
             const stuAtt = attendance[e.id]?.[currentMonth] || [false, false, false, false];
 
             return (
-              <div key={e.id} className={styles.studentCard}>
-                <div className={styles.studentInfo}>
-                  <h3 className={styles.childName}>
-                    {e.childName} 
-                    {e.status === 'pending' && <span style={{ fontSize: '0.75rem', background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', marginLeft: '10px', verticalAlign: 'middle' }}>PENDIENTE</span>}
-                  </h3>
-                  <p style={{ color: 'var(--color-text-light)', fontSize: '0.9rem', margin: '0 0 5px 0' }}>
-                    🎂 Nacimiento: {e.childBirthDate ? new Date(e.childBirthDate).toLocaleDateString('es-ES') : 'Desconocida'} 
-                    <span className={styles.ageBadge}>{ageText}</span>
-                  </p>
-                  <p className={styles.parentInfo}>
-                    👤 {e.parentName} &bull; ✉️ {e.email}
-                  </p>
-                  <div className={styles.actions}>
-                    <a 
-                      href={`https://wa.me/34${e.phone.replace(/\s+/g, '')}?text=Hola%20${e.parentName},%20te%20escribo%20desde%20Musicabalú...`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className={styles.waBtn}
-                    >
-                      💬 WhatsApp
-                    </a>
-                    <button 
-                      onClick={() => deleteEnrollment(e.id, e.childName)}
-                      disabled={isDeleting}
-                      style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#fee2e2', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
-                    >
-                      🗑️ Eliminar
-                    </button>
-                  </div>
-                </div>
-
-                <div className={styles.attendanceSection}>
-                  <div className={styles.attendanceHeader}>
-                    <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Asistencia {currentMonth.split('-')[1]}/{currentMonth.split('-')[0]}</span>
-                  </div>
-                  
-                  <div className={styles.weeksGrid}>
-                    {[0, 1, 2, 3].map(weekIndex => (
-                      <div 
-                        key={weekIndex} 
-                        className={styles.weekBox}
-                        onClick={() => toggleAttendance(e.id, weekIndex)}
-                      >
-                        <span className={styles.weekLabel}>S{weekIndex + 1}</span>
-                        <div className={`${styles.checkbox} ${stuAtt[weekIndex] ? styles.checkboxChecked : ''}`}>
-                          {stuAtt[weekIndex] && '✓'}
-                        </div>
+              <div key={e.id} className={styles.studentCard} style={{ display: 'flex', flexDirection: 'column' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div className={styles.studentInfo} style={{ flex: 1, minWidth: '300px' }}>
+                    <h3 className={styles.childName}>
+                      {e.childName} 
+                      {e.status === 'pending' && <span style={{ fontSize: '0.75rem', background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', marginLeft: '10px', verticalAlign: 'middle' }}>PENDIENTE</span>}
+                    </h3>
+                    <p style={{ color: 'var(--color-text-light)', fontSize: '0.9rem', margin: '0 0 5px 0' }}>
+                      🎂 Nacimiento: {e.childBirthDate ? new Date(e.childBirthDate).toLocaleDateString('es-ES') : 'Desconocida'} 
+                      <span className={styles.ageBadge}>{ageText}</span>
+                    </p>
+                    <p className={styles.parentInfo}>
+                      👤 {e.parentName} &bull; ✉️ {e.email}
+                    </p>
+                    
+                    {e.notes && (
+                      <div style={{ background: '#FEFCBF', padding: '10px', borderRadius: '8px', fontSize: '0.9rem', marginTop: '10px', borderLeft: '4px solid #D69E2E' }}>
+                        <strong>📝 Notas:</strong> {e.notes}
                       </div>
-                    ))}
+                    )}
+
+                    <div className={styles.actions} style={{ marginTop: '15px', display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
+                      <a 
+                        href={`https://wa.me/34${e.phone.replace(/\s+/g, '')}?text=Hola%20${e.parentName},%20te%20escribo%20desde%20Musicabalú...`} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={styles.waBtn}
+                      >
+                        💬 WhatsApp
+                      </a>
+                      <button 
+                        onClick={() => handleEditNotes(e)}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #CBD5E0', background: '#EDF2F7', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
+                      >
+                        📝 Notas
+                      </button>
+                      <button 
+                        onClick={() => deleteEnrollment(e.id, e.childName)}
+                        disabled={isDeleting}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#fee2e2', color: '#ef4444', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
+                      >
+                        🗑️ Eliminar
+                      </button>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: '250px' }}>
+                    <div className={styles.attendanceSection}>
+                      <div className={styles.attendanceHeader}>
+                        <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Asistencia {currentMonth.split('-')[1]}/{currentMonth.split('-')[0]}</span>
+                      </div>
+                      
+                      <div className={styles.weeksGrid}>
+                        {[0, 1, 2, 3].map(weekIndex => (
+                          <div 
+                            key={weekIndex} 
+                            className={styles.weekBox}
+                            onClick={() => toggleAttendance(e.id, weekIndex)}
+                          >
+                            <span className={styles.weekLabel}>S{weekIndex + 1}</span>
+                            <div className={`${styles.checkbox} ${stuAtt[weekIndex] ? styles.checkboxChecked : ''}`}>
+                              {stuAtt[weekIndex] && '✓'}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div style={{ padding: '15px', background: '#F7FAFC', borderRadius: '12px', border: '1px solid #E2E8F0' }}>
+                      <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', marginBottom: '8px', color: '#4A5568' }}>Cambiar de grupo:</label>
+                      <select 
+                        value={e.groupId} 
+                        onChange={(ev) => {
+                          if (window.confirm(`¿Seguro que quieres mover a ${e.childName} a este nuevo grupo?`)) {
+                            updateEnrollment(e.id, 'groupId', ev.target.value);
+                          }
+                        }}
+                        style={{ width: '100%', padding: '8px', borderRadius: '6px', border: '1px solid #CBD5E0', fontSize: '0.9rem' }}
+                      >
+                        {allGroups?.map(g => (
+                          <option key={g.id} value={g.id}>{g.name} ({g.schedule})</option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
                 </div>
               </div>

@@ -31,3 +31,34 @@ export async function DELETE(req, { params }) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+export async function PATCH(req, { params }) {
+  try {
+    const session = await getServerSession(authOptions);
+    const { id } = await params;
+    
+    if (!session || session.user.role !== 'admin') {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 401 });
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: 'ID requerido' }, { status: 400 });
+    }
+
+    const data = await req.json();
+    const updateData = {};
+    if (data.notes !== undefined) updateData.notes = data.notes;
+    if (data.groupId !== undefined) updateData.groupId = data.groupId;
+
+    const updatedEnrollment = await prisma.enrollment.update({
+      where: { id: id },
+      data: updateData
+    });
+
+    return NextResponse.json({ success: true, enrollment: updatedEnrollment });
+    
+  } catch (error) {
+    console.error('Error updating enrollment:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
