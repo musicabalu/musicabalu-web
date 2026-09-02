@@ -155,6 +155,7 @@ export default function GroupDetailClient({ group, allGroups }) {
                     <h3 className={styles.childName}>
                       {e.childName} 
                       {e.status === 'pending' && <span style={{ fontSize: '0.75rem', background: '#fef3c7', color: '#b45309', padding: '2px 8px', borderRadius: '12px', marginLeft: '10px', verticalAlign: 'middle' }}>PENDIENTE</span>}
+                      {e.isEmpi && <span style={{ fontSize: '0.75rem', background: '#e0e7ff', color: '#4338ca', padding: '2px 8px', borderRadius: '12px', marginLeft: '10px', verticalAlign: 'middle', border: '1px solid #c7d2fe' }}>🎓 ALUMNO EMPI</span>}
                     </h3>
                     <p style={{ color: 'var(--color-text-light)', fontSize: '0.9rem', margin: '0 0 5px 0' }}>
                       🎂 Nacimiento: {e.childBirthDate ? new Date(e.childBirthDate).toLocaleDateString('es-ES') : 'Desconocida'} 
@@ -184,6 +185,12 @@ export default function GroupDetailClient({ group, allGroups }) {
                         style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #CBD5E0', background: '#EDF2F7', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
                       >
                         📝 Notas
+                      </button>
+                      <button 
+                        onClick={() => updateEnrollment(e.id, 'isEmpi', !e.isEmpi)}
+                        style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #c7d2fe', background: e.isEmpi ? '#e0e7ff' : '#ffffff', color: '#4338ca', cursor: 'pointer', fontWeight: 'bold', fontSize: '0.9rem' }}
+                      >
+                        {e.isEmpi ? '🎓 Quitar EMPI' : '🎓 Marcar EMPI'}
                       </button>
                       <button 
                         onClick={() => deleteEnrollment(e.id, e.childName)}

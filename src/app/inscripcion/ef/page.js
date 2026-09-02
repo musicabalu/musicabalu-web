@@ -20,6 +20,7 @@ export default function VeteranosInscripcionPage() {
     groupId: '',
     paymentMethod: 'stripe',
     paymentFrequency: 'mensual',
+    isEmpi: null,
     acceptedTerms: false,
     acceptedComms: false,
     skipStripeMatricula: true
@@ -157,6 +158,21 @@ export default function VeteranosInscripcionPage() {
                 <label>Correo Electrónico</label>
                 <input type="email" name="email" required value={formData.email} onChange={handleChange} placeholder="correo@ejemplo.com" />
               </div>
+            </div>
+          </div>
+
+          <div className={styles.formSection}>
+            <h3>Vinculación con EMPI</h3>
+            <p className={styles.helpText}>¿El alumno/a está matriculado en la Escuela Infantil EMPI en el curso 2026/2027?</p>
+            <div className={styles.radioGroup}>
+              <label className={styles.radioLabel}>
+                <input type="radio" name="isEmpi" required checked={formData.isEmpi === true} onChange={() => setFormData(prev => ({...prev, isEmpi: true}))} />
+                <span>Sí, es alumno/a de EMPI</span>
+              </label>
+              <label className={styles.radioLabel}>
+                <input type="radio" name="isEmpi" required checked={formData.isEmpi === false} onChange={() => setFormData(prev => ({...prev, isEmpi: false}))} />
+                <span>No (Externo)</span>
+              </label>
             </div>
           </div>
 

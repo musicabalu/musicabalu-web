@@ -133,6 +133,7 @@ model Enrollment {
   userId           String?
   acceptedTerms    Boolean  @default(false)
   acceptedComms    Boolean  @default(false)
+  isEmpi           Boolean  @default(false)
   notes            String?  @db.Text
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
