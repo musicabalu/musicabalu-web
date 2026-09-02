@@ -13,6 +13,7 @@
     "@auth/prisma-adapter": "^2.11.2",
     "@prisma/client": "^5.22.0",
     "googleapis": "^175.0.0",
+    "html-to-image": "^1.11.13",
     "next": "16.2.10",
     "next-auth": "^4.24.14",
     "nodemailer": "^7.0.13",

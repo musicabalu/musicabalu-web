@@ -102,6 +102,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Mantenimiento del sistema</p>
           </div>
         </Link>
+        <Link href="/admin/cartel" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>🖼️ Cartel Plazas</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Generador de estado de WhatsApp</p>
+          </div>
+        </Link>
       </div>
 
       {/* Desglose de Grupos */}
