@@ -196,12 +196,12 @@ export default function CartelClient({ initialGroups }) {
                       {group.schedule}
                     </p>
                   </div>
-                  <div style={{
-                    background: st.bg,
-                    padding: '20px 40px',
-                    borderRadius: '50px',
-                    border: \`4px solid \${st.color}\`
-                  }}>
+                    <div style={{
+                      background: st.bg,
+                      padding: '20px 40px',
+                      borderRadius: '50px',
+                      border: '4px solid ' + st.color
+                    }}>
                     <span style={{
                       color: st.color,
                       fontSize: '32px',
