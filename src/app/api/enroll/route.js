@@ -108,6 +108,15 @@ export async function POST(request) {
         }
         
         const senderEmail = process.env.SMTP_USER || process.env.GMAIL_USER;
+        
+        const lopdFooter = `
+          <hr style="margin-top: 40px; border: none; border-top: 1px solid #eee;" />
+          <div style="font-size: 10px; color: #999; line-height: 1.4; text-align: justify; font-family: sans-serif;">
+            <strong>Protección de Datos</strong><br/>
+            MUSICABALÚ le informa que su dirección de correo electrónico, así como el resto de los datos de carácter personal que nos facilite, serán objeto de tratamiento en nuestros ficheros con la finalidad de gestionar las comunicaciones, la relación con los alumnos y familias, y el envío de información profesional o de los servicios de nuestra empresa por vía electrónica.<br/><br/>
+            Usted podrá en cualquier momento ejercer sus derechos de acceso, rectificación, supresión y portabilidad de sus datos, de limitación y oposición a su tratamiento, así como a no ser objeto de decisiones basadas únicamente en el tratamiento automatizado de sus datos, en los términos establecidos en la LSSI-CE, el Reglamento General de Protección de Datos Europeo 2016/679 (RGPD) y la Ley Orgánica 3/2018 de 5 de diciembre de Protección de Datos (LOPDGDD). El responsable del tratamiento es Javier Muñoz Sánchez, con DNI 48402528V y domicilio en Sierra de Guadarrama, 26, 30163, Murcia. Para ejercer dichos derechos o si no desea recibir más correos de nuestra parte, envíenos un correo electrónico a hola@musicabalu.com manifestando tal deseo.
+          </div>
+        `;
 
         // 1. Correo de Resguardo
         await transporter.sendMail({
@@ -152,7 +161,8 @@ export async function POST(request) {
 
                    <h4>UBICACIÓN</h4>
                    <p>Las clases de Musicabalú son un proyecto independiente de EMPI. Musicabalú se reserva el derecho de modificar la ubicación de las clases dentro de la misma zona o ciudad por motivos de aforo, mejoras en las instalaciones o fuerza mayor.</p>
-                 </div>`
+                 </div>
+                 ${lopdFooter}`
         });
 
         // 2. Correo de Bienvenida (El Gancho)
@@ -170,7 +180,8 @@ export async function POST(request) {
                    <li><strong>Email:</strong> ${email}</li>
                  </ul>
                  <p><em>⚠️ Nota Importante: Puedes acceder ya a la plataforma, pero todos los contenidos de audio estarán disponibles a partir del <strong>16 de septiembre</strong>. ¡Te avisaré cuando esté todo listo!</em></p>
-                 <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>`
+                 <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>
+                 ${lopdFooter}`
         });
       } else if (!skipStripeMatricula) {
         console.log('Emails de resguardo y bienvenida delegados al webhook de Stripe.');

@@ -161,6 +161,15 @@ export async function POST(request) {
             const transport = createTransport(process.env.EMAIL_SERVER);
             const origin = process.env.NEXT_PUBLIC_SITE_URL || 'https://musicabalu.com';
 
+            const lopdFooter = `
+              <hr style="margin-top: 40px; border: none; border-top: 1px solid #eee;" />
+              <div style="font-size: 10px; color: #999; line-height: 1.4; text-align: justify; font-family: sans-serif;">
+                <strong>Protección de Datos</strong><br/>
+                MUSICABALÚ le informa que su dirección de correo electrónico, así como el resto de los datos de carácter personal que nos facilite, serán objeto de tratamiento en nuestros ficheros con la finalidad de gestionar las comunicaciones, la relación con los alumnos y familias, y el envío de información profesional o de los servicios de nuestra empresa por vía electrónica.<br/><br/>
+                Usted podrá en cualquier momento ejercer sus derechos de acceso, rectificación, supresión y portabilidad de sus datos, de limitación y oposición a su tratamiento, así como a no ser objeto de decisiones basadas únicamente en el tratamiento automatizado de sus datos, en los términos establecidos en la LSSI-CE, el Reglamento General de Protección de Datos Europeo 2016/679 (RGPD) y la Ley Orgánica 3/2018 de 5 de diciembre de Protección de Datos (LOPDGDD). El responsable del tratamiento es Javier Muñoz Sánchez, con DNI 48402528V y domicilio en Sierra de Guadarrama, 26, 30163, Murcia. Para ejercer dichos derechos o si no desea recibir más correos de nuestra parte, envíenos un correo electrónico a hola@musicabalu.com manifestando tal deseo.
+              </div>
+            `;
+
             // 1. Correo de Resguardo
             await transport.sendMail({
               from: process.env.EMAIL_FROM,
@@ -176,7 +185,7 @@ export async function POST(request) {
                      
                      <div style="font-size: 0.85em; color: #555; background: #f9f9f9; padding: 15px; border-radius: 8px;">
                        <h4 style="margin-top:0;">CLASES Y FUNCIONAMIENTO</h4>
-                       <p>Las clases consistirán en una sesión semanal con una duración aproximada de 40-45 minutos y se ofrecerán en grupos de entre 6 y 12 niños. Los niños deberán asistir a las clases acompañados de su madre, padre o persona con la que mantengan algún vínculo afectivo (un solo adulto). Para garantizar la calidad de la experiencia musical y la concentración de los peques, es indispensable la participación activa del adulto acompañante y el respeto a las pautas y normas de funcionamiento del aula que el profesor indicará al inicio del curso.</p>
+                       <p>Las clases consistirán en una sesión semanal con una duración aproximada de 40-45 minutos y se ofrecerán en grupos de entre 6 y 12 niños. Los niños deberán asistir a las clases acompañados de su madre, padre o persona con la que mantengan algún vínculo afectivo (un solo adulto). Para garantizar la calidad de la experiencia musical y la concentración de peques, es indispensable la participación activa del adulto acompañante y el respeto a las pautas y normas de funcionamiento del aula que el profesor indicará al inicio del curso.</p>
 
                        <h4>GRUPOS</h4>
                        <p>Para confirmar un grupo es necesario un mínimo de 6 niños inscritos. En caso de matricularse en un grupo que finalmente no llegue a este número mínimo de alumnos, cabe la posibilidad de que el grupo se cancele. En ese caso se le ofrecerá a los alumnos inscritos en este grupo otro horario disponible; en caso de no poder ubicarse en ningún otro grupo, el alumno podrá solicitar la devolución del importe de la matrícula.</p>
@@ -204,7 +213,8 @@ export async function POST(request) {
 
                        <h4>UBICACIÓN</h4>
                        <p>Las clases de Musicabalú son un proyecto independiente de EMPI. Musicabalú se reserva el derecho de modificar la ubicación de las clases dentro de la misma zona o ciudad por motivos de aforo, mejoras en las instalaciones o fuerza mayor.</p>
-                     </div>`
+                     </div>
+                     ${lopdFooter}`
             });
 
             // 2. Correo de Bienvenida (El Gancho)
@@ -222,7 +232,8 @@ export async function POST(request) {
                        <li><strong>Email:</strong> ${enrollment.email}</li>
                      </ul>
                      <p><em>⚠️ Nota Importante: Puedes acceder ya a la plataforma, pero todos los contenidos de audio estarán disponibles a partir del <strong>16 de septiembre</strong>. ¡Te avisaré cuando esté todo listo!</em></p>
-                     <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>`
+                     <p>Un abrazo y nos vemos muy pronto,<br>Javi.</p>
+                     ${lopdFooter}`
             });
             console.log("✅ Emails de matrícula y bienvenida enviados tras pago Stripe");
           } catch (emailError) {
