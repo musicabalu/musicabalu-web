@@ -43,6 +43,17 @@ export default function FormacionesPlataforma() {
     { id: 'karaokes', label: 'Karaokes', color: 'var(--color-yellow)' }
   ];
 
+  const handleTabChange = (tabId) => {
+    setActiveTab(tabId);
+    if (tabId === 'apuntes') {
+      fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'Plataforma', details: 'Visualizó los Apuntes' })
+      }).catch(err => console.error(err));
+    }
+  };
+
   return (
     <div style={{ paddingBottom: currentIndex !== null ? '120px' : '40px', maxWidth: '1000px', margin: '0 auto' }}>
       <div style={{ marginBottom: '30px', textAlign: 'center' }}>
@@ -55,7 +66,7 @@ export default function FormacionesPlataforma() {
         {tabs.map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => handleTabChange(tab.id)}
             style={{
               padding: '12px 24px',
               borderRadius: '30px',
@@ -98,10 +109,20 @@ export default function FormacionesPlataforma() {
           }}>
             {currentPlaylist.map(([path, title], index) => {
               const isActive = currentIndex === index;
+              
+              const handlePlayAudio = () => {
+                setCurrentIndex(index);
+                fetch('/api/activity', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ action: 'Reproducción', details: `Escuchó: ${title}` })
+                }).catch(err => console.error(err));
+              };
+
               return (
                 <div 
                   key={path}
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={handlePlayAudio}
                   style={{
                     backgroundColor: 'white',
                     padding: '20px',
