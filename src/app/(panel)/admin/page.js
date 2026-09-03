@@ -43,11 +43,13 @@ export default async function AdminDashboard() {
 
       {/* Tarjetas de Métricas Principales */}
       <div className={styles.statsGrid}>
-        <div className={styles.statCard}>
-          <h3 className={styles.statTitle}>Alumnos Activos</h3>
-          <p className={styles.statValue}>{totalEnrolled}</p>
-          <p className={styles.statDetail}>Plazas libres globales: {availableSpots}</p>
-        </div>
+        <Link href="/admin/inscripciones" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'translateY(-2px)' } }}>
+            <h3 className={styles.statTitle}>Alumnos Activos</h3>
+            <p className={styles.statValue}>{totalEnrolled}</p>
+            <p className={styles.statDetail}>Plazas libres globales: {availableSpots} (Click para ver listado)</p>
+          </div>
+        </Link>
 
         <div className={styles.statCard}>
           <h3 className={styles.statTitle}>Ocupación Media</h3>
