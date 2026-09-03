@@ -146,23 +146,23 @@ export default function CartelClient({ initialGroups }) {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '40px',
+            padding: '30px',
             boxSizing: 'border-box',
             fontFamily: 'var(--font-body), sans-serif',
             justifyContent: 'space-between'
           }}
         >
           {/* Logo y Título combinados en horizontal para ahorrar espacio vertical */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 10px' }}>
             <img 
               src="/logo_texto_corazon.png" 
               alt="Musicabalú" 
-              style={{ width: '380px', height: 'auto' }}
+              style={{ width: '300px', height: 'auto' }}
               crossOrigin="anonymous"
             />
             <h1 style={{
               fontFamily: 'var(--font-heading)',
-              fontSize: '85px',
+              fontSize: '60px',
               color: 'var(--color-dark)',
               textAlign: 'right',
               lineHeight: '0.9',
@@ -177,14 +177,14 @@ export default function CartelClient({ initialGroups }) {
           <div style={{
             background: 'rgba(255, 255, 255, 0.9)',
             width: '100%',
-            borderRadius: '30px',
-            padding: '30px',
+            borderRadius: '25px',
+            padding: '20px',
             boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '15px',
-            marginTop: '25px',
-            marginBottom: '20px'
+            gap: '10px',
+            marginTop: '15px',
+            marginBottom: '15px'
           }}>
             {initialGroups.map(group => {
               const st = statusConfig[statuses[group.id]];
@@ -194,25 +194,25 @@ export default function CartelClient({ initialGroups }) {
                   justifyContent: 'space-between',
                   alignItems: 'center',
                   borderBottom: '2px solid #eee',
-                  paddingBottom: '12px'
+                  paddingBottom: '8px'
                 }}>
                   <div>
-                    <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: 'var(--color-dark)', fontWeight: '800' }}>
+                    <h3 style={{ fontSize: '26px', margin: '0 0 4px 0', color: 'var(--color-dark)', fontWeight: '800' }}>
                       {group.name}
                     </h3>
-                    <p style={{ fontSize: '24px', margin: 0, color: 'var(--color-pink)', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '20px', margin: 0, color: 'var(--color-pink)', fontWeight: 'bold' }}>
                       {group.schedule}
                     </p>
                   </div>
                   <div style={{
                     background: st.bg,
-                    padding: '12px 24px',
-                    borderRadius: '30px',
+                    padding: '8px 16px',
+                    borderRadius: '20px',
                     border: '3px solid ' + st.color
                   }}>
                     <span style={{
                       color: st.color,
-                      fontSize: '22px',
+                      fontSize: '18px',
                       fontWeight: '900',
                       letterSpacing: '1px'
                     }}>
@@ -226,10 +226,10 @@ export default function CartelClient({ initialGroups }) {
 
           {/* Footer */}
           <div style={{ textAlign: 'center', paddingBottom: '10px' }}>
-            <p style={{ fontSize: '30px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 5px 0' }}>
+            <p style={{ fontSize: '26px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 5px 0' }}>
               www.musicabalu.com
             </p>
-            <p style={{ fontSize: '22px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
+            <p style={{ fontSize: '18px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
               Reserva tu plaza online
             </p>
           </div>
