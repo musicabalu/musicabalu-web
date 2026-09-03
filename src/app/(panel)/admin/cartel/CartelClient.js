@@ -15,12 +15,12 @@ export default function CartelClient({ initialGroups }) {
   const cartelRef = useRef(null);
 
   const statusConfig = {
-    disponible: { text: 'DISPONIBLES', color: '#10B981', bg: '#D1FAE5' }, // Green
-    tres: { text: '3 PLAZAS', color: '#059669', bg: '#D1FAE5' }, // Green-ish
-    dos: { text: '2 PLAZAS', color: '#D97706', bg: '#FEF3C7' }, // Orange-ish
-    una: { text: '1 PLAZA', color: '#EA580C', bg: '#FFEDD5' }, // Orange-Red
-    ultimas: { text: 'ÚLTIMAS PLAZAS', color: '#F59E0B', bg: '#FEF3C7' }, // Yellow
-    completo: { text: 'COMPLETO', color: '#EF4444', bg: '#FEE2E2' } // Red
+    disponible: { text: 'DISPONIBLES', color: '#2C3333', bg: '#AADB1E' }, // Green
+    tres: { text: '3 PLAZAS', color: '#FFFFFF', bg: '#00B2E3' }, // Cyan
+    dos: { text: '2 PLAZAS', color: '#FFFFFF', bg: '#00B2E3' }, // Cyan
+    una: { text: '1 PLAZA', color: '#2C3333', bg: '#FED65E' }, // Yellow
+    ultimas: { text: 'ÚLTIMAS PLAZAS', color: '#2C3333', bg: '#FED65E' }, // Yellow
+    completo: { text: 'COMPLETO', color: '#FFFFFF', bg: '#F4436C' } // Pink
   };
 
   const handleStatusChange = (groupId, newStatus) => {
@@ -155,7 +155,7 @@ export default function CartelClient({ initialGroups }) {
           style={{
             width: '1080px',
             height: '1080px',
-            background: 'linear-gradient(135deg, #FEF08A 0%, #FDE047 100%)', // Fondo amarillo
+            background: 'white', // Fondo blanco solicitado
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
@@ -166,34 +166,24 @@ export default function CartelClient({ initialGroups }) {
             justifyContent: 'space-between'
           }}
         >
-          {/* Logo y Título combinados en horizontal para ahorrar espacio vertical */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 10px' }}>
+          {/* Logo centrado */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '20px 10px' }}>
             <img 
               src="/logo_texto_corazon.png" 
               alt="Musicabalú" 
-              style={{ width: '300px', height: 'auto' }}
+              style={{ width: '450px', height: 'auto' }}
               crossOrigin="anonymous"
             />
-            <h1 style={{
-              fontFamily: 'var(--font-heading)',
-              fontSize: '60px',
-              color: 'var(--color-dark)',
-              textAlign: 'right',
-              lineHeight: '0.9',
-              margin: '0',
-              textShadow: '3px 3px 0px rgba(255,255,255,0.8)'
-            }}>
-              MATRÍCULAS<br/>ABIERTAS
-            </h1>
           </div>
 
           {/* Lista de Grupos */}
           <div style={{
-            background: 'rgba(255, 255, 255, 0.9)',
+            background: 'rgba(255, 255, 255, 1)',
             width: '100%',
             borderRadius: '25px',
             padding: '20px',
-            boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+            boxSizing: 'border-box', // CRUCIAL para que no se corte por la derecha
+            border: '2px solid #E2E8F0', // Borde sutil para separarlo del fondo blanco
             display: 'flex',
             flexDirection: 'column',
             gap: '10px',
@@ -222,7 +212,9 @@ export default function CartelClient({ initialGroups }) {
                     background: st.bg,
                     padding: '8px 16px',
                     borderRadius: '20px',
-                    border: '3px solid ' + st.color
+                    border: 'none',
+                    minWidth: '160px',
+                    textAlign: 'center'
                   }}>
                     <span style={{
                       color: st.color,
