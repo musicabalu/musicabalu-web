@@ -38,8 +38,8 @@ export default function CartelClient({ initialGroups }) {
       const dataUrl = await htmlToImage.toJpeg(cartelRef.current, {
         quality: 0.95,
         width: 1080,
-        height: 1920,
-        pixelRatio: 1, // Ensure exact 1080x1920
+        height: 1080,
+        pixelRatio: 1, // Ensure exact 1080x1080
         style: {
           transform: 'scale(1)',
           transformOrigin: 'top left',
@@ -125,10 +125,10 @@ export default function CartelClient({ initialGroups }) {
       {/* Vista Previa del Cartel */}
       <div style={{ 
         width: '1080px', 
-        height: '1920px', 
-        transform: 'scale(0.35)', 
+        height: '1080px', 
+        transform: 'scale(0.5)', 
         transformOrigin: 'top left',
-        marginBottom: '-1248px', // Compensa el espacio del scale(0.35) -> 1920 * 0.65 = 1248
+        marginBottom: '-540px', // Compensa el espacio del scale(0.5) -> 1080 * 0.5 = 540
         boxShadow: '0 0 20px rgba(0,0,0,0.1)',
         borderRadius: '30px',
         overflow: 'hidden',
@@ -140,49 +140,51 @@ export default function CartelClient({ initialGroups }) {
           ref={cartelRef}
           style={{
             width: '1080px',
-            height: '1920px',
+            height: '1080px',
             background: 'linear-gradient(135deg, #FEF08A 0%, #FDE047 100%)', // Fondo amarillo
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '80px',
+            padding: '40px',
             boxSizing: 'border-box',
-            fontFamily: 'var(--font-body), sans-serif'
+            fontFamily: 'var(--font-body), sans-serif',
+            justifyContent: 'space-between'
           }}
         >
-          {/* Logo */}
-          <img 
-            src="/logo_texto_corazon.png" 
-            alt="Musicabalú" 
-            style={{ width: '600px', height: 'auto', marginBottom: '60px' }}
-            crossOrigin="anonymous"
-          />
-
-          {/* Título */}
-          <h1 style={{
-            fontFamily: 'var(--font-heading)',
-            fontSize: '120px',
-            color: 'var(--color-dark)',
-            textAlign: 'center',
-            lineHeight: '1.1',
-            margin: '0 0 80px 0',
-            textShadow: '4px 4px 0px rgba(255,255,255,0.8)'
-          }}>
-            MATRÍCULAS<br/>ABIERTAS
-          </h1>
+          {/* Logo y Título combinados en horizontal para ahorrar espacio vertical */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%', padding: '0 20px' }}>
+            <img 
+              src="/logo_texto_corazon.png" 
+              alt="Musicabalú" 
+              style={{ width: '380px', height: 'auto' }}
+              crossOrigin="anonymous"
+            />
+            <h1 style={{
+              fontFamily: 'var(--font-heading)',
+              fontSize: '85px',
+              color: 'var(--color-dark)',
+              textAlign: 'right',
+              lineHeight: '0.9',
+              margin: '0',
+              textShadow: '3px 3px 0px rgba(255,255,255,0.8)'
+            }}>
+              MATRÍCULAS<br/>ABIERTAS
+            </h1>
+          </div>
 
           {/* Lista de Grupos */}
           <div style={{
             background: 'rgba(255, 255, 255, 0.9)',
             width: '100%',
-            borderRadius: '40px',
-            padding: '60px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
-            flex: '1',
+            borderRadius: '30px',
+            padding: '30px',
+            boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
             display: 'flex',
             flexDirection: 'column',
-            gap: '40px'
+            gap: '15px',
+            marginTop: '25px',
+            marginBottom: '20px'
           }}>
             {initialGroups.map(group => {
               const st = statusConfig[statuses[group.id]];
@@ -191,28 +193,28 @@ export default function CartelClient({ initialGroups }) {
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
-                  borderBottom: '3px solid #eee',
-                  paddingBottom: '30px'
+                  borderBottom: '2px solid #eee',
+                  paddingBottom: '12px'
                 }}>
                   <div>
-                    <h3 style={{ fontSize: '45px', margin: '0 0 10px 0', color: 'var(--color-dark)', fontWeight: '800' }}>
+                    <h3 style={{ fontSize: '32px', margin: '0 0 5px 0', color: 'var(--color-dark)', fontWeight: '800' }}>
                       {group.name}
                     </h3>
-                    <p style={{ fontSize: '35px', margin: 0, color: 'var(--color-pink)', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '24px', margin: 0, color: 'var(--color-pink)', fontWeight: 'bold' }}>
                       {group.schedule}
                     </p>
                   </div>
-                    <div style={{
-                      background: st.bg,
-                      padding: '20px 40px',
-                      borderRadius: '50px',
-                      border: '4px solid ' + st.color
-                    }}>
+                  <div style={{
+                    background: st.bg,
+                    padding: '12px 24px',
+                    borderRadius: '30px',
+                    border: '3px solid ' + st.color
+                  }}>
                     <span style={{
                       color: st.color,
-                      fontSize: '32px',
+                      fontSize: '22px',
                       fontWeight: '900',
-                      letterSpacing: '2px'
+                      letterSpacing: '1px'
                     }}>
                       {st.text}
                     </span>
@@ -223,11 +225,11 @@ export default function CartelClient({ initialGroups }) {
           </div>
 
           {/* Footer */}
-          <div style={{ marginTop: '60px', textAlign: 'center' }}>
-            <p style={{ fontSize: '40px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 10px 0' }}>
+          <div style={{ textAlign: 'center', paddingBottom: '10px' }}>
+            <p style={{ fontSize: '30px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 5px 0' }}>
               www.musicabalu.com
             </p>
-            <p style={{ fontSize: '30px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
+            <p style={{ fontSize: '22px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
               Reserva tu plaza online
             </p>
           </div>
