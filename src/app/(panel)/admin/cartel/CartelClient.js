@@ -35,17 +35,31 @@ export default function CartelClient({ initialGroups }) {
       // We need to wait a tick for fonts/images to be fully ready just in case
       await new Promise(r => setTimeout(r, 100));
 
+      // FIX: html-to-image bug with CSS transform on parents.
+      // We must remove the scale from the parent temporarily to avoid cropping.
+      const wrapper = cartelRef.current.parentElement;
+      const originalTransform = wrapper.style.transform;
+      const originalMargin = wrapper.style.marginBottom;
+      
+      wrapper.style.transform = 'scale(1)';
+      wrapper.style.marginBottom = '0px';
+      
+      // Allow browser to repaint without scale
+      await new Promise(r => setTimeout(r, 50));
+
       const dataUrl = await htmlToImage.toJpeg(cartelRef.current, {
         quality: 0.95,
         width: 1080,
         height: 1080,
         pixelRatio: 1, // Ensure exact 1080x1080
         style: {
-          transform: 'scale(1)',
-          transformOrigin: 'top left',
           margin: 0
         }
       });
+
+      // Restore the scale
+      wrapper.style.transform = originalTransform;
+      wrapper.style.marginBottom = originalMargin;
 
       const link = document.createElement('a');
       link.download = `plazas-musicabalu-${new Date().toISOString().split('T')[0]}.jpg`;
