@@ -15,6 +15,7 @@ export default function InscripcionesClient({ initialGroups }) {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [sortConfig, setSortConfig] = useState({ key: 'childName', direction: 'asc' });
+  const [selectedNote, setSelectedNote] = useState(null);
 
   // Filtrar
   const filteredEnrollments = allEnrollments.filter(e => 
@@ -77,6 +78,9 @@ export default function InscripcionesClient({ initialGroups }) {
               <th onClick={() => handleSort('groupName')} style={{ padding: '1rem', cursor: 'pointer', color: '#4a5568' }}>
                 Grupo {getSortIcon('groupName')}
               </th>
+              <th style={{ padding: '1rem', color: '#4a5568', textAlign: 'center' }}>
+                Nota
+              </th>
               <th onClick={() => handleSort('isEmpi')} style={{ padding: '1rem', cursor: 'pointer', color: '#4a5568', textAlign: 'center' }}>
                 EMPI {getSortIcon('isEmpi')}
               </th>
@@ -103,8 +107,21 @@ export default function InscripcionesClient({ initialGroups }) {
                     <div style={{ fontSize: '0.8rem', color: '#718096' }}>{e.email}</div>
                   </td>
                   <td style={{ padding: '1rem' }}>
-                    <div style={{ fontWeight: 'bold', color: 'var(--color-pink)' }}>{e.groupName}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#718096' }}>{e.groupSchedule}</div>
+                    <div style={{ fontWeight: 'bold', color: 'var(--color-pink)' }}>{e.groupName?.split(' (')[0]}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#718096' }}>{e.groupSchedule?.split(' -')[0]}</div>
+                  </td>
+                  <td style={{ padding: '1rem', textAlign: 'center' }}>
+                    {e.notes ? (
+                      <button 
+                        onClick={() => setSelectedNote({ child: e.childName, note: e.notes })}
+                        style={{ background: '#fef3c7', border: 'none', cursor: 'pointer', padding: '6px', borderRadius: '50%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                        title="Ver nota"
+                      >
+                        📝
+                      </button>
+                    ) : (
+                      <span style={{ color: '#cbd5e0' }}>-</span>
+                    )}
                   </td>
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
                     {e.isEmpi ? (
@@ -141,6 +158,19 @@ export default function InscripcionesClient({ initialGroups }) {
           </tbody>
         </table>
       </div>
+
+      {/* Modal para Notas */}
+      {selectedNote && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }} onClick={() => setSelectedNote(null)}>
+          <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', maxWidth: '400px', width: '90%', boxShadow: '0 10px 15px rgba(0,0,0,0.1)' }} onClick={e => e.stopPropagation()}>
+            <h3 style={{ marginTop: 0, marginBottom: '1rem', color: '#2d3748' }}>Nota de {selectedNote.child}</h3>
+            <p style={{ color: '#4a5568', lineHeight: '1.5', whiteSpace: 'pre-wrap' }}>{selectedNote.note}</p>
+            <button onClick={() => setSelectedNote(null)} style={{ marginTop: '1.5rem', padding: '8px 16px', backgroundColor: 'var(--color-pink)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', width: '100%' }}>
+              Cerrar
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
