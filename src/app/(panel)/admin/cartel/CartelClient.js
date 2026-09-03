@@ -48,10 +48,10 @@ export default function CartelClient({ initialGroups }) {
       await new Promise(r => setTimeout(r, 50));
 
       const dataUrl = await htmlToImage.toJpeg(cartelRef.current, {
-        quality: 0.95,
+        quality: 1.0,
         width: 1080,
         height: 1080,
-        pixelRatio: 1, // Ensure exact 1080x1080
+        pixelRatio: 3, // ALTA CALIDAD 4K para evitar pérdida al subirla a WhatsApp
         style: {
           margin: 0
         }
@@ -172,11 +172,11 @@ export default function CartelClient({ initialGroups }) {
           }}
         >
           {/* Logo centrado */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '20px 10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', padding: '10px' }}>
             <img 
               src="/logo_texto_corazon.png" 
               alt="Musicabalú" 
-              style={{ width: '400px', height: 'auto' }}
+              style={{ width: '500px', height: 'auto' }}
               crossOrigin="anonymous"
             />
           </div>
@@ -207,17 +207,17 @@ export default function CartelClient({ initialGroups }) {
                   paddingBottom: '10px'
                 }}>
                   <div style={{ width: '100%' }}>
-                    <h3 style={{ fontSize: '22px', margin: '0 0 2px 0', color: 'var(--color-dark)', fontWeight: '800', lineHeight: '1.2' }}>
+                    <h3 style={{ fontSize: '30px', margin: '0 0 2px 0', color: 'var(--color-dark)', fontWeight: '800', lineHeight: '1.1' }}>
                       {group.name}
                     </h3>
-                    <p style={{ fontSize: '18px', margin: '0 0 8px 0', color: 'var(--color-pink)', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '24px', margin: '0 0 12px 0', color: 'var(--color-pink)', fontWeight: 'bold' }}>
                       {group.schedule}
                     </p>
                   </div>
                   <div style={{
                     background: st.bg,
-                    padding: '6px 10px',
-                    borderRadius: '15px',
+                    padding: '8px 12px',
+                    borderRadius: '20px',
                     border: 'none',
                     width: '100%',
                     textAlign: 'center',
@@ -225,7 +225,7 @@ export default function CartelClient({ initialGroups }) {
                   }}>
                     <span style={{
                       color: st.color,
-                      fontSize: '16px',
+                      fontSize: '22px',
                       fontWeight: '900',
                       letterSpacing: '1px'
                     }}>
