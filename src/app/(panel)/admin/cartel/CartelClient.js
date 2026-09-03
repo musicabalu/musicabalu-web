@@ -73,9 +73,14 @@ export default function CartelClient({ initialGroups }) {
     }
   };
 
-  // Group groups by day of week if possible, or just list them
-  // Assuming `schedule` contains the day (e.g., "Lunes 17:00")
-  
+  // Sort groups by day of week
+  const daysOrder = { 'Lunes': 1, 'Martes': 2, 'Miércoles': 3, 'Jueves': 4, 'Viernes': 5, 'Sábado': 6, 'Domingo': 7 };
+  const sortedGroups = [...initialGroups].sort((a, b) => {
+    const dayA = a.schedule.split(' ')[0];
+    const dayB = b.schedule.split(' ')[0];
+    return (daysOrder[dayA] || 99) - (daysOrder[dayB] || 99);
+  });
+
   return (
     <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
       
@@ -83,7 +88,7 @@ export default function CartelClient({ initialGroups }) {
       <div style={{ flex: '1', minWidth: '300px', background: 'white', padding: '2rem', borderRadius: '15px', boxShadow: 'var(--shadow-md)' }}>
         <h2 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: 'var(--color-dark)' }}>Editar Plazas</h2>
         
-        {initialGroups.map(group => (
+        {sortedGroups.map(group => (
           <div key={group.id} style={{ marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid #eee' }}>
             <p style={{ fontWeight: 'bold', margin: '0 0 0.5rem 0' }}>{group.name} <span style={{ fontWeight: 'normal', color: 'gray', fontSize: '0.9em' }}>({group.schedule})</span></p>
             <select
@@ -139,10 +144,10 @@ export default function CartelClient({ initialGroups }) {
       {/* Vista Previa del Cartel */}
       <div style={{ 
         width: '1080px', 
-        height: '1080px', 
-        transform: 'scale(0.5)', 
+        height: '1350px', 
+        transform: 'scale(0.4)', 
         transformOrigin: 'top left',
-        marginBottom: '-540px', // Compensa el espacio del scale(0.5) -> 1080 * 0.5 = 540
+        marginBottom: '-810px', // Compensa el espacio del scale(0.4) -> 1350 * 0.6 = 810
         boxShadow: '0 0 20px rgba(0,0,0,0.1)',
         borderRadius: '30px',
         overflow: 'hidden',
@@ -154,13 +159,13 @@ export default function CartelClient({ initialGroups }) {
           ref={cartelRef}
           style={{
             width: '1080px',
-            height: '1080px',
+            height: '1350px',
             background: 'white', // Fondo blanco solicitado
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '30px',
+            padding: '60px 50px', // Márgenes más grandes
             boxSizing: 'border-box',
             fontFamily: 'var(--font-body), sans-serif',
             justifyContent: 'space-between'
@@ -181,16 +186,16 @@ export default function CartelClient({ initialGroups }) {
             background: 'rgba(255, 255, 255, 1)',
             width: '100%',
             borderRadius: '25px',
-            padding: '20px',
+            padding: '30px',
             boxSizing: 'border-box', // CRUCIAL para que no se corte por la derecha
             border: '2px solid #E2E8F0', // Borde sutil para separarlo del fondo blanco
             display: 'flex',
             flexDirection: 'column',
-            gap: '10px',
-            marginTop: '15px',
-            marginBottom: '15px'
+            gap: '15px',
+            marginTop: '20px',
+            marginBottom: '20px'
           }}>
-            {initialGroups.map(group => {
+            {sortedGroups.map(group => {
               const st = statusConfig[statuses[group.id]];
               return (
                 <div key={group.id} style={{

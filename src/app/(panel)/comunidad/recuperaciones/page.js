@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 import { redirect } from 'next/navigation';
 import { PrismaClient } from '@prisma/client';
+import BibliotecaTabs from '@/components/comunidad/BibliotecaTabs';
 
 const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
@@ -14,18 +15,29 @@ export default async function RecuperacionesPage() {
   }
 
   const user = await prisma.user.findUnique({
-    where: { email: session.user.email }
+    where: { email: session.user.email },
+    include: {
+      enrollments: {
+        where: { status: { in: ['active', 'pending'] } }
+      }
+    }
   });
 
-  if (!user || (user.role !== 'admin' && !user.hasActiveSub)) {
+  const isPresential = user?.enrollments && user.enrollments.length > 0;
+  const role = user?.role;
+
+  if (!user || (role !== 'admin' && !user.hasActiveSub && !isPresential)) {
     redirect('/comunidad');
   }
 
   return (
-    <div style={{ maxWidth: '800px', margin: '0 auto', background: 'white', padding: '2.5rem', borderRadius: '20px', boxShadow: 'var(--shadow-md)', lineHeight: '1.7', color: 'var(--color-text)' }}>
-      <h2 style={{ fontSize: '2rem', color: 'var(--color-pink)', marginBottom: '1.5rem', borderBottom: '2px solid var(--color-pink-light)', paddingBottom: '0.5rem' }}>
-        Política de Recuperación de Clases
-      </h2>
+    <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
+      <BibliotecaTabs isPresential={isPresential} role={role} />
+      
+      <div style={{ maxWidth: '800px', margin: '0 auto', background: 'white', padding: '2.5rem', borderRadius: '20px', boxShadow: 'var(--shadow-md)', lineHeight: '1.7', color: 'var(--color-text)' }}>
+        <h2 style={{ fontSize: '2rem', color: 'var(--color-pink)', marginBottom: '1.5rem', borderBottom: '2px solid var(--color-pink-light)', paddingBottom: '0.5rem' }}>
+          Política de Recuperación de Clases
+        </h2>
       
       <p style={{ fontSize: '1.1rem' }}>
         Como sabéis, en la inscripción viene recogido que:
@@ -97,6 +109,7 @@ export default async function RecuperacionesPage() {
       <p style={{ fontSize: '1.1rem', marginTop: '3rem', textAlign: 'center' }}>
         Muchas gracias por vuestra colaboración siempre ❤️🎶
       </p>
+      </div>
     </div>
   );
 }

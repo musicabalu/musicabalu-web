@@ -44,3 +44,16 @@ npm install
 ```bash
 npm run build
 ```
+
+---
+
+## 💾 Comandos de Copia de Seguridad (GitHub)
+
+**Para guardar todos tus cambios de forma segura en la nube:**
+
+```bash
+git add .
+git commit -m "Descripción de los cambios de hoy"
+git push
+```
+*(Recuerda que si te pide contraseña en el paso `git push`, debes usar tu Personal Access Token).*
