@@ -161,7 +161,7 @@ export default function InscripcionPage() {
 
           <div className={styles.formSection}>
             <h3>Vinculación con EMPI</h3>
-            <p className={styles.helpText}>¿El alumno/a está matriculado en la Escuela Infantil EMPI en el curso 2026/2027?</p>
+            
             <div className={styles.radioGroup}>
               <label className={styles.radioLabel}>
                 <input type="radio" name="isEmpi" required checked={formData.isEmpi === true} onChange={() => setFormData(prev => ({...prev, isEmpi: true}))} />
