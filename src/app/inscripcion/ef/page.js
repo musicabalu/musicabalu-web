@@ -162,7 +162,7 @@ export default function VeteranosInscripcionPage() {
           </div>
 
           <div className={styles.formSection}>
-            <h3>Vinculación con EMPI</h3>
+            <h3>Vinculación con EMPI en 2026/2027</h3>
             
             <div className={styles.radioGroup}>
               <label className={styles.radioLabel}>
