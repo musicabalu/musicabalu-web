@@ -144,10 +144,10 @@ export default function CartelClient({ initialGroups }) {
       {/* Vista Previa del Cartel */}
       <div style={{ 
         width: '1080px', 
-        height: '1350px', 
-        transform: 'scale(0.4)', 
+        height: '1080px', 
+        transform: 'scale(0.5)', 
         transformOrigin: 'top left',
-        marginBottom: '-810px', // Compensa el espacio del scale(0.4) -> 1350 * 0.6 = 810
+        marginBottom: '-540px', // Compensa el espacio del scale(0.5) -> 1080 * 0.5 = 540
         boxShadow: '0 0 20px rgba(0,0,0,0.1)',
         borderRadius: '30px',
         overflow: 'hidden',
@@ -159,13 +159,13 @@ export default function CartelClient({ initialGroups }) {
           ref={cartelRef}
           style={{
             width: '1080px',
-            height: '1350px',
+            height: '1080px',
             background: 'white', // Fondo blanco solicitado
             position: 'relative',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            padding: '60px 50px', // Márgenes más grandes
+            padding: '40px', // Margen uniforme
             boxSizing: 'border-box',
             fontFamily: 'var(--font-body), sans-serif',
             justifyContent: 'space-between'
@@ -176,7 +176,7 @@ export default function CartelClient({ initialGroups }) {
             <img 
               src="/logo_texto_corazon.png" 
               alt="Musicabalú" 
-              style={{ width: '450px', height: 'auto' }}
+              style={{ width: '400px', height: 'auto' }}
               crossOrigin="anonymous"
             />
           </div>
@@ -186,44 +186,46 @@ export default function CartelClient({ initialGroups }) {
             background: 'rgba(255, 255, 255, 1)',
             width: '100%',
             borderRadius: '25px',
-            padding: '30px',
+            padding: '25px',
             boxSizing: 'border-box', // CRUCIAL para que no se corte por la derecha
             border: '2px solid #E2E8F0', // Borde sutil para separarlo del fondo blanco
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '15px',
-            marginTop: '20px',
-            marginBottom: '20px'
+            display: 'grid',
+            gridTemplateColumns: '1fr 1fr', // 2 COLUMNAS para que quepa todo
+            gap: '15px 20px',
+            marginTop: '10px',
+            marginBottom: '10px'
           }}>
             {sortedGroups.map(group => {
               const st = statusConfig[statuses[group.id]];
               return (
                 <div key={group.id} style={{
                   display: 'flex',
+                  flexDirection: 'column',
                   justifyContent: 'space-between',
-                  alignItems: 'center',
-                  borderBottom: '2px solid #eee',
-                  paddingBottom: '8px'
+                  alignItems: 'flex-start',
+                  borderBottom: '1px solid #eee',
+                  paddingBottom: '10px'
                 }}>
-                  <div>
-                    <h3 style={{ fontSize: '26px', margin: '0 0 4px 0', color: 'var(--color-dark)', fontWeight: '800' }}>
+                  <div style={{ width: '100%' }}>
+                    <h3 style={{ fontSize: '22px', margin: '0 0 2px 0', color: 'var(--color-dark)', fontWeight: '800', lineHeight: '1.2' }}>
                       {group.name}
                     </h3>
-                    <p style={{ fontSize: '20px', margin: 0, color: 'var(--color-pink)', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '18px', margin: '0 0 8px 0', color: 'var(--color-pink)', fontWeight: 'bold' }}>
                       {group.schedule}
                     </p>
                   </div>
                   <div style={{
                     background: st.bg,
-                    padding: '8px 16px',
-                    borderRadius: '20px',
+                    padding: '6px 10px',
+                    borderRadius: '15px',
                     border: 'none',
-                    minWidth: '160px',
-                    textAlign: 'center'
+                    width: '100%',
+                    textAlign: 'center',
+                    boxSizing: 'border-box'
                   }}>
                     <span style={{
                       color: st.color,
-                      fontSize: '18px',
+                      fontSize: '16px',
                       fontWeight: '900',
                       letterSpacing: '1px'
                     }}>
