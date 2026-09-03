@@ -100,6 +100,7 @@ export default function InscripcionesClient({ initialGroups }) {
                   </td>
                   <td style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: '500', color: '#4a5568' }}>{e.parentName}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#718096' }}>{e.email}</div>
                   </td>
                   <td style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: 'bold', color: 'var(--color-pink)' }}>{e.groupName}</div>

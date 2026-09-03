@@ -16,6 +16,9 @@ export default function CartelClient({ initialGroups }) {
 
   const statusConfig = {
     disponible: { text: 'DISPONIBLES', color: '#10B981', bg: '#D1FAE5' }, // Green
+    tres: { text: '3 PLAZAS', color: '#059669', bg: '#D1FAE5' }, // Green-ish
+    dos: { text: '2 PLAZAS', color: '#D97706', bg: '#FEF3C7' }, // Orange-ish
+    una: { text: '1 PLAZA', color: '#EA580C', bg: '#FFEDD5' }, // Orange-Red
     ultimas: { text: 'ÚLTIMAS PLAZAS', color: '#F59E0B', bg: '#FEF3C7' }, // Yellow
     completo: { text: 'COMPLETO', color: '#EF4444', bg: '#FEE2E2' } // Red
   };
@@ -84,6 +87,9 @@ export default function CartelClient({ initialGroups }) {
               }}
             >
               <option value="disponible">🟢 Disponibles</option>
+              <option value="tres">🟩 3 Plazas</option>
+              <option value="dos">🟧 2 Plazas</option>
+              <option value="una">🔥 1 Plaza</option>
               <option value="ultimas">🟡 Últimas plazas</option>
               <option value="completo">🔴 Completo</option>
             </select>

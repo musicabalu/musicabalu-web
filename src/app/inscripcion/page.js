@@ -299,6 +299,13 @@ export default function InscripcionPage() {
               </label>
             </div>
           </div>
+          
+          {formData.paymentMethod === 'stripe' && (
+            <div style={{ backgroundColor: '#fef3c7', padding: '15px', borderRadius: '8px', marginBottom: '20px', borderLeft: '4px solid #f59e0b', fontSize: '0.9rem', color: '#92400e' }}>
+              <strong>ℹ️ Aviso sobre cobros recurrentes:</strong><br />
+              Con el método de pago que elijas a continuación se te cobrarán las cuotas {formData.paymentFrequency === 'mensual' ? 'mensuales' : 'trimestrales'} automáticamente. Si en algún momento deseas cambiar de método de pago o utilizar otra cuenta, deberás avisarnos con antelación.
+            </div>
+          )}
 
           <button type="submit" disabled={loading} className={`btn btn-pink ${styles.submitBtn}`}>
             {loading ? 'Procesando...' : 'Completar Inscripción'}
