@@ -6,6 +6,7 @@ import Link from "next/link";
 const prisma = new PrismaClient();
 
 export default async function DashboardPage({ searchParams }) {
+  const params = await searchParams;
   const session = await getServerSession(authOptions);
 
   const user = await prisma.user.findUnique({
@@ -21,7 +22,7 @@ export default async function DashboardPage({ searchParams }) {
     <div className="animate-fade-in" style={{ paddingBottom: '40px' }}>
       {/* Cabecera */}
       <div style={{ marginBottom: "40px", paddingBottom: "24px", borderBottom: "2px solid var(--color-border)" }}>
-        {searchParams?.success === 'true' && (
+        {params?.success === 'true' && (
           <div style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '16px', borderRadius: '12px', marginBottom: '24px', border: '1px solid #bbf7d0' }}>
             <strong style={{ fontSize: '1.1rem' }}>¡Compra completada con éxito! 🎉</strong><br/><br/>
             Acabamos de enviarte un email con la confirmación. Tu pedido aparecerá en tu historial de compras y, si has adquirido una suscripción, ya tienes acceso a los contenidos desbloqueados.

@@ -6,10 +6,11 @@ const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export default async function ActividadPage({ searchParams }) {
+  const params = await searchParams;
   // 1. Determinar la fecha seleccionada en zona horaria de Madrid
   const formatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Madrid' });
   const todayStr = formatter.format(new Date()); 
-  const selectedDateStr = searchParams.date || todayStr;
+  const selectedDateStr = params.date || todayStr;
 
   // Calcular fechas anterior y siguiente para los botones
   const selectedDateObj = new Date(`${selectedDateStr}T12:00:00Z`); // Mediodía UTC para evitar saltos de día por zona horaria
