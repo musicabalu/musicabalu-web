@@ -47,11 +47,11 @@ export default function CartelClient({ initialGroups }) {
       // Allow browser to repaint without scale
       await new Promise(r => setTimeout(r, 50));
 
-      const dataUrl = await htmlToImage.toJpeg(cartelRef.current, {
+      const dataUrl = await htmlToImage.toPng(cartelRef.current, {
         quality: 1.0,
         width: 1080,
         height: 1080,
-        pixelRatio: 3, // ALTA CALIDAD 4K para evitar pérdida al subirla a WhatsApp
+        pixelRatio: 3, // ALTA CALIDAD
         style: {
           margin: 0
         }
@@ -62,7 +62,7 @@ export default function CartelClient({ initialGroups }) {
       wrapper.style.marginBottom = originalMargin;
 
       const link = document.createElement('a');
-      link.download = `plazas-musicabalu-${new Date().toISOString().split('T')[0]}.jpg`;
+      link.download = `plazas-musicabalu-${new Date().toISOString().split('T')[0]}.png`;
       link.href = dataUrl;
       link.click();
     } catch (error) {
@@ -207,10 +207,10 @@ export default function CartelClient({ initialGroups }) {
                   paddingBottom: '10px'
                 }}>
                   <div style={{ width: '100%' }}>
-                    <h3 style={{ fontSize: '30px', margin: '0 0 2px 0', color: 'var(--color-dark)', fontWeight: '800', lineHeight: '1.1' }}>
+                    <h3 style={{ fontSize: '38px', margin: '0 0 2px 0', color: 'var(--color-dark)', fontWeight: '800', lineHeight: '1.1' }}>
                       {group.name}
                     </h3>
-                    <p style={{ fontSize: '24px', margin: '0 0 12px 0', color: 'var(--color-pink)', fontWeight: 'bold' }}>
+                    <p style={{ fontSize: '28px', margin: '0 0 12px 0', color: 'var(--color-pink)', fontWeight: 'bold' }}>
                       {group.schedule}
                     </p>
                   </div>
@@ -225,7 +225,7 @@ export default function CartelClient({ initialGroups }) {
                   }}>
                     <span style={{
                       color: st.color,
-                      fontSize: '22px',
+                      fontSize: '26px',
                       fontWeight: '900',
                       letterSpacing: '1px'
                     }}>
@@ -239,10 +239,10 @@ export default function CartelClient({ initialGroups }) {
 
           {/* Footer */}
           <div style={{ textAlign: 'center', paddingBottom: '10px' }}>
-            <p style={{ fontSize: '26px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 5px 0' }}>
+            <p style={{ fontSize: '32px', fontWeight: 'bold', color: 'var(--color-dark)', margin: '0 0 5px 0' }}>
               www.musicabalu.com
             </p>
-            <p style={{ fontSize: '18px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
+            <p style={{ fontSize: '24px', color: 'var(--color-pink)', margin: 0, fontWeight: 'bold' }}>
               Reserva tu plaza online
             </p>
           </div>
