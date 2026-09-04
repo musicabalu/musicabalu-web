@@ -40,7 +40,7 @@ export default async function InscripcionesPage() {
 
   return (
     <div style={{ padding: '20px', maxWidth: '1200px', margin: '0 auto' }}>
-      <BackButton href="/dashboard" />
+      <BackButton href="/admin" />
       <h1 style={{ fontSize: '2rem', marginBottom: '10px', color: '#333' }}>Panel de Inscripciones</h1>
       <p style={{ color: '#666', marginBottom: '30px' }}>
         Aquí puedes ver a todos los alumnos matriculados organizados por grupo.
