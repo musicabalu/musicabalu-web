@@ -35,12 +35,13 @@ export async function POST(request) {
 
         console.log("Stripe Checkout Completado:", metadata);
 
-        // Si el pago es asíncrono (ej. domiciliación SEPA) y aún se está procesando, 
-        // Stripe completará la sesión pero el estado del pago no será 'paid'.
-        // En este caso, ignoramos este evento y esperamos al webhook 'payment_intent.succeeded' (o similar)
-        // Por ahora, solo procesamos si está pagado.
-        if (session.payment_status !== 'paid' && session.payment_status !== 'no_payment_required') {
-          console.log(`Pago no completado aún (status: ${session.payment_status}). Se ignora este evento.`);
+        // Si el pago es asíncrono (ej. domiciliación SEPA), Stripe completará la sesión 
+        // pero el estado del pago puede ser 'processing' o 'unpaid'.
+        // Para no bloquear la plaza y enviar el email de confirmación inmediatamente,
+        // aceptamos estos estados si la sesión de checkout se ha completado.
+        const validStatuses = ['paid', 'no_payment_required', 'processing', 'unpaid'];
+        if (!validStatuses.includes(session.payment_status)) {
+          console.log(`Pago con estado inválido (status: ${session.payment_status}). Se ignora este evento.`);
           break;
         }
 
