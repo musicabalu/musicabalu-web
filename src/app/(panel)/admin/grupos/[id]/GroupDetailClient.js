@@ -197,7 +197,7 @@ export default function GroupDetailClient({ group, allGroups }) {
                     </div>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: '250px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', width: '320px', minWidth: '320px', flexShrink: 0 }}>
                     <div className={styles.attendanceSection}>
                       <div className={styles.attendanceHeader}>
                         <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Asistencia {currentMonth.split('-')[1]}/{currentMonth.split('-')[0]}</span>
