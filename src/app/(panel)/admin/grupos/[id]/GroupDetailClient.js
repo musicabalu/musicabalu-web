@@ -178,7 +178,7 @@ export default function GroupDetailClient({ group, allGroups }) {
                         rel="noopener noreferrer"
                         className={styles.waBtn}
                       >
-                        💬 WhatsApp
+                        💬 WhatsApp <span style={{ fontSize: '0.8rem', opacity: 0.8, marginLeft: '5px' }}>{e.phone}</span>
                       </a>
                       <button 
                         onClick={() => handleEditNotes(e)}
