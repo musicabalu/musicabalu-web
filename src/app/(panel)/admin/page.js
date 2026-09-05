@@ -114,38 +114,47 @@ export default async function AdminDashboard() {
 
       {/* Desglose de Grupos */}
       <h2 className={styles.sectionTitle}>Estado de los Grupos</h2>
-      <div className={styles.groupsGrid}>
-        {groups.map(group => {
-          const enrolled = group.enrollments.length;
-          const percentage = Math.round((enrolled / group.capacity) * 100);
-          const isFull = enrolled >= group.capacity;
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+        {['Martes', 'Jueves', 'Viernes'].map(day => (
+          <div key={day}>
+            <h3 style={{ fontSize: '1.2rem', color: '#4a5568', borderBottom: '2px solid #edf2f7', paddingBottom: '10px', marginBottom: '15px', fontWeight: 'bold' }}>{day}</h3>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+              {groups
+                .filter(g => g.schedule.toLowerCase().includes(day.toLowerCase()))
+                .map(group => {
+                  const enrolled = group.enrollments.length;
+                  const percentage = Math.round((enrolled / group.capacity) * 100);
+                  const isFull = enrolled >= group.capacity;
 
-          return (
-            <Link key={group.id} href={`/admin/grupos/${group.id}`} style={{ textDecoration: 'none' }}>
-              <div className={styles.groupCard}>
-                <h3 className={styles.groupName}>{group.name}</h3>
-              <p className={styles.groupSchedule}>🕒 {group.schedule}</p>
-              
-              <div className={styles.progressBar}>
-                <div 
-                  className={styles.progressFill} 
-                  style={{ 
-                    width: `${Math.min(percentage, 100)}%`,
-                    backgroundColor: isFull ? '#ef4444' : 'var(--color-cyan)'
-                  }}
-                ></div>
-              </div>
-              
-              <div className={styles.groupStats}>
-                <span>{enrolled} / {group.capacity} plazas</span>
-                <span className={`${styles.badge} ${isFull ? styles.badgeFull : styles.badgeOpen}`}>
-                  {isFull ? 'COMPLETO' : 'DISPONIBLE'}
-                </span>
-              </div>
+                  return (
+                    <Link key={group.id} href={`/admin/grupos/${group.id}`} style={{ textDecoration: 'none' }}>
+                      <div className={styles.groupCard}>
+                        <h3 className={styles.groupName}>{group.name}</h3>
+                        <p className={styles.groupSchedule}>🕒 {group.schedule}</p>
+                        
+                        <div className={styles.progressBar}>
+                          <div 
+                            className={styles.progressFill} 
+                            style={{ 
+                              width: `${Math.min(percentage, 100)}%`,
+                              backgroundColor: isFull ? '#ef4444' : 'var(--color-cyan)'
+                            }}
+                          ></div>
+                        </div>
+                        
+                        <div className={styles.groupStats}>
+                          <span>{enrolled} / {group.capacity} plazas</span>
+                          <span className={`${styles.badge} ${isFull ? styles.badgeFull : styles.badgeOpen}`}>
+                            {isFull ? 'COMPLETO' : 'DISPONIBLE'}
+                          </span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+              })}
             </div>
-          </Link>
-          );
-        })}
+          </div>
+        ))}
       </div>
     </div>
   );

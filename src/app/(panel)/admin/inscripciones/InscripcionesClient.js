@@ -105,7 +105,6 @@ export default function InscripcionesClient({ initialGroups }) {
                   <td style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: '500', color: '#4a5568' }}>{e.parentName}</div>
                     <div style={{ fontSize: '0.8rem', color: '#718096' }}>{e.email}</div>
-                    <div style={{ fontSize: '0.8rem', color: '#718096' }}>📞 {e.phone}</div>
                   </td>
                   <td style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: 'bold', color: 'var(--color-pink)' }}>{e.groupName?.split(' (')[0]}</div>
@@ -144,14 +143,17 @@ export default function InscripcionesClient({ initialGroups }) {
                     </span>
                   </td>
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
-                    <a 
-                      href={`https://wa.me/34${e.phone.replace(/\s+/g, '')}?text=Hola%20${e.parentName},%20te%20escribo%20desde%20Musicabalú...`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      style={{ padding: '6px 12px', backgroundColor: '#25D366', color: 'white', borderRadius: '8px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold', display: 'inline-block' }}
-                    >
-                      WhatsApp
-                    </a>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
+                        <a 
+                          href={`https://wa.me/34${e.phone.replace(/\s+/g, '')}?text=Hola%20${e.parentName},%20te%20escribo%20desde%20Musicabalú...`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          style={{ padding: '6px 12px', backgroundColor: '#25D366', color: 'white', borderRadius: '8px', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 'bold', display: 'inline-block' }}
+                        >
+                          WhatsApp
+                        </a>
+                        <span style={{ fontSize: '0.75rem', color: '#718096' }}>{e.phone}</span>
+                      </div>
                   </td>
                 </tr>
               ))
