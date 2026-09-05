@@ -93,6 +93,35 @@ export default function Formaciones() {
           </div>
         </section>
 
+        {/* TESTIMONIOS */}
+        <section style={{ padding: '5rem 2rem', backgroundColor: '#f9fafb' }}>
+          <h2 style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2rem', color: 'var(--color-dark)' }}>Lo que opinan quienes ya lo han vivido</h2>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem', maxWidth: '1000px', margin: '0 auto' }}>
+            
+            {/* Testimonio 1 */}
+            <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03)', border: '1px solid #edf2f7' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                <div style={{ width: '45px', height: '45px', borderRadius: '50%', backgroundColor: 'var(--color-cyan)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', fontWeight: 'bold', marginRight: '15px' }}>
+                  M
+                </div>
+                <div>
+                  <h4 style={{ margin: 0, color: 'var(--color-dark)', fontSize: '1.1rem' }}>Merche Martínez</h4>
+                  <p style={{ margin: 0, color: 'var(--color-text-light)', fontSize: '0.85rem' }}>Educadora de Infantil</p>
+                </div>
+              </div>
+              <div style={{ color: '#FBBF24', letterSpacing: '2px', marginBottom: '1rem', fontSize: '1.2rem' }}>
+                ★★★★★
+              </div>
+              <p style={{ color: '#4a5568', fontStyle: 'italic', fontSize: '0.95rem', lineHeight: 1.6, margin: 0 }}>
+                "Esta formación me ha resultado muy práctica, nos ha aportado muchos recursos y juegos musicales que puedo llevar al aula desde el primer minuto. Además me encanta tener los apuntes y canciones siempre disponibles en la web. Lo recomiendo al 100%"
+              </p>
+            </div>
+            
+            {/* Espacio preparado para el 2 y el 3 */}
+            
+          </div>
+        </section>
+
         {/* CTA FINAL */}
         <section className={styles.actionSection}>
           <h2>¿Te vienes a la próxima edición?</h2>
