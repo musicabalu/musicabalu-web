@@ -52,7 +52,7 @@ export default async function AdminDashboard() {
         </Link>
 
         <div className={styles.statCard}>
-          <h3 className={styles.statTitle}>Ocupación Media</h3>
+          <h3 className={styles.statTitle}>Ocupación</h3>
           <p className={styles.statValue}>{occupancyRate}%</p>
           <p className={styles.statDetail}>De {totalCapacity} plazas totales ofertadas</p>
         </div>
