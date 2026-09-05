@@ -117,7 +117,7 @@ export default async function AdminDashboard() {
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
         {['Martes', 'Jueves', 'Viernes'].map(day => (
           <div key={day}>
-            <h3 style={{ fontSize: '1.2rem', color: '#4a5568', borderBottom: '2px solid #edf2f7', paddingBottom: '10px', marginBottom: '15px', fontWeight: 'bold' }}>{day}</h3>
+            <h3 style={{ fontSize: '1.2rem', color: '#4a5568', borderBottom: '2px solid #edf2f7', paddingBottom: '10px', marginBottom: '15px', fontWeight: 'bold', textAlign: 'center' }}>{day}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
               {groups
                 .filter(g => g.schedule.toLowerCase().includes(day.toLowerCase()))
