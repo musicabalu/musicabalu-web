@@ -5,7 +5,10 @@ import BackButton from "@/components/BackButton";
 
 export const dynamic = 'force-dynamic'; // Para que los datos estén siempre frescos
 
-export default async function InscripcionesPage() {
+export default async function InscripcionesPage({ searchParams }) {
+  const resolvedParams = await searchParams;
+  const q = resolvedParams?.q || '';
+
   // Obtenemos todos los grupos, incluyendo las inscripciones 'active' en cada uno
   let groups = await prisma.group.findMany({
     include: {
@@ -46,7 +49,7 @@ export default async function InscripcionesPage() {
         Aquí puedes ver a todos los alumnos matriculados organizados por grupo.
       </p>
       
-      <InscripcionesClient initialGroups={groups} />
+      <InscripcionesClient initialGroups={groups} initialSearch={q} />
     </div>
   );
 }

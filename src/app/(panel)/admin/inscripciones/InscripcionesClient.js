@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import styles from './inscripciones.module.css';
 
-export default function InscripcionesClient({ initialGroups }) {
+export default function InscripcionesClient({ initialGroups, initialSearch = '' }) {
   // Aplanar todos los alumnos en una sola lista
   const allEnrollments = initialGroups.flatMap(g => 
     g.enrollments.map(e => ({
@@ -13,14 +13,15 @@ export default function InscripcionesClient({ initialGroups }) {
     }))
   );
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [sortConfig, setSortConfig] = useState({ key: 'childName', direction: 'asc' });
   const [selectedNote, setSelectedNote] = useState(null);
 
   // Filtrar
   const filteredEnrollments = allEnrollments.filter(e => 
     e.childName.toLowerCase().includes(searchTerm.toLowerCase()) || 
-    e.parentName.toLowerCase().includes(searchTerm.toLowerCase())
+    e.parentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (e.email && e.email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Ordenar
@@ -58,7 +59,7 @@ export default function InscripcionesClient({ initialGroups }) {
       <div style={{ marginBottom: '20px' }}>
         <input 
           type="text" 
-          placeholder="Buscar por nombre del alumno o padre/madre..." 
+          placeholder="Buscar por nombre, apellidos o email..." 
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{ padding: '12px 20px', width: '100%', maxWidth: '500px', borderRadius: '8px', border: '1px solid #e2e8f0', fontSize: '1rem' }}
