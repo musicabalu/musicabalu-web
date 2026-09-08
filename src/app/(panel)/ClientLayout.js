@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import styles from './layout.module.css';
 
 import LogoutButton from '@/components/auth/LogoutButton';
+import RouteTracker from '@/components/RouteTracker';
 import { estrategiaHtml } from '@/app/(panel)/admin/estrategia/estrategiaData';
 
 // Parsear el índice de la estrategia
@@ -54,6 +55,7 @@ export default function ClientLayout({ children, user, hasFullAccess, isPresenti
 
   return (
     <div className={styles.container}>
+      <RouteTracker />
       <div className={styles.mobileTopBar}>
         <div className={styles.brandMobile}>
           <Link href="/">

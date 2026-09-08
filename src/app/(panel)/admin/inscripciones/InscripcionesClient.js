@@ -85,6 +85,9 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
               <th onClick={() => handleSort('isEmpi')} style={{ padding: '1rem', cursor: 'pointer', color: '#4a5568', textAlign: 'center' }}>
                 EMPI {getSortIcon('isEmpi')}
               </th>
+              <th onClick={() => handleSort('hasSiblings')} style={{ padding: '1rem', cursor: 'pointer', color: '#4a5568', textAlign: 'center' }}>
+                Hermano(s) {getSortIcon('hasSiblings')}
+              </th>
               <th onClick={() => handleSort('paymentMethod')} style={{ padding: '1rem', cursor: 'pointer', color: '#4a5568', textAlign: 'center' }}>
                 Pago {getSortIcon('paymentMethod')}
               </th>
@@ -127,6 +130,13 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
                     {e.isEmpi ? (
                       <span style={{ padding: '4px 8px', borderRadius: '12px', backgroundColor: '#e0e7ff', color: '#4338ca', fontSize: '0.8rem', fontWeight: 'bold' }}>SÍ</span>
+                    ) : (
+                      <span style={{ padding: '4px 8px', borderRadius: '12px', backgroundColor: '#f3f4f6', color: '#6b7280', fontSize: '0.8rem' }}>No</span>
+                    )}
+                  </td>
+                  <td style={{ padding: '1rem', textAlign: 'center' }}>
+                    {e.hasSiblings ? (
+                      <span style={{ padding: '4px 8px', borderRadius: '12px', backgroundColor: '#fbcfe8', color: '#9d174d', fontSize: '0.8rem', fontWeight: 'bold' }}>SÍ</span>
                     ) : (
                       <span style={{ padding: '4px 8px', borderRadius: '12px', backgroundColor: '#f3f4f6', color: '#6b7280', fontSize: '0.8rem' }}>No</span>
                     )}

@@ -134,6 +134,7 @@ model Enrollment {
   acceptedTerms    Boolean  @default(false)
   acceptedComms    Boolean  @default(false)
   isEmpi           Boolean  @default(false)
+  hasSiblings      Boolean  @default(false)
   notes            String?  @db.Text
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt

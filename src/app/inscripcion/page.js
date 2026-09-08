@@ -21,6 +21,7 @@ export default function InscripcionPage() {
     paymentMethod: 'stripe',
     paymentFrequency: 'mensual',
     isEmpi: null,
+    hasSiblings: null,
     acceptedTerms: false,
     acceptedComms: false
   });
@@ -170,6 +171,21 @@ export default function InscripcionPage() {
               <label className={styles.radioLabel}>
                 <input type="radio" name="isEmpi" required checked={formData.isEmpi === false} onChange={() => setFormData(prev => ({...prev, isEmpi: false}))} />
                 <span>No (Externo)</span>
+              </label>
+            </div>
+          </div>
+
+          <div className={styles.formSection}>
+            <h3>Hermanos en Musicabalú</h3>
+            <p className={styles.helpText}>Los peques que asistan a clases junto a un hermano/a disfrutarán de un descuento mensual o trimestral.</p>
+            <div className={styles.radioGroup}>
+              <label className={styles.radioLabel}>
+                <input type="radio" name="hasSiblings" required checked={formData.hasSiblings === true} onChange={() => setFormData(prev => ({...prev, hasSiblings: true}))} />
+                <span>Sí, tiene hermanos apuntados</span>
+              </label>
+              <label className={styles.radioLabel}>
+                <input type="radio" name="hasSiblings" required checked={formData.hasSiblings === false} onChange={() => setFormData(prev => ({...prev, hasSiblings: false}))} />
+                <span>No</span>
               </label>
             </div>
           </div>

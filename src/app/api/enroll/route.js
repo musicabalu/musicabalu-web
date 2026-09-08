@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || 'sk_test_mock', {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { childName, childBirthDate, parentName, phone, email, groupId, paymentMethod, paymentFrequency, acceptedTerms, acceptedComms, skipStripeMatricula, isEmpi } = body;
+    const { childName, childBirthDate, parentName, phone, email, groupId, paymentMethod, paymentFrequency, acceptedTerms, acceptedComms, skipStripeMatricula, isEmpi, hasSiblings } = body;
 
     if (!childName || !parentName || !phone || !email || !groupId || !paymentMethod || !acceptedTerms || isEmpi === undefined || isEmpi === null) {
       return NextResponse.json({ error: 'Faltan campos obligatorios o no has aceptado las condiciones.' }, { status: 400 });
@@ -61,6 +61,7 @@ export async function POST(request) {
         groupId,
         userId: user.id,
         isEmpi: Boolean(isEmpi),
+        hasSiblings: Boolean(hasSiblings),
         acceptedTerms: Boolean(acceptedTerms),
         acceptedComms: Boolean(acceptedComms),
         status: skipStripeMatricula ? 'active' : 'pending' // Si es veterano, se activa directo
@@ -303,6 +304,7 @@ export async function POST(request) {
                    <li><strong>Email:</strong> ${email}</li>
                    <li><strong>Método de pago:</strong> ${paymentMethod} (${paymentFrequency})</li>
                    <li><strong>Vinculación EMPI:</strong> ${isEmpi ? 'Sí, es alumno de EMPI' : 'No (Externo)'}</li>
+                   <li><strong>Hermanos matriculados:</strong> ${hasSiblings ? 'Sí (Aplicar descuento)' : 'No'}</li>
                    <li><strong>Estado inicial:</strong> ${skipStripeMatricula ? 'Activa (Efectivo)' : 'Pendiente (Stripe)'}</li>
                  </ul>
                  <hr/>
