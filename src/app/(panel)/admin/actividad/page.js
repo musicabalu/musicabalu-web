@@ -95,6 +95,26 @@ export default async function ActividadPage({ searchParams }) {
         <p className={styles.subtitle}>Supervisa quién entra y qué hace en la plataforma</p>
       </header>
 
+      {/* Buscador manual por email */}
+      <form action="/admin/actividad" method="GET" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', width: '100%', maxWidth: '600px' }}>
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="🔍 Buscar historial por email del usuario..." 
+          defaultValue={params.email || ''} 
+          style={{ flex: 1, padding: '0.8rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e0', outline: 'none', fontSize: '1rem' }}
+          required 
+        />
+        <button type="submit" style={{ padding: '0.8rem 1.5rem', background: 'var(--color-pink)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
+          Buscar
+        </button>
+        {params.email && (
+          <Link href="/admin/actividad" style={{ padding: '0.8rem 1.5rem', background: '#edf2f7', color: '#4a5568', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
+            Limpiar
+          </Link>
+        )}
+      </form>
+
       {/* Navegación por Días o Filtro Activo */}
       {params.email ? (
         <div style={{ background: '#ebf8ff', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '1.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
