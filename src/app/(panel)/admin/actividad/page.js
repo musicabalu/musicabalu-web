@@ -25,14 +25,19 @@ export default async function ActividadPage({ searchParams }) {
 
   const isToday = selectedDateStr === todayStr;
 
+  const searchQuery = params.q?.trim() || params.email?.trim();
+
   let logs = [];
   try {
-    if (params.email) {
-      // Filtrar por correo específico: Historial completo del usuario
+    if (searchQuery) {
+      // Filtrar por correo o nombre específico: Historial completo del usuario
       logs = await prisma.activityLog.findMany({
         where: {
           user: {
-            email: params.email
+            OR: [
+              { email: { contains: searchQuery, mode: 'insensitive' } },
+              { name: { contains: searchQuery, mode: 'insensitive' } }
+            ]
           }
         },
         orderBy: { createdAt: 'desc' },
@@ -95,20 +100,20 @@ export default async function ActividadPage({ searchParams }) {
         <p className={styles.subtitle}>Supervisa quién entra y qué hace en la plataforma</p>
       </header>
 
-      {/* Buscador manual por email */}
+      {/* Buscador manual por nombre o email */}
       <form action="/admin/actividad" method="GET" style={{ marginBottom: '1.5rem', display: 'flex', gap: '1rem', width: '100%', maxWidth: '600px' }}>
         <input 
-          type="email" 
-          name="email" 
-          placeholder="🔍 Buscar historial por email del usuario..." 
-          defaultValue={params.email || ''} 
+          type="text" 
+          name="q" 
+          placeholder="🔍 Buscar historial por nombre o email..." 
+          defaultValue={searchQuery || ''} 
           style={{ flex: 1, padding: '0.8rem 1rem', borderRadius: '8px', border: '1px solid #cbd5e0', outline: 'none', fontSize: '1rem' }}
           required 
         />
         <button type="submit" style={{ padding: '0.8rem 1.5rem', background: 'var(--color-pink)', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }}>
           Buscar
         </button>
-        {params.email && (
+        {searchQuery && (
           <Link href="/admin/actividad" style={{ padding: '0.8rem 1.5rem', background: '#edf2f7', color: '#4a5568', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold', display: 'inline-flex', alignItems: 'center' }}>
             Limpiar
           </Link>
@@ -116,13 +121,13 @@ export default async function ActividadPage({ searchParams }) {
       </form>
 
       {/* Navegación por Días o Filtro Activo */}
-      {params.email ? (
+      {searchQuery ? (
         <div style={{ background: '#ebf8ff', padding: '1rem 1.5rem', borderRadius: '12px', marginBottom: '1.5rem', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             <h2 style={{ fontSize: '1.2rem', margin: 0, color: '#2b6cb0' }}>
-              Historial completo: {params.email}
+              Resultados de búsqueda: "{searchQuery}"
             </h2>
-            <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#4a5568' }}>Mostrando hasta las últimas 100 acciones de este usuario.</p>
+            <p style={{ margin: '4px 0 0', fontSize: '0.9rem', color: '#4a5568' }}>Mostrando hasta las últimas 100 acciones encontradas.</p>
           </div>
           <Link 
             href="/admin/actividad"
@@ -187,8 +192,8 @@ export default async function ActividadPage({ searchParams }) {
                     <div style={{ fontSize: '0.8rem', color: '#718096', marginBottom: '5px' }}>{log.user?.email}</div>
                     {log.user?.email && (
                       <div style={{ display: 'flex', gap: '8px', marginTop: '4px' }}>
-                        {!params.email && (
-                          <Link href={`/admin/actividad?email=${log.user.email}`} style={{ fontSize: '0.75rem', padding: '4px 8px', background: '#edf2f7', color: '#2b6cb0', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', display: 'inline-flex', alignItems: 'center' }}>
+                        {!searchQuery && (
+                          <Link href={`/admin/actividad?q=${log.user.email}`} style={{ fontSize: '0.75rem', padding: '4px 8px', background: '#edf2f7', color: '#2b6cb0', borderRadius: '4px', textDecoration: 'none', fontWeight: '500', display: 'inline-flex', alignItems: 'center' }}>
                             🔍 Historial Completo
                           </Link>
                         )}
