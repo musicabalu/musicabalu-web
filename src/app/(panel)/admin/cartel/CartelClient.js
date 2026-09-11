@@ -58,7 +58,7 @@ export default function CartelClient({ initialGroups }) {
       const dataUrl = await htmlToImage.toPng(cartelRef.current, {
         quality: 1.0,
         width: 1080,
-        height: 1080,
+        height: 1920,
         pixelRatio: 3,
         style: {
           margin: 0
@@ -156,10 +156,10 @@ export default function CartelClient({ initialGroups }) {
       {/* Vista Previa del Cartel */}
       <div style={{ 
         width: '1080px', 
-        height: '1080px', 
-        transform: 'scale(0.5)', 
+        height: '1920px', 
+        transform: 'scale(0.35)', 
         transformOrigin: 'top left',
-        marginBottom: '-540px', // Compensa el espacio del scale(0.5) -> 1080 * 0.5 = 540
+        marginBottom: '-1248px', // Compensa el espacio del scale(0.35) -> 1920 - (1920 * 0.35) = 1248
         boxShadow: '0 0 20px rgba(0,0,0,0.1)',
         borderRadius: '30px',
         overflow: 'hidden',
@@ -171,7 +171,7 @@ export default function CartelClient({ initialGroups }) {
           ref={cartelRef}
           style={{
             width: '1080px',
-            height: '1080px',
+            height: '1920px',
             background: 'white', // Fondo blanco solicitado
             position: 'relative',
             display: 'flex',
