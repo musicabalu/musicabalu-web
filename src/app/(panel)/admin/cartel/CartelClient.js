@@ -35,31 +35,43 @@ export default function CartelClient({ initialGroups }) {
       // We need to wait a tick for fonts/images to be fully ready just in case
       await new Promise(r => setTimeout(r, 100));
 
-      // FIX: html-to-image bug with CSS transform on parents.
-      // We must remove the scale from the parent temporarily to avoid cropping.
+      // FIX: html-to-image bug with CSS transform and Viewport on Apple devices.
+      // We must remove the scale and place it absolute top-left so it doesn't get clipped by scrolled window.
       const wrapper = cartelRef.current.parentElement;
       const originalTransform = wrapper.style.transform;
       const originalMargin = wrapper.style.marginBottom;
+      const originalPosition = wrapper.style.position;
+      const originalTop = wrapper.style.top;
+      const originalLeft = wrapper.style.left;
+      const originalZIndex = wrapper.style.zIndex;
       
       wrapper.style.transform = 'scale(1)';
       wrapper.style.marginBottom = '0px';
+      wrapper.style.position = 'fixed';
+      wrapper.style.top = '0';
+      wrapper.style.left = '0';
+      wrapper.style.zIndex = '9999';
       
-      // Allow browser to repaint without scale
-      await new Promise(r => setTimeout(r, 50));
+      // Allow browser to repaint without scale (300ms for slow Safaris)
+      await new Promise(r => setTimeout(r, 300));
 
       const dataUrl = await htmlToImage.toPng(cartelRef.current, {
         quality: 1.0,
         width: 1080,
         height: 1080,
-        pixelRatio: 3, // ALTA CALIDAD
+        pixelRatio: 3,
         style: {
           margin: 0
         }
       });
 
-      // Restore the scale
+      // Restore
       wrapper.style.transform = originalTransform;
       wrapper.style.marginBottom = originalMargin;
+      wrapper.style.position = originalPosition;
+      wrapper.style.top = originalTop;
+      wrapper.style.left = originalLeft;
+      wrapper.style.zIndex = originalZIndex;
 
       const link = document.createElement('a');
       link.download = `plazas-musicabalu-${new Date().toISOString().split('T')[0]}.png`;
