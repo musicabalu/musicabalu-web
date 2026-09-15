@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
+import Image from "next/image";
 import styles from '../page.module.css';
 import BibliotecaTabs from '@/components/comunidad/BibliotecaTabs';
 
@@ -24,8 +25,10 @@ export default async function MiClasePage() {
   const enrollment = user?.enrollments[0];
   const isPresential = user?.enrollments.some(e => e.status === 'active' || e.status === 'pending');
   const role = user?.role;
+  const isAdmin = role === 'admin';
 
-  if (!enrollment) {
+  // El admin siempre ve el contenido completo, sin necesitar matrícula
+  if (!enrollment && !isAdmin) {
     return (
       <div className={styles.fadeInUp} style={{ maxWidth: '1000px', margin: '0 auto' }}>
         <BibliotecaTabs isPresential={isPresential} role={role} />
@@ -40,24 +43,33 @@ export default async function MiClasePage() {
     <div className={styles.fadeInUp} style={{ maxWidth: '1000px', margin: '0 auto' }}>
       <BibliotecaTabs isPresential={isPresential} role={role} />
 
-      {/* Tarjeta de Información del Grupo */}
-      <div style={{ 
-        background: 'var(--color-bg, #FFFFFF)', 
-        border: '1px solid var(--color-border, #E2E8F0)', 
-        padding: '2rem', 
-        borderRadius: '16px', 
-        marginBottom: '3rem',
-        boxShadow: 'var(--shadow-sm)',
-        position: 'relative',
-        overflow: 'hidden'
-      }}>
-        <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'var(--color-green, #AADB1E)' }} />
-        <h2 style={{ color: 'var(--color-dark, #2C3333)', margin: '0 0 1rem 0', fontSize: '1.5rem', fontWeight: '800' }}>👩‍🏫 Tu Grupo: {enrollment.group.name} {enrollment.group.schedule}</h2>
-        <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
-          <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>🕒 Horario:</strong> {enrollment.group.schedule}</p>
-          <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>👶 Peque:</strong> {enrollment.childName}</p>
+      {/* Aviso visual solo para admin */}
+      {isAdmin && !enrollment && (
+        <div style={{ background: 'var(--color-yellow-light, #FEF9E7)', border: '1px solid var(--color-yellow, #FED65E)', borderRadius: '12px', padding: '0.75rem 1.25rem', marginBottom: '1.5rem', fontSize: '0.9rem', color: '#8B6914', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+          <span>⚙️</span> <strong>Vista de administrador</strong> — Estás viendo el contenido como lo verían las familias matriculadas.
         </div>
-      </div>
+      )}
+
+      {/* Tarjeta de Información del Grupo — solo si hay matrícula real */}
+      {enrollment && (
+        <div style={{ 
+          background: 'var(--color-bg, #FFFFFF)', 
+          border: '1px solid var(--color-border, #E2E8F0)', 
+          padding: '2rem', 
+          borderRadius: '16px', 
+          marginBottom: '3rem',
+          boxShadow: 'var(--shadow-sm)',
+          position: 'relative',
+          overflow: 'hidden'
+        }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: 'var(--color-green, #AADB1E)' }} />
+          <h2 style={{ color: 'var(--color-dark, #2C3333)', margin: '0 0 1rem 0', fontSize: '1.5rem', fontWeight: '800' }}>👩‍🏫 Tu Grupo: {enrollment.group.name} {enrollment.group.schedule}</h2>
+          <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap' }}>
+            <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>🕒 Horario:</strong> {enrollment.group.schedule}</p>
+            <p style={{ margin: 0, color: 'var(--color-text, #4A5568)', fontSize: '1.1rem' }}><strong>👶 Peque:</strong> {enrollment.childName}</p>
+          </div>
+        </div>
+      )}
 
       {/* Pautas y Normas de la Clase */}
       <section style={{ 
@@ -104,6 +116,47 @@ export default async function MiClasePage() {
             <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}><span>📱</span><span>Utilizar el teléfono (debe estar en silencio).</span></li>
             <li style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}><span>🥪</span><span>Comer dentro del aula (los peques sí pueden beber agua dentro del aula, pero no sobre el tatami sino en el lugar donde dejamos los bolsos y cosas personales).</span></li>
           </ul>
+        </div>
+      </section>
+
+      {/* Imágenes de la entrada al aula */}
+      <section style={{
+        marginTop: '3rem',
+        background: 'var(--color-bg, #FFFFFF)',
+        border: '1px solid var(--color-border, #E2E8F0)',
+        borderRadius: '16px',
+        padding: 'clamp(1.5rem, 4vw, 2.5rem)',
+        boxShadow: 'var(--shadow-sm)',
+      }}>
+        <h3 style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--color-dark, #2C3333)', marginBottom: '0.5rem' }}>
+          📍 Cómo llegar al aula
+        </h3>
+        <p style={{ color: 'var(--color-text-light, #718096)', marginBottom: '2rem', fontSize: '1rem' }}>
+          Esta es la entrada que lleva a nuestro aula. ¡Nos vemos aquí cada semana!
+        </p>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gap: '1.25rem',
+        }}>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
+            <Image
+              src="/entrada1.jpg"
+              alt="Entrada al aula de Musicabalú en EMPI Murcia"
+              width={800}
+              height={600}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
+          <div style={{ borderRadius: '12px', overflow: 'hidden', boxShadow: 'var(--shadow-md)' }}>
+            <Image
+              src="/entrada2.jpg"
+              alt="Acceso al aula de Musicabalú"
+              width={800}
+              height={600}
+              style={{ width: '100%', height: 'auto', display: 'block' }}
+            />
+          </div>
         </div>
       </section>
     </div>

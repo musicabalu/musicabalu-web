@@ -6,6 +6,17 @@ import Footer from "../../components/Footer";
 import GoogleReviews from "../../components/GoogleReviews";
 import { REVIEWS } from "../../data/reviews";
 
+export const metadata = {
+  title: "Clases de Música para Bebés 0-3 años en Murcia | Musicabalú",
+  description: "Sesiones semanales de educación musical temprana en EMPI, Murcia. Método Gordon (MLT): grupos reducidos, niños de 0 a 3 años acompañados de sus familias. Desde 2017.",
+  openGraph: {
+    title: "Clases de Música para Bebés en Murcia | Musicabalú",
+    description: "Educación musical temprana para bebés de 0 a 3 años en EMPI (Murcia). Método Gordon (MLT). Grupos muy reducidos con acompañamiento familiar.",
+    url: "https://musicabalu.com/presencial",
+    type: "website",
+  },
+};
+
 export default function Presencial() {
   return (
     <div className={styles.container}>
@@ -111,6 +122,52 @@ export default function Presencial() {
       </main>
 
       <Footer />
+
+      {/* Schema.org LocalBusiness para Google */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            "name": "Musicabalú",
+            "alternateName": "Musicabalu",
+            "description": "Escuela de educación musical temprana para bebés y niños de 0 a 3 años en Murcia, siguiendo la Teoría del Aprendizaje Musical (MLT) de E. Gordon.",
+            "url": "https://musicabalu.com",
+            "telephone": "+34633715302",
+            "email": "hola@musicabalu.com",
+            "foundingDate": "2017",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "EMPI, Escuela Murciana de Primera Infancia",
+              "addressLocality": "Murcia",
+              "addressRegion": "Región de Murcia",
+              "addressCountry": "ES"
+            },
+            "geo": {
+              "@type": "GeoCoordinates",
+              "latitude": "37.97104",
+              "longitude": "-1.13051"
+            },
+            "founder": {
+              "@type": "Person",
+              "name": "Javier Muñoz Sánchez",
+              "jobTitle": "Director y Educador Musical"
+            },
+            "sameAs": [
+              "https://www.instagram.com/musicabalu/",
+              "https://www.facebook.com/musicabalu/"
+            ],
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": "5",
+              "bestRating": "5",
+              "ratingCount": "15",
+              "reviewCount": "15"
+            }
+          })
+        }}
+      />
     </div>
   );
 }

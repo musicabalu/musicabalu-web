@@ -4,6 +4,17 @@ import Carousel from "../../components/Carousel";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
+export const metadata = {
+  title: "Formación Musical para Educadores y Familias | Musicabalú",
+  description: "Formaciones prácticas en Educación Musical Temprana (MLT de Gordon) para docentes de infantil y familias sin conocimientos musicales. Aprende a usar la música en el aula desde el primer día.",
+  openGraph: {
+    title: "Formación Musical para Educadores | Musicabalú",
+    description: "Formación práctica basada en la MLT de Gordon para educadores y familias. Recursos musicales aplicables desde el primer día.",
+    url: "https://musicabalu.com/formaciones",
+    type: "website",
+  },
+};
+
 export default function Formaciones() {
   return (
     <div className={styles.container}>

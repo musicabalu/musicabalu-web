@@ -4,6 +4,17 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 
+export const metadata = {
+  title: "Sobre Nosotros: Javier Muñoz y el Método MLT | Musicabalú",
+  description: "Conoce a Javier Muñoz Sánchez, fundador de Musicabalú. Especialista en Educación Musical Temprana (MLT de Gordon) desde 2017 en Murcia. La historia detrás del proyecto.",
+  openGraph: {
+    title: "Conoce a Javi Balú — Fundador de Musicabalú",
+    description: "Músico y especialista en MLT. Fundador de Musicabalú en 2017. La historia detrás de las clases de música para bebés en Murcia.",
+    url: "https://musicabalu.com/conocenos",
+    type: "profile",
+  },
+};
+
 export default function Conocenos() {
   return (
     <div className={styles.container}>

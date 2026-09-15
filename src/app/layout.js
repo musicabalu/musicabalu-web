@@ -16,7 +16,37 @@ const quicksand = Quicksand({
 
 export const metadata = {
   title: "Musicabalú | Educación Musical para la Primera Infancia",
-  description: "Plataforma de educación musical temprana (0 a 3 años) basada en la Teoría del Aprendizaje Musical de E. Gordon.",
+  description: "Clases de música para bebés de 0 a 3 años en Murcia basadas en la Teoría del Aprendizaje Musical (MLT) de E. Gordon. Más de 9 años desarrollando el potencial musical y cognitivo de los más pequeños.",
+  metadataBase: new URL("https://musicabalu.com"),
+  openGraph: {
+    title: "Musicabalú | Música para Bebés en Murcia",
+    description: "Clases de música para bebés de 0 a 3 años en Murcia. Método Gordon (MLT). Desde 2017 conectando familias a través de la música.",
+    url: "https://musicabalu.com",
+    siteName: "Musicabalú",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Musicabalú — Clases de música para bebés en Murcia",
+      },
+    ],
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Musicabalú | Música para Bebés en Murcia",
+    description: "Clases de música para bebés de 0 a 3 años en Murcia. Método Gordon (MLT).",
+    images: ["/og-image.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  verification: {
+    google: "5Qx9UWSt_4_C2bmgHPS7Cjvv4aQXiNbtQ1AVclPiRMI",
+  },
 };
 
 export default function RootLayout({ children }) {
