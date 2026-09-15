@@ -151,8 +151,8 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
                       fontWeight: 'bold' 
                     }}>
                       {e.paymentMethod === 'stripe' ? '💳 STRIPE' : '💵 EFECTIVO'}
-                      {e.paymentFrequency === 'monthly' && ' · M'}
-                      {e.paymentFrequency === 'quarterly' && ' · T'}
+                      {(e.paymentFrequency === 'monthly' || e.paymentFrequency === 'mensual') && ' · M'}
+                      {(e.paymentFrequency === 'quarterly' || e.paymentFrequency === 'trimestral') && ' · T'}
                     </span>
                   </td>
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
