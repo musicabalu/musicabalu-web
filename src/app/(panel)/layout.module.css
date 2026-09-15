@@ -136,7 +136,6 @@
   flex: 1;
   padding: 3rem 4rem;
   max-width: 1200px;
-  z-index: 1;
   overflow-y: auto;
   height: 100vh;
 }
