@@ -138,42 +138,58 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
         )}
 
         {selectedUser && (
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem', animation: 'fadeInUp 0.4s ease-out' }}>
-            
-            {/* Top Páginas del Usuario */}
-            <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px' }}>
-              <h3 style={{ fontSize: '1.1rem', color: '#4a5568', margin: '0 0 1rem 0' }}>📌 Secciones Favoritas</h3>
-              {selectedUser.topPages.length > 0 ? (
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {selectedUser.topPages.map((page, idx) => (
-                    <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: idx !== 2 ? '1px solid #e2e8f0' : 'none' }}>
-                      <span style={{ fontWeight: 500, color: '#2d3748' }}>{page.name}</span>
-                      <span style={{ color: 'var(--color-pink)', fontWeight: 'bold' }}>{page.vistas}</span>
-                    </li>
-                  ))}
-                </ul>
+          <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#4a5568', marginRight: '10px' }}>Nivel de Acceso:</span>
+              {selectedUser.hasComunidad ? (
+                <span style={{ background: '#e6fffa', color: '#319795', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✓ Comunidad / Presencial</span>
               ) : (
-                <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>Sin visitas registradas.</p>
+                <span style={{ background: '#fff5f5', color: '#e53e3e', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✕ Sin Comunidad</span>
+              )}
+              {selectedUser.hasFormaciones ? (
+                <span style={{ background: '#ebf4ff', color: '#3182ce', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✓ Formaciones</span>
+              ) : (
+                <span style={{ background: '#fff5f5', color: '#e53e3e', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✕ Sin Formaciones</span>
               )}
             </div>
 
-            {/* Top Audios del Usuario */}
-            <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px' }}>
-              <h3 style={{ fontSize: '1.1rem', color: '#4a5568', margin: '0 0 1rem 0' }}>🎧 Canciones Favoritas</h3>
-              {selectedUser.topAudios.length > 0 ? (
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {selectedUser.topAudios.map((audio, idx) => (
-                    <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: idx !== 2 ? '1px solid #e2e8f0' : 'none' }}>
-                      <span style={{ fontWeight: 500, color: '#2d3748' }}>{audio.name}</span>
-                      <span style={{ color: 'var(--color-green)', fontWeight: 'bold' }}>{audio.reproducciones}</span>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>Sin audios registrados.</p>
-              )}
-            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
+              
+              {/* Top Páginas del Usuario */}
+              <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px' }}>
+                <h3 style={{ fontSize: '1.1rem', color: '#4a5568', margin: '0 0 1rem 0' }}>📌 Secciones Favoritas</h3>
+                {selectedUser.topPages.length > 0 ? (
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {selectedUser.topPages.map((page, idx) => (
+                      <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: idx !== 2 ? '1px solid #e2e8f0' : 'none' }}>
+                        <span style={{ fontWeight: 500, color: '#2d3748' }}>{page.name}</span>
+                        <span style={{ color: 'var(--color-pink)', fontWeight: 'bold' }}>{page.vistas}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>Sin visitas registradas.</p>
+                )}
+              </div>
 
+              {/* Top Audios del Usuario */}
+              <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px' }}>
+                <h3 style={{ fontSize: '1.1rem', color: '#4a5568', margin: '0 0 1rem 0' }}>🎧 Canciones Favoritas</h3>
+                {selectedUser.topAudios.length > 0 ? (
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {selectedUser.topAudios.map((audio, idx) => (
+                      <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: idx !== 2 ? '1px solid #e2e8f0' : 'none' }}>
+                        <span style={{ fontWeight: 500, color: '#2d3748' }}>{audio.name}</span>
+                        <span style={{ color: 'var(--color-green)', fontWeight: 'bold' }}>{audio.reproducciones}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>Sin audios registrados.</p>
+                )}
+              </div>
+
+            </div>
           </div>
         )}
       </div>

@@ -23,7 +23,12 @@ export default async function AnaliticasPage() {
       user: {
         select: {
           name: true,
-          email: true
+          email: true,
+          role: true,
+          hasActiveSub: true,
+          enrollments: {
+            select: { status: true }
+          }
         }
       }
     }
@@ -39,9 +44,21 @@ export default async function AnaliticasPage() {
   logs.forEach(log => {
     const userKey = log.user?.email || 'Desconocido';
     if (!usersMap[userKey]) {
+      const u = log.user;
+      
+      let hasComunidad = false;
+      let hasFormaciones = false;
+      
+      if (u) {
+        hasComunidad = u.hasActiveSub || u.role === 'admin' || (u.enrollments && u.enrollments.some(e => e.status === 'active' || e.status === 'pending'));
+        hasFormaciones = u.role === 'educador' || u.role === 'admin';
+      }
+
       usersMap[userKey] = {
-        name: log.user?.name || userKey,
+        name: u?.name || userKey,
         email: userKey,
+        hasComunidad,
+        hasFormaciones,
         pageViews: {},
         audioPlays: {}
       };
@@ -87,6 +104,8 @@ export default async function AnaliticasPage() {
   const usersData = Object.values(usersMap).map(u => ({
     name: u.name,
     email: u.email,
+    hasComunidad: u.hasComunidad,
+    hasFormaciones: u.hasFormaciones,
     topPages: Object.keys(u.pageViews)
       .map(k => ({ name: k, vistas: u.pageViews[k] }))
       .sort((a, b) => b.vistas - a.vistas)
