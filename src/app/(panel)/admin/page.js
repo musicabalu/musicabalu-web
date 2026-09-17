@@ -82,8 +82,14 @@ export default async function AdminDashboard() {
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
         <Link href="/admin/actividad" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📊 Actividad</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Registro de acciones de usuarios</p>
+            <h3 className={styles.statTitle}>📋 Registro Actividad</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Lista diaria de acciones</p>
+          </div>
+        </Link>
+        <Link href="/admin/analiticas" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📊 Analíticas (Gráficas)</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Estadísticas de uso mensual</p>
           </div>
         </Link>
         <Link href="/admin/cronograma" style={{ textDecoration: 'none', color: 'inherit' }}>

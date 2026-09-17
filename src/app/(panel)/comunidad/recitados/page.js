@@ -8,6 +8,7 @@ import AudioList from '@/components/comunidad/AudioList';
 import BibliotecaTabs from '@/components/comunidad/BibliotecaTabs';
 
 const prisma = new PrismaClient();
+export const dynamic = 'force-dynamic';
 
 export default async function RecitadosPage() {
   const session = await getServerSession(authOptions);
