@@ -32,10 +32,13 @@ export default async function CancionesPage() {
     const fileContents = fs.readFileSync(titulosPath, 'utf8');
     const data = JSON.parse(fileContents);
 
-    // Filtrar solo canciones (ignorando karaokes y recitados)
-    Object.entries(data).forEach(([url, title]) => {
-      if (url.includes('canciones/')) {
-        tracks.push({ title, url, type: 'Canción' });
+    // Extraer las claves en el orden exacto en el que aparecen en el texto del archivo
+    const keysInOrder = Array.from(fileContents.matchAll(/"([^"]+)"\s*:/g)).map(m => m[1]);
+
+    // Filtrar solo canciones y mantener el orden estricto
+    keysInOrder.forEach((url) => {
+      if (url.includes('canciones/') && data[url]) {
+        tracks.push({ title: data[url], url, type: 'Canción' });
       }
     });
   } catch (error) {

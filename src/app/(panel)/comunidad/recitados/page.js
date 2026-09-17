@@ -32,10 +32,13 @@ export default async function RecitadosPage() {
     const fileContents = fs.readFileSync(titulosPath, 'utf8');
     const data = JSON.parse(fileContents);
 
-    // Filtrar solo recitados
-    Object.entries(data).forEach(([url, title]) => {
-      if (url.includes('recitados/')) {
-        tracks.push({ title, url, type: 'Recitado' });
+    // Extraer las claves en el orden exacto en el que aparecen en el texto del archivo
+    const keysInOrder = Array.from(fileContents.matchAll(/"([^"]+)"\s*:/g)).map(m => m[1]);
+
+    // Filtrar solo recitados y mantener el orden estricto
+    keysInOrder.forEach((url) => {
+      if (url.includes('recitados/') && data[url]) {
+        tracks.push({ title: data[url], url, type: 'Recitado' });
       }
     });
   } catch (error) {

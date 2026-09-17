@@ -19,19 +19,36 @@ export default async function AnaliticasPage() {
     },
     select: {
       action: true,
-      details: true
+      details: true,
+      user: {
+        select: {
+          name: true,
+          email: true
+        }
+      }
     }
   });
 
-  // Procesar Visitas a Páginas
+  // Procesar Visitas a Páginas y Reproducciones Globales
   const pageViews = {};
-  // Procesar Reproducciones de Audio
   const audioPlays = {};
+  
+  // Procesar por usuario
+  const usersMap = {};
 
   logs.forEach(log => {
+    const userKey = log.user?.email || 'Desconocido';
+    if (!usersMap[userKey]) {
+      usersMap[userKey] = {
+        name: log.user?.name || userKey,
+        email: userKey,
+        pageViews: {},
+        audioPlays: {}
+      };
+    }
+
     if (log.action === 'Visita de vista') {
       let page = log.details.replace('Accedió a: ', '').trim();
-      // Simplify page names for better charts
       if (page.startsWith('/comunidad/mi-clase')) page = 'Mi Clase';
       else if (page.startsWith('/comunidad/canciones')) page = 'Canciones';
       else if (page.startsWith('/comunidad/recitados')) page = 'Recitados';
@@ -42,24 +59,43 @@ export default async function AnaliticasPage() {
       else if (page.startsWith('/presencial')) page = 'Presencial';
       else if (page === '/') page = 'Landing';
 
-      pageViews[page] = (pageViews[page] || 0) + 1;
+      // Excluir Inicio de las analíticas
+      if (page !== 'Inicio') {
+        pageViews[page] = (pageViews[page] || 0) + 1;
+        usersMap[userKey].pageViews[page] = (usersMap[userKey].pageViews[page] || 0) + 1;
+      }
     } 
     else if (log.action === 'REPRODUCIR_AUDIO' || log.action === 'Reproducción') {
       let audio = log.details.replace('Escuchó: ', '').replace('(Compartida)', '').replace('(Compartido)', '').trim();
       audioPlays[audio] = (audioPlays[audio] || 0) + 1;
+      usersMap[userKey].audioPlays[audio] = (usersMap[userKey].audioPlays[audio] || 0) + 1;
     }
   });
 
-  // Formatear datos para Recharts y ordenar
+  // Formatear datos Globales
   const pageViewsData = Object.keys(pageViews)
     .map(key => ({ name: key, vistas: pageViews[key] }))
     .sort((a, b) => b.vistas - a.vistas)
-    .slice(0, 10); // Top 10
+    .slice(0, 10);
 
   const audioPlaysData = Object.keys(audioPlays)
     .map(key => ({ name: key, reproducciones: audioPlays[key] }))
     .sort((a, b) => b.reproducciones - a.reproducciones)
-    .slice(0, 10); // Top 10
+    .slice(0, 10);
+
+  // Formatear datos de Usuarios
+  const usersData = Object.values(usersMap).map(u => ({
+    name: u.name,
+    email: u.email,
+    topPages: Object.keys(u.pageViews)
+      .map(k => ({ name: k, vistas: u.pageViews[k] }))
+      .sort((a, b) => b.vistas - a.vistas)
+      .slice(0, 3),
+    topAudios: Object.keys(u.audioPlays)
+      .map(k => ({ name: k, reproducciones: u.audioPlays[k] }))
+      .sort((a, b) => b.reproducciones - a.reproducciones)
+      .slice(0, 3)
+  })).sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 20px 40px 20px' }}>
@@ -79,6 +115,7 @@ export default async function AnaliticasPage() {
       <AnalyticsDashboard 
         pageViewsData={pageViewsData} 
         audioPlaysData={audioPlaysData} 
+        usersData={usersData}
       />
     </div>
   );
