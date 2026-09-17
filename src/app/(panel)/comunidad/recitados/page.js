@@ -24,8 +24,8 @@ export default async function RecitadosPage() {
   const isPresential = user?.enrollments.some(e => e.status === 'active' || e.status === 'pending');
   const role = user?.role;
 
-  // Leer el titulos.json
-  const titulosPath = path.join(process.cwd(), 'public', 'audios', 'titulos.json');
+  // Leer el comunidad_titulos.json
+  const titulosPath = path.join(process.cwd(), 'public', 'audios', 'comunidad_titulos.json');
   let tracks = [];
 
   try {
