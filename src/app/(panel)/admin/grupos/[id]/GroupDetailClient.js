@@ -51,9 +51,17 @@ export default function GroupDetailClient({ group, allGroups }) {
 
   const toggleAttendance = async (enrollmentId, weekIndex) => {
     const currentStudentAtt = attendance[enrollmentId] || {};
-    const monthAtt = currentStudentAtt[currentMonth] || [false, false, false, false];
+    const monthAtt = currentStudentAtt[currentMonth] || [null, null, null, null];
     const newMonthAtt = [...monthAtt];
-    newMonthAtt[weekIndex] = !newMonthAtt[weekIndex];
+    
+    let currentState = newMonthAtt[weekIndex];
+    if (currentState === true) currentState = 'present';
+    if (currentState === false) currentState = null;
+
+    if (currentState === null) newMonthAtt[weekIndex] = 'present';
+    else if (currentState === 'present') newMonthAtt[weekIndex] = 'absent';
+    else newMonthAtt[weekIndex] = null;
+    
     const newStudentAtt = { ...currentStudentAtt, [currentMonth]: newMonthAtt };
 
     setAttendance(prev => ({ ...prev, [enrollmentId]: newStudentAtt }));
@@ -161,9 +169,17 @@ export default function GroupDetailClient({ group, allGroups }) {
                       🎂 Nacimiento: {e.childBirthDate ? new Date(e.childBirthDate).toLocaleDateString('es-ES') : 'Desconocida'} 
                       <span className={styles.ageBadge}>{ageText}</span>
                     </p>
-                    <p className={styles.parentInfo}>
+                    <p className={styles.parentInfo} style={{ marginBottom: '5px' }}>
                       👤 {e.parentName} &bull; ✉️ {e.email}
                     </p>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '0.75rem', background: '#e2e8f0', color: '#475569', padding: '2px 8px', borderRadius: '12px', fontWeight: '600' }}>
+                        💳 {e.paymentMethod === 'stripe' ? 'Stripe' : 'Efectivo'}
+                      </span>
+                      <span style={{ fontSize: '0.75rem', background: '#e2e8f0', color: '#475569', padding: '2px 8px', borderRadius: '12px', fontWeight: '600' }}>
+                        📅 {e.paymentFrequency === 'monthly' ? 'Mensual' : 'Trimestral'}
+                      </span>
+                    </div>
                     
                     {e.notes && (
                       <div style={{ background: '#FEFCBF', padding: '10px', borderRadius: '8px', fontSize: '0.9rem', marginTop: '10px', borderLeft: '4px solid #D69E2E' }}>
@@ -211,8 +227,9 @@ export default function GroupDetailClient({ group, allGroups }) {
                             onClick={() => toggleAttendance(e.id, weekIndex)}
                           >
                             <span className={styles.weekLabel}>S{weekIndex + 1}</span>
-                            <div className={`${styles.checkbox} ${stuAtt[weekIndex] ? styles.checkboxChecked : ''}`}>
-                              {stuAtt[weekIndex] && '✓'}
+                            <div className={`${styles.checkbox} ${(stuAtt[weekIndex] === 'present' || stuAtt[weekIndex] === true) ? styles.checkboxChecked : (stuAtt[weekIndex] === 'absent' ? styles.checkboxAbsent : '')}`}>
+                              {(stuAtt[weekIndex] === 'present' || stuAtt[weekIndex] === true) && '✓'}
+                              {stuAtt[weekIndex] === 'absent' && '✗'}
                             </div>
                           </div>
                         ))}
