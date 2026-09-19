@@ -13,6 +13,14 @@ export const metadata = {
     title: "Clases de Música para Bebés en Murcia | Musicabalú",
     description: "Educación musical temprana para bebés de 0 a 3 años en EMPI (Murcia). Método Gordon (MLT). Grupos muy reducidos con acompañamiento familiar.",
     url: "https://musicabalu.com/presencial",
+    images: [
+      {
+        url: "https://musicabalu.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Clases de música presenciales Musicabalú",
+      },
+    ],
     type: "website",
   },
 };
