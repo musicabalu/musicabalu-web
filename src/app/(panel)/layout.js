@@ -18,8 +18,9 @@ export default async function PanelServerLayout({ children }) {
     include: { enrollments: true },
   });
 
-  const hasFullAccess = user?.hasActiveSub || user?.enrollments.some(e => e.status === 'active');
-  const isPresential = user?.enrollments.some(e => e.status === 'active' || e.status === 'pending');
+  const isAdmin = user?.role === 'admin';
+  const hasFullAccess = isAdmin || user?.hasActiveSub || user?.enrollments.some(e => e.status === 'active');
+  const isPresential = isAdmin || user?.enrollments.some(e => e.status === 'active' || e.status === 'pending');
 
   return (
     <ClientLayout user={session.user} hasFullAccess={hasFullAccess} isPresential={isPresential} role={user?.role}>
