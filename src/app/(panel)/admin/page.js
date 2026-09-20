@@ -10,7 +10,10 @@ export default async function AdminDashboard() {
   const groups = await prisma.group.findMany({
     include: {
       enrollments: {
-        where: { status: { in: ['active', 'pending'] } }
+        where: { 
+          status: { in: ['active', 'pending'] },
+          email: { not: 'jamusanchez@gmail.com' }
+        }
       }
     }
   });
@@ -20,7 +23,10 @@ export default async function AdminDashboard() {
   });
 
   const enrollments = await prisma.enrollment.findMany({
-    where: { status: { in: ['active', 'pending'] } }
+    where: { 
+      status: { in: ['active', 'pending'] },
+      email: { not: 'jamusanchez@gmail.com' }
+    }
   });
 
   // 2. Cálculos

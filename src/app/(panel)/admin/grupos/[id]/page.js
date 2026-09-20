@@ -12,7 +12,10 @@ export default async function GroupPage({ params }) {
     where: { id },
     include: {
       enrollments: {
-        where: { status: { in: ['active', 'pending'] } },
+        where: { 
+          status: { in: ['active', 'pending'] },
+          email: { not: 'jamusanchez@gmail.com' }
+        },
         orderBy: { childName: 'asc' }
       }
     }

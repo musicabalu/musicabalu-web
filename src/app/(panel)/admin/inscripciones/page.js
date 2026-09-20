@@ -14,7 +14,8 @@ export default async function InscripcionesPage({ searchParams }) {
     include: {
       enrollments: {
         where: {
-          status: 'active'
+          status: 'active',
+          email: { not: 'jamusanchez@gmail.com' }
         },
         orderBy: {
           createdAt: 'asc'
