@@ -58,7 +58,7 @@ export default async function ActividadPage({ searchParams }) {
         where: {
           user: {
             email: {
-              notIn: ['musicabalu@gmail.com', 'hola@musicabalu.com']
+              notIn: ['musicabalu@gmail.com', 'hola@musicabalu.com', 'jamusanchez@gmail.com']
             }
           },
           createdAt: {
