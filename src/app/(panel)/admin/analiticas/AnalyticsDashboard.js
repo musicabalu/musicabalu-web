@@ -10,6 +10,9 @@ const COLORS = ['#F4436C', '#AADB1E', '#38B2AC', '#F6E05E', '#ED8936', '#9F7AEA'
 export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, usersData }) {
   // Manejo de hidratación para evitar errores de mismatch en SVG de Recharts
   const [mounted, setMounted] = useState(false);
+  const [selectedUserEmail, setSelectedUserEmail] = useState('');
+  const [selectedFormacionEmail, setSelectedFormacionEmail] = useState('');
+
   const familiasData = usersData?.filter(u => u.hasComunidad) || [];
   const formacionesData = usersData?.filter(u => u.hasFormaciones) || [];
 
