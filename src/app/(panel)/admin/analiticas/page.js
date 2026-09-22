@@ -41,6 +41,37 @@ export default async function AnaliticasPage() {
   // Procesar por usuario
   const usersMap = {};
 
+  // Fetch all users to ensure everyone (especially 'educador' without recent activity) appears in the dropdowns
+  const allUsers = await prisma.user.findMany({
+    where: {
+      email: { notIn: ['musicabalu@gmail.com', 'hola@musicabalu.com', 'jamusanchez@gmail.com'] }
+    },
+    select: {
+      name: true,
+      email: true,
+      role: true,
+      hasActiveSub: true,
+      enrollments: {
+        select: { status: true }
+      }
+    }
+  });
+
+  allUsers.forEach(u => {
+    if (!u.email) return;
+    const hasComunidad = u.hasActiveSub || u.role === 'admin' || (u.enrollments && u.enrollments.some(e => e.status === 'active' || e.status === 'pending'));
+    const hasFormaciones = u.role === 'educador' || u.role === 'admin';
+    
+    usersMap[u.email] = {
+      name: u.name || u.email,
+      email: u.email,
+      hasComunidad,
+      hasFormaciones,
+      pageViews: {},
+      audioPlays: {}
+    };
+  });
+
   logs.forEach(log => {
     const userKey = log.user?.email || 'Desconocido';
     if (!usersMap[userKey]) {
