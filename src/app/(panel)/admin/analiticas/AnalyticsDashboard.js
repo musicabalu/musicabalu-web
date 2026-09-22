@@ -13,6 +13,22 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
   const familiasData = usersData?.filter(u => u.hasComunidad) || [];
   const formacionesData = usersData?.filter(u => u.hasFormaciones) || [];
 
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return <div style={{ minHeight: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>Cargando gráficas...</div>;
+
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: '8px', padding: '10px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}>
+          <p style={{ margin: 0, fontWeight: 'bold', color: '#2d3748' }}>{label || payload[0].name}</p>
+          <p style={{ margin: 0, color: 'var(--color-pink)' }}>{`${payload[0].value} interacciones`}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const UserAnalyticsSection = ({ title, icon, usersList, selectedEmail, setSelectedEmail, emptyText }) => {
     const selectedUser = usersList?.find(u => u.email === selectedEmail);
     return (
