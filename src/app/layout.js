@@ -25,9 +25,9 @@ export const metadata = {
     siteName: "Musicabalú",
     images: [
       {
-        url: "https://musicabalu.com/og-image.jpg",
-        width: 1200,
-        height: 630,
+        url: "https://musicabalu.com/og-logo.png",
+        width: 418,
+        height: 418,
         alt: "Musicabalú — Clases de música para bebés en Murcia",
       },
     ],
@@ -38,7 +38,7 @@ export const metadata = {
     card: "summary_large_image",
     title: "Musicabalú | Música para Bebés en Murcia",
     description: "Clases de música para bebés de 0 a 3 años en Murcia. Método Gordon (MLT).",
-    images: ["/og-image.jpg"],
+    images: ["/og-logo.png"],
   },
   robots: {
     index: true,
