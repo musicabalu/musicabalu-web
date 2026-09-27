@@ -11,6 +11,8 @@ const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export default async function CancionesPage() {
+  const FREE_CANCIONES = ["La ranita quiere cantar", "Cumbia Balú"];
+  
   const session = await getServerSession(authOptions);
   
   if (!session) return null;
@@ -50,7 +52,7 @@ export default async function CancionesPage() {
       <BibliotecaTabs isPresential={isPresential} role={role} />
 
       <div style={{ paddingBottom: '120px', marginTop: '2rem' }}>
-        <AudioList tracks={tracks} hasFullAccess={hasFullAccess} />
+        <AudioList tracks={tracks} hasFullAccess={hasFullAccess} freeTitles={FREE_CANCIONES} />
       </div>
     </div>
   );

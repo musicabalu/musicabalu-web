@@ -4,12 +4,12 @@ import { useState } from 'react';
 import Link from 'next/link';
 import AudioPlayer from '@/components/AudioPlayer';
 
-export default function AudioList({ tracks, hasFullAccess }) {
+export default function AudioList({ tracks, hasFullAccess, freeTitles = [] }) {
   const [currentIndex, setCurrentIndex] = useState(null);
 
   const handlePlayPause = (index) => {
-    // Si no tiene acceso total, bloqueamos a partir de la pista 2 (índice 2 o mayor)
-    if (!hasFullAccess && index >= 2) {
+    const isLocked = !hasFullAccess && (freeTitles.length > 0 ? !freeTitles.includes(tracks[index].title) : index >= 2);
+    if (isLocked) {
       alert("Para escuchar esta pista necesitas estar matriculado o suscribirte a La Comunidad.");
       return;
     }
@@ -28,8 +28,9 @@ export default function AudioList({ tracks, hasFullAccess }) {
   const handleNext = () => {
     if (currentIndex !== null && tracks.length > 0) {
       let nextIndex = (currentIndex + 1) % tracks.length;
-      if (!hasFullAccess && nextIndex >= 2) {
-        nextIndex = 0; // Vuelve al principio si la siguiente está bloqueada
+      const isNextLocked = !hasFullAccess && (freeTitles.length > 0 ? !freeTitles.includes(tracks[nextIndex].title) : nextIndex >= 2);
+      if (isNextLocked) {
+        nextIndex = tracks.findIndex((t, i) => hasFullAccess || (freeTitles.length > 0 ? freeTitles.includes(t.title) : i < 2));
       }
       setCurrentIndex(nextIndex);
     }
@@ -38,8 +39,15 @@ export default function AudioList({ tracks, hasFullAccess }) {
   const handlePrev = () => {
     if (currentIndex !== null && tracks.length > 0) {
       let prevIndex = (currentIndex - 1 + tracks.length) % tracks.length;
-      if (!hasFullAccess && prevIndex >= 2) {
-        prevIndex = 1; // Si va hacia atrás y cae en bloqueadas, va a la última permitida
+      const isPrevLocked = !hasFullAccess && (freeTitles.length > 0 ? !freeTitles.includes(tracks[prevIndex].title) : prevIndex >= 2);
+      if (isPrevLocked) {
+        // Encontrar el último desbloqueado
+        for (let i = tracks.length - 1; i >= 0; i--) {
+          if (hasFullAccess || (freeTitles.length > 0 ? freeTitles.includes(tracks[i].title) : i < 2)) {
+            prevIndex = i;
+            break;
+          }
+        }
       }
       setCurrentIndex(prevIndex);
     }
@@ -75,7 +83,7 @@ export default function AudioList({ tracks, hasFullAccess }) {
         gap: '15px' 
       }}>
         {tracks.map((track, index) => {
-          const isLocked = !hasFullAccess && index >= 2;
+          const isLocked = !hasFullAccess && (freeTitles.length > 0 ? !freeTitles.includes(track.title) : index >= 2);
           const isActive = currentIndex === index;
 
           return (

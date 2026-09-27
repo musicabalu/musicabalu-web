@@ -150,3 +150,16 @@ model ActivityLog {
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model Waitlist {
+  id             String   @id @default(cuid())
+  childName      String
+  childBirthDate String?
+  parentName     String
+  contact        String
+  desiredGroups  String
+  notes          String?  @db.Text
+  status         String   @default("pending") // pending, contacted, enrolled, rejected
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}

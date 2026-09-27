@@ -86,6 +86,12 @@ export default async function AdminDashboard() {
       {/* Herramientas de Gestión */}
       <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+        <Link href="/admin/lista-espera" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>⏳ Lista de Espera</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Familias pendientes de plaza</p>
+          </div>
+        </Link>
         <Link href="/admin/actividad" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>📋 Registro Actividad</h3>

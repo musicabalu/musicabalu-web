@@ -146,9 +146,8 @@ export default async function DashboardPage({ searchParams }) {
               </>
             )}
 
-            {/* Sección Comunidad (Solo visible si tienen acceso activo o presencial) */}
-            {(hasActiveSub || isPresential) && (
-              <>
+            {/* Sección Comunidad (Pública para Freemium) */}
+            <>
                 {/* 2. Canciones */}
                 <Link href="/comunidad/canciones" style={{ textDecoration: 'none' }}>
                   <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-pink)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
@@ -185,7 +184,6 @@ export default async function DashboardPage({ searchParams }) {
                   </section>
                 </Link>
               </>
-            )}
 
             {/* 5. Formaciones (B2B) */}
             {isB2B && (
@@ -219,21 +217,8 @@ export default async function DashboardPage({ searchParams }) {
                 </div>
               </section>
             </Link>
-            {/* 7. Mensaje para usuarios sin acceso (Cuenta gratuita / Sin clase presencial) */}
-            {!isPresential && !hasActiveSub && !isB2B && (
-              <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-cyan)", height: '100%' }}>
-                <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
-                  🧸 La Comunidad Musicabalú
-                </h2>
-                <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
-                  ¡Hola! Tu cuenta está lista, pero en estos momentos estamos preparando los últimos detalles de nuestra plataforma digital. 
-                  Muy pronto abriremos las suscripciones para que puedas disfrutar de toda nuestra música y recursos pedagógicos desde casa.
-                </p>
-                <div style={{ marginTop: '16px', padding: '12px', backgroundColor: '#edf2f7', borderRadius: '8px', fontSize: '0.85rem', color: '#4a5568', textAlign: 'center' }}>
-                  ⏳ Próximamente...
-                </div>
-              </section>
-            )}
+            */}
+
           </>
         )}
       </div>
