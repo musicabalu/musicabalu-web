@@ -6,6 +6,10 @@ import path from 'path';
 export async function GET(request) {
   const url = new URL(request.url);
   const code = url.searchParams.get('code');
+  const host = url.host;
+  const protocol = url.protocol;
+
+  const redirectUri = `${protocol}//${host}/api/google/callback`;
 
   if (!code) {
     return NextResponse.json({ error: 'No code provided' }, { status: 400 });
@@ -15,7 +19,7 @@ export async function GET(request) {
     const oauth2Client = new google.auth.OAuth2(
       process.env.GOOGLE_CLIENT_ID,
       process.env.GOOGLE_CLIENT_SECRET,
-      'http://localhost:3000/api/google/callback'
+      redirectUri
     );
 
     const { tokens } = await oauth2Client.getToken(code);
