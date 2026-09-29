@@ -15,6 +15,9 @@ export default async function AdminDashboard() {
           email: { not: 'jamusanchez@gmail.com' }
         }
       }
+    },
+    orderBy: {
+      schedule: 'asc'
     }
   });
 
