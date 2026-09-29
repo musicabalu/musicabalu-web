@@ -135,7 +135,7 @@ export default function GuionesAdminPage() {
               backgroundColor: 'white', 
               borderRadius: '12px',
               border: '1px solid var(--color-border)',
-              borderLeft: \`6px solid \${getStatusColor(script.status)}\`,
+              borderLeft: `6px solid ${getStatusColor(script.status)}`,
               overflow: 'hidden'
             }}
           >
