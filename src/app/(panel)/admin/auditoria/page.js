@@ -20,7 +20,7 @@ export default async function AuditoriaDashboard() {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <h1 className={styles.title}>Auditoría y Mantenimiento</h1>
+        <h1 className={styles.title}>Auditoría, Mantenimiento y Backups</h1>
         <p className={styles.subtitle}>Herramientas para mantener la plataforma sana</p>
       </header>
 
@@ -54,6 +54,26 @@ export default async function AuditoriaDashboard() {
           <CleanupButton />
         </div>
 
+        {/* Panel de Backups */}
+        <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+          <h3 style={{ marginTop: 0, color: '#2C3333' }}>Copias de Seguridad / Backups (Quincenal)</h3>
+          <p style={{ color: '#4A5568', fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '10px' }}>
+            Es recomendable hacer una copia de seguridad manual de los datos cada dos semanas para no perder información crítica de las familias.
+          </p>
+          <div style={{ background: '#F7FAFC', padding: '12px', borderRadius: '8px', border: '1px solid #E2E8F0', fontSize: '0.85rem', color: '#4A5568' }}>
+            <ol style={{ margin: 0, paddingLeft: '20px', lineHeight: '1.6' }}>
+              <li>Entra en tu cuenta de <a href="https://supabase.com" target="_blank" rel="noreferrer" style={{color: '#3182CE'}}>Supabase</a> y ve al proyecto <strong>Musicabalu</strong>.</li>
+              <li>En el menú lateral izquierdo, haz clic en <strong>Table Editor</strong>.</li>
+              <li>Haz clic en la tabla <code>Enrollment</code> (Inscripciones).</li>
+              <li>Arriba a la derecha, pulsa en el botón <strong>Export</strong> y elige <strong>CSV</strong>.</li>
+              <li>Repite el proceso para las tablas <code>User</code> (Familias) y <code>VideoScript</code> (Tus guiones).</li>
+            </ol>
+          </div>
+          <p style={{ fontSize: '0.75rem', color: '#718096', marginTop: '10px' }}>
+            * Guarda esos 3 archivos en una carpeta segura de tu ordenador.
+          </p>
+        </div>
+
         {/* Panel de Dependencias */}
         <div style={{ background: '#fff', padding: '24px', borderRadius: '12px', border: '1px solid #E2E8F0', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
           <h3 style={{ marginTop: 0, color: '#2C3333' }}>Actualización de Código (Anual)</h3>
@@ -61,7 +81,7 @@ export default async function AuditoriaDashboard() {
             Para mantener la seguridad contra hackeos, es recomendable actualizar las librerías del servidor 1 o 2 veces al año. Esta acción la debe realizar un programador o técnico desde la consola.
           </p>
           <div style={{ background: '#1A202C', color: '#A0AEC0', padding: '12px', borderRadius: '8px', fontSize: '0.85rem', fontFamily: 'monospace', marginTop: '1rem' }}>
-            npm outdated<br/>
+            npm audit fix<br/>
             npm update
           </div>
           <p style={{ fontSize: '0.75rem', color: '#718096', marginTop: '8px' }}>
