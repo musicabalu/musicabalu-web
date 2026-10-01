@@ -186,7 +186,7 @@ export default function GroupDetailClient({ group, allGroups }) {
                         💳 {e.paymentMethod === 'stripe' ? 'Stripe' : 'Efectivo'}
                       </span>
                       <span style={{ fontSize: '0.75rem', background: '#e2e8f0', color: '#475569', padding: '2px 8px', borderRadius: '12px', fontWeight: '600' }}>
-                        📅 {e.paymentFrequency === 'monthly' ? 'Mensual' : 'Trimestral'}
+                        📅 {(e.paymentFrequency === 'monthly' || e.paymentFrequency === 'mensual') ? 'Mensual' : 'Trimestral'}
                       </span>
                     </div>
                     
