@@ -7,6 +7,7 @@ export default function GuionesAdminPage() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
+  const [draggedIndex, setDraggedIndex] = useState(null);
 
   useEffect(() => {
     fetchScripts();
@@ -65,6 +66,30 @@ export default function GuionesAdminPage() {
     newScripts.forEach((s, i) => s.order = i);
     setScripts(newScripts);
     saveOrder(newScripts);
+  };
+
+  const handleDragStart = (e, index) => {
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", index);
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e, index) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    
+    const newScripts = [...scripts];
+    const item = newScripts.splice(draggedIndex, 1)[0];
+    newScripts.splice(index, 0, item);
+    
+    newScripts.forEach((s, i) => s.order = i);
+    setScripts(newScripts);
+    saveOrder(newScripts);
+    setDraggedIndex(null);
   };
 
   const saveOrder = async (currentScripts) => {
@@ -131,12 +156,18 @@ export default function GuionesAdminPage() {
         {scripts.map((script, index) => (
           <div 
             key={script.id} 
+            draggable
+            onDragStart={(e) => handleDragStart(e, index)}
+            onDragOver={handleDragOver}
+            onDrop={(e) => handleDrop(e, index)}
             style={{ 
               backgroundColor: 'white', 
               borderRadius: '12px',
               border: '1px solid var(--color-border)',
               borderLeft: `6px solid ${getStatusColor(script.status)}`,
-              overflow: 'hidden'
+              overflow: 'hidden',
+              cursor: 'grab',
+              opacity: draggedIndex === index ? 0.5 : 1
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', padding: '1rem' }}>
@@ -159,7 +190,7 @@ export default function GuionesAdminPage() {
 
               <div style={{ flex: 1, cursor: 'pointer' }} onClick={() => toggleExpand(script.id)}>
                 <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--color-dark)' }}>
-                  {index + 1}. {script.title.replace('🎬 ', '')}
+                  {index + 1}. {script.title.replace('🎬 ', '').replace(/^(?:Píldora|Pildora)\s*\d+[\.\-\:]?\s*/i, '')}
                 </h3>
               </div>
 
