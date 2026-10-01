@@ -50,6 +50,8 @@ export async function PATCH(req, { params }) {
     if (data.notes !== undefined) updateData.notes = data.notes;
     if (data.groupId !== undefined) updateData.groupId = data.groupId;
     if (data.isEmpi !== undefined) updateData.isEmpi = data.isEmpi;
+    if (data.paymentMethod !== undefined) updateData.paymentMethod = data.paymentMethod;
+    if (data.paymentFrequency !== undefined) updateData.paymentFrequency = data.paymentFrequency;
 
     const updatedEnrollment = await prisma.enrollment.update({
       where: { id: id },

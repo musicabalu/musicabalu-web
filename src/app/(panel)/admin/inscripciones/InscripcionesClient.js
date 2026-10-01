@@ -1,9 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import styles from './inscripciones.module.css';
 
 export default function InscripcionesClient({ initialGroups, initialSearch = '' }) {
+  const router = useRouter();
   // Aplanar todos los alumnos en una sola lista
   const allEnrollments = initialGroups.flatMap(g => 
     g.enrollments.map(e => ({
@@ -16,6 +18,34 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
   const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [sortConfig, setSortConfig] = useState({ key: 'childName', direction: 'asc' });
   const [selectedNote, setSelectedNote] = useState(null);
+  const [editingPayment, setEditingPayment] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  
+  const handleSavePayment = async () => {
+    if (!editingPayment) return;
+    setIsSaving(true);
+    try {
+      const res = await fetch(`/api/admin/enrollments/${editingPayment.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          paymentMethod: editingPayment.paymentMethod,
+          paymentFrequency: editingPayment.paymentFrequency
+        })
+      });
+      if (res.ok) {
+        setEditingPayment(null);
+        router.refresh();
+      } else {
+        alert('Error al guardar');
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Error de conexión');
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   // Filtrar
   const filteredEnrollments = allEnrollments.filter(e => 
@@ -142,18 +172,27 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
                     )}
                   </td>
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
-                    <span style={{ 
-                      padding: '4px 8px', 
-                      borderRadius: '12px', 
-                      backgroundColor: e.paymentMethod === 'stripe' ? '#dcfce7' : '#fef3c7', 
-                      color: e.paymentMethod === 'stripe' ? '#166534' : '#b45309', 
-                      fontSize: '0.8rem', 
-                      fontWeight: 'bold' 
-                    }}>
-                      {e.paymentMethod === 'stripe' ? '💳 STRIPE' : '💵 EFECTIVO'}
-                      {(e.paymentFrequency === 'monthly' || e.paymentFrequency === 'mensual') && ' · M'}
-                      {(e.paymentFrequency === 'quarterly' || e.paymentFrequency === 'trimestral') && ' · T'}
-                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                      <span style={{ 
+                        padding: '4px 8px', 
+                        borderRadius: '12px', 
+                        backgroundColor: e.paymentMethod === 'stripe' ? '#dcfce7' : '#fef3c7', 
+                        color: e.paymentMethod === 'stripe' ? '#166534' : '#b45309', 
+                        fontSize: '0.8rem', 
+                        fontWeight: 'bold' 
+                      }}>
+                        {e.paymentMethod === 'stripe' ? '💳 STRIPE' : '💵 EFECTIVO'}
+                        {(e.paymentFrequency === 'monthly' || e.paymentFrequency === 'mensual') && ' · M'}
+                        {(e.paymentFrequency === 'quarterly' || e.paymentFrequency === 'trimestral') && ' · T'}
+                      </span>
+                      <button 
+                        onClick={() => setEditingPayment({ ...e })}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', opacity: 0.6 }}
+                        title="Editar pago"
+                      >
+                        ✏️
+                      </button>
+                    </div>
                   </td>
                   <td style={{ padding: '1rem', textAlign: 'center' }}>
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
@@ -174,6 +213,55 @@ export default function InscripcionesClient({ initialGroups, initialSearch = '' 
           </tbody>
         </table>
       </div>
+
+      {/* Modal para Editar Pago */}
+      {editingPayment && (
+        <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 1000 }} onClick={() => setEditingPayment(null)}>
+          <div style={{ backgroundColor: 'white', padding: '2rem', borderRadius: '12px', maxWidth: '400px', width: '90%', boxShadow: '0 10px 15px rgba(0,0,0,0.1)' }} onClick={e => e.stopPropagation()}>
+            <h3 style={{ marginTop: 0, marginBottom: '1.5rem', color: '#2d3748' }}>Editar Pago de {editingPayment.childName}</h3>
+            
+            <div style={{ marginBottom: '1rem' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568' }}>Método de Pago</label>
+              <select 
+                value={editingPayment.paymentMethod} 
+                onChange={e => setEditingPayment({...editingPayment, paymentMethod: e.target.value})}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e0' }}
+              >
+                <option value="stripe">Stripe</option>
+                <option value="efectivo">Efectivo</option>
+              </select>
+            </div>
+
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 'bold', color: '#4a5568' }}>Frecuencia</label>
+              <select 
+                value={editingPayment.paymentFrequency === 'mensual' ? 'monthly' : (editingPayment.paymentFrequency === 'trimestral' ? 'quarterly' : editingPayment.paymentFrequency)} 
+                onChange={e => setEditingPayment({...editingPayment, paymentFrequency: e.target.value})}
+                style={{ width: '100%', padding: '10px', borderRadius: '8px', border: '1px solid #cbd5e0' }}
+              >
+                <option value="monthly">Mensual</option>
+                <option value="quarterly">Trimestral</option>
+              </select>
+            </div>
+
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button 
+                onClick={() => setEditingPayment(null)} 
+                style={{ padding: '10px', backgroundColor: '#e2e8f0', color: '#4a5568', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold', flex: 1 }}
+              >
+                Cancelar
+              </button>
+              <button 
+                onClick={handleSavePayment} 
+                disabled={isSaving}
+                style={{ padding: '10px', backgroundColor: 'var(--color-pink)', color: 'white', border: 'none', borderRadius: '8px', cursor: isSaving ? 'not-allowed' : 'pointer', fontWeight: 'bold', flex: 1, opacity: isSaving ? 0.7 : 1 }}
+              >
+                {isSaving ? 'Guardando...' : 'Guardar Cambios'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal para Notas */}
       {selectedNote && (
