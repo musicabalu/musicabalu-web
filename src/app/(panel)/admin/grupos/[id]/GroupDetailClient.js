@@ -5,15 +5,18 @@ import Link from 'next/link';
 import styles from './grupo.module.css';
 import { useRouter } from 'next/navigation';
 
-// Helper: Calcular edad
-function calculateAge(birthDateString) {
+// Helper: Calcular edad referenciada al mes seleccionado
+function calculateAge(birthDateString, targetMonthStr) {
   if (!birthDateString) return '?';
   const birthDate = new Date(birthDateString);
-  const today = new Date();
   
-  let months = (today.getFullYear() - birthDate.getFullYear()) * 12;
+  // targetMonthStr viene como "YYYY-MM"
+  const [year, month] = targetMonthStr.split('-');
+  const targetDate = new Date(parseInt(year), parseInt(month) - 1, 15);
+  
+  let months = (targetDate.getFullYear() - birthDate.getFullYear()) * 12;
   months -= birthDate.getMonth();
-  months += today.getMonth();
+  months += targetDate.getMonth();
   
   if (months <= 0) return 'Recién nacido';
   if (months < 24) return `${months} meses`;
@@ -45,7 +48,13 @@ export default function GroupDetailClient({ group, allGroups }) {
     return initialState;
   });
 
-  const [currentMonth, setCurrentMonth] = useState('2026-09');
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const today = new Date();
+    const y = today.getFullYear();
+    const m = String(today.getMonth() + 1).padStart(2, '0');
+    const monthStr = `${y}-${m}`;
+    return monthsList.includes(monthStr) ? monthStr : '2026-09';
+  });
   const [isDeleting, setIsDeleting] = useState(false);
   const router = useRouter();
 
@@ -153,7 +162,7 @@ export default function GroupDetailClient({ group, allGroups }) {
           <p>No hay alumnos en este grupo aún.</p>
         ) : (
           group.enrollments.map(e => {
-            const ageText = calculateAge(e.childBirthDate);
+            const ageText = calculateAge(e.childBirthDate, currentMonth);
             const stuAtt = attendance[e.id]?.[currentMonth] || [false, false, false, false];
 
             return (

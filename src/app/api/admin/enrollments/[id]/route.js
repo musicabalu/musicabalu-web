@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { PrismaClient } from '@prisma/client';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { revalidatePath } from 'next/cache';
 
 const prisma = new PrismaClient();
 
@@ -57,6 +58,8 @@ export async function PATCH(req, { params }) {
       where: { id: id },
       data: updateData
     });
+
+    revalidatePath('/admin', 'layout');
 
     return NextResponse.json({ success: true, enrollment: updatedEnrollment });
     
