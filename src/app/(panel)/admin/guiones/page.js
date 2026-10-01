@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function GuionesAdminPage() {
   const [scripts, setScripts] = useState([]);
@@ -134,10 +135,13 @@ export default function GuionesAdminPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h1 style={{ color: 'var(--color-pink)', marginBottom: '0.5rem' }}>Píldoras y Guiones</h1>
-          <p style={{ color: 'var(--color-dark)' }}>
+          <p style={{ color: 'var(--color-dark)', marginBottom: '1.5rem' }}>
             Arrastra o usa las flechas para ordenar tus grabaciones.
             {saving && <span style={{ color: 'var(--color-cyan)', marginLeft: '1rem', fontSize: '0.9rem' }}>Guardando orden...</span>}
           </p>
+          <Link href="/admin" style={{ display: 'inline-flex', alignItems: 'center', color: '#718096', textDecoration: 'none', fontWeight: '500', fontSize: '0.9rem' }}>
+            <span style={{ marginRight: '8px' }}>←</span> Volver a Panel de Control
+          </Link>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.9rem' }}>
