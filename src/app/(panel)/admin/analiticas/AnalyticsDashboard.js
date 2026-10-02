@@ -13,6 +13,7 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
   const [mounted, setMounted] = useState(false);
   const [selectedUserEmail, setSelectedUserEmail] = useState('');
   const [selectedFormacionEmail, setSelectedFormacionEmail] = useState('');
+  const [sortConfig, setSortConfig] = useState({ key: 'totalActivity', direction: 'desc' });
 
   const familiasData = usersData?.filter(u => u.hasComunidad) || [];
   const formacionesData = usersData?.filter(u => u.hasFormaciones) || [];
@@ -216,18 +217,64 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
           <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#718096', fontSize: '0.9rem' }}>
-                <th style={{ padding: '12px 8px' }}>Usuario</th>
-                <th style={{ padding: '12px 8px' }}>Perfil</th>
-                <th style={{ padding: '12px 8px', textAlign: 'center' }}>Vistas</th>
-                <th style={{ padding: '12px 8px', textAlign: 'center' }}>Audios</th>
-                <th style={{ padding: '12px 8px' }}>Última conexión</th>
+                {[
+                  { label: 'Usuario', key: 'name' },
+                  { label: 'Perfil', key: 'profile' },
+                  { label: 'Vistas', key: 'totalViews', center: true },
+                  { label: 'Audios', key: 'totalAudios', center: true },
+                  { label: 'Última conexión', key: 'lastConnection' }
+                ].map((col) => (
+                  <th 
+                    key={col.key}
+                    onClick={() => {
+                      let direction = 'desc';
+                      if (sortConfig.key === col.key && sortConfig.direction === 'desc') {
+                        direction = 'asc';
+                      }
+                      setSortConfig({ key: col.key, direction });
+                    }}
+                    style={{ 
+                      padding: '12px 8px', 
+                      cursor: 'pointer', 
+                      userSelect: 'none',
+                      textAlign: col.center ? 'center' : 'left'
+                    }}
+                  >
+                    {col.label} {sortConfig.key === col.key ? (sortConfig.direction === 'asc' ? '↑' : '↓') : '↕'}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {usersData
-                .filter(u => u.totalViews > 0 || u.totalAudios > 0)
-                .sort((a, b) => (b.totalViews + b.totalAudios) - (a.totalViews + a.totalAudios))
-                .map((u, idx) => (
+              {(() => {
+                let sortableUsers = [...usersData].filter(u => u.totalViews > 0 || u.totalAudios > 0);
+                sortableUsers.sort((a, b) => {
+                  let aVal, bVal;
+                  if (sortConfig.key === 'name') {
+                    aVal = a.name.toLowerCase();
+                    bVal = b.name.toLowerCase();
+                  } else if (sortConfig.key === 'profile') {
+                    aVal = (a.hasComunidad ? 1 : 0) + (a.hasFormaciones ? 2 : 0);
+                    bVal = (b.hasComunidad ? 1 : 0) + (b.hasFormaciones ? 2 : 0);
+                  } else if (sortConfig.key === 'totalViews') {
+                    aVal = a.totalViews;
+                    bVal = b.totalViews;
+                  } else if (sortConfig.key === 'totalAudios') {
+                    aVal = a.totalAudios;
+                    bVal = b.totalAudios;
+                  } else if (sortConfig.key === 'lastConnection') {
+                    aVal = a.lastConnection ? new Date(a.lastConnection).getTime() : 0;
+                    bVal = b.lastConnection ? new Date(b.lastConnection).getTime() : 0;
+                  } else {
+                    aVal = a.totalViews + a.totalAudios;
+                    bVal = b.totalViews + b.totalAudios;
+                  }
+                  if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
+                  if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
+                  return 0;
+                });
+                
+                return sortableUsers.map((u, idx) => (
                 <tr key={u.email} style={{ borderBottom: '1px solid #edf2f7', background: idx % 2 === 0 ? '#ffffff' : '#f7fafc' }}>
                   <td style={{ padding: '12px 8px' }}>
                     <div style={{ fontWeight: '600', color: '#2d3748' }}>{u.name}</div>
@@ -245,7 +292,7 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
                     {u.lastConnection ? new Date(u.lastConnection).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-'}
                   </td>
                 </tr>
-              ))}
+              ))})()}
             </tbody>
           </table>
         </div>
