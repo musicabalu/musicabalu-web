@@ -204,6 +204,8 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
             </div>
           )}
         </div>
+      </div>
+      
       {/* Resumen Global de Usuarios */}
       <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
         <h2 style={{ fontSize: '1.4rem', color: '#2d3748', margin: '0 0 1.5rem 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
