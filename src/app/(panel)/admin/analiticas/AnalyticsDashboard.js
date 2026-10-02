@@ -4,6 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, 
   PieChart, Pie, Cell, Legend 
 } from 'recharts';
+import Link from 'next/link';
 
 const COLORS = ['#F4436C', '#AADB1E', '#38B2AC', '#F6E05E', '#ED8936', '#9F7AEA', '#4299E1', '#E53E3E', '#319795', '#D69E2E'];
 
@@ -164,9 +165,14 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
 
         {/* Gráfica de Canciones Más Escuchadas */}
         <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
-          <h2 style={{ fontSize: '1.4rem', color: '#2d3748', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span>🎵</span> Top Audios Más Escuchados
-          </h2>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '10px' }}>
+            <h2 style={{ fontSize: '1.4rem', color: '#2d3748', margin: 0, display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span>🎵</span> Top Audios Más Escuchados
+            </h2>
+            <Link href="/admin/analiticas/audios" style={{ fontSize: '0.9rem', fontWeight: 'bold', color: 'var(--color-cyan)', textDecoration: 'none', background: 'var(--color-bg-alt)', padding: '5px 12px', borderRadius: '20px' }}>
+              Ver todas las estadísticas →
+            </Link>
+          </div>
           {audioPlaysData.length === 0 ? (
             <p style={{ textAlign: 'center', color: '#a0aec0', fontStyle: 'italic' }}>No hay reproducciones registradas aún.</p>
           ) : (
