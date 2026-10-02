@@ -204,6 +204,49 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
             </div>
           )}
         </div>
+      {/* Resumen Global de Usuarios */}
+      <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
+        <h2 style={{ fontSize: '1.4rem', color: '#2d3748', margin: '0 0 1.5rem 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <span>👥</span> Actividad Global de Usuarios (Últimos 30 días)
+        </h2>
+        
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
+            <thead>
+              <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#718096', fontSize: '0.9rem' }}>
+                <th style={{ padding: '12px 8px' }}>Usuario</th>
+                <th style={{ padding: '12px 8px' }}>Perfil</th>
+                <th style={{ padding: '12px 8px', textAlign: 'center' }}>Vistas</th>
+                <th style={{ padding: '12px 8px', textAlign: 'center' }}>Audios</th>
+                <th style={{ padding: '12px 8px' }}>Última conexión</th>
+              </tr>
+            </thead>
+            <tbody>
+              {usersData
+                .filter(u => u.totalViews > 0 || u.totalAudios > 0)
+                .sort((a, b) => (b.totalViews + b.totalAudios) - (a.totalViews + a.totalAudios))
+                .map((u, idx) => (
+                <tr key={u.email} style={{ borderBottom: '1px solid #edf2f7', background: idx % 2 === 0 ? '#ffffff' : '#f7fafc' }}>
+                  <td style={{ padding: '12px 8px' }}>
+                    <div style={{ fontWeight: '600', color: '#2d3748' }}>{u.name}</div>
+                    <div style={{ fontSize: '0.8rem', color: '#718096' }}>{u.email}</div>
+                  </td>
+                  <td style={{ padding: '12px 8px' }}>
+                    <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+                      {u.hasComunidad && <span style={{ background: '#e6fffa', color: '#319795', padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 'bold' }}>Familia</span>}
+                      {u.hasFormaciones && <span style={{ background: '#ebf4ff', color: '#3182ce', padding: '2px 8px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 'bold' }}>Formaciones</span>}
+                    </div>
+                  </td>
+                  <td style={{ padding: '12px 8px', textAlign: 'center', fontWeight: 'bold', color: 'var(--color-pink)' }}>{u.totalViews}</td>
+                  <td style={{ padding: '12px 8px', textAlign: 'center', fontWeight: 'bold', color: 'var(--color-green)' }}>{u.totalAudios}</td>
+                  <td style={{ padding: '12px 8px', fontSize: '0.85rem', color: '#718096' }}>
+                    {u.lastConnection ? new Date(u.lastConnection).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <UserAnalyticsSection 

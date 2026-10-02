@@ -20,6 +20,7 @@ export default async function AnaliticasPage() {
     select: {
       action: true,
       details: true,
+      createdAt: true,
       user: {
         select: {
           name: true,
@@ -68,7 +69,8 @@ export default async function AnaliticasPage() {
       hasComunidad,
       hasFormaciones,
       pageViews: {},
-      audioPlays: {}
+      audioPlays: {},
+      lastConnection: null
     };
   });
 
@@ -91,8 +93,13 @@ export default async function AnaliticasPage() {
         hasComunidad,
         hasFormaciones,
         pageViews: {},
-        audioPlays: {}
+        audioPlays: {},
+        lastConnection: null
       };
+    }
+
+    if (!usersMap[userKey].lastConnection || log.createdAt > usersMap[userKey].lastConnection) {
+      usersMap[userKey].lastConnection = log.createdAt;
     }
 
     if (log.action === 'Visita de vista') {
@@ -137,6 +144,9 @@ export default async function AnaliticasPage() {
     email: u.email,
     hasComunidad: u.hasComunidad,
     hasFormaciones: u.hasFormaciones,
+    totalViews: Object.values(u.pageViews).reduce((a, b) => a + b, 0),
+    totalAudios: Object.values(u.audioPlays).reduce((a, b) => a + b, 0),
+    lastConnection: u.lastConnection ? u.lastConnection.toISOString() : null,
     topPages: Object.keys(u.pageViews)
       .map(k => ({ name: k, vistas: u.pageViews[k] }))
       .sort((a, b) => b.vistas - a.vistas)
