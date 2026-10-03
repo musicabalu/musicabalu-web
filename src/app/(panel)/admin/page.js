@@ -137,6 +137,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Chuletario para cobrar en Stripe</p>
           </div>
         </Link>
+        <Link href="/admin/talleres" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>🧸 Talleres Pop-up</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Gestionar Enlaces de Stripe</p>
+          </div>
+        </Link>
         <Link href="/admin/guiones" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>🎬 Píldoras y Guiones</h3>

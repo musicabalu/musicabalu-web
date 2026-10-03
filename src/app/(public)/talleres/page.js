@@ -1,12 +1,22 @@
 import React from 'react';
 import Link from 'next/link';
+import { PrismaClient } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export const metadata = {
   title: 'Talleres en Familia | Musicabalú',
   description: 'Inscripción para los talleres musicales de fin de semana.',
 };
 
-export default function TalleresPage() {
+export const revalidate = 0; // Ensure fresh data on every load
+
+export default async function TalleresPage() {
+  const activeWorkshops = await prisma.workshop.findMany({
+    where: { isActive: true },
+    orderBy: { createdAt: 'desc' }
+  });
+
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '40px 20px', fontFamily: 'var(--font-body)' }}>
       <div style={{ maxWidth: '800px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
@@ -31,8 +41,9 @@ export default function TalleresPage() {
             Gracias, gracias, gracias por venir a disfrutar con nosotros a este espacio de conexión musical. 
             Os he preparado alguna información importante para que la sesión se desarrolle de la mejor manera posible y con el mayor beneficio y disfrute para los niños:
           </p>
-          
+
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
+            
             <div style={{ display: 'flex', gap: '16px' }}>
               <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>✨</div>
               <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
@@ -110,23 +121,54 @@ export default function TalleresPage() {
                 <li>📸 Hacer grabaciones o fotos.</li>
                 <li>📱 Utilizar el teléfono (debe estar en silencio).</li>
                 <li>🥪 Comer dentro del aula (los peques sí pueden beber agua dentro del aula, pero no sobre el tatami sino en el lugar que habilitemos para ello).</li>
+                <li>🎂 <strong style={{ textDecoration: 'underline' }}>Límite de edad:</strong> Este taller está diseñado exclusivamente para niños y niñas de 0 a 36 meses. No está permitida la asistencia de niños mayores.</li>
               </ul>
             </div>
+
           </div>
 
           <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-            <p style={{ margin: '0 0 20px 0', color: '#64748b', fontWeight: 'bold' }}>
+            <p style={{ margin: '0 0 24px 0', color: '#64748b', fontWeight: 'bold' }}>
               La inscripción en esta sesión supone la aceptación del funcionamiento y las normas descritas.
             </p>
-            <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', margin: '0 0 20px 0', fontFamily: 'var(--font-heading)' }}>
-              Reserva tu plaza (20€ / familia)
+            <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', margin: '0 0 24px 0', fontFamily: 'var(--font-heading)' }}>
+              Elige tu sesión y reserva tu plaza
             </h2>
-            <p style={{ margin: '0 0 20px 0', color: '#64748b' }}>
-              Pronto activaremos las inscripciones automáticas con tarjeta. Si tienes dudas mientras tanto, escríbenos.
-            </p>
+            
+            {activeWorkshops.length === 0 ? (
+              <p style={{ margin: '0 0 20px 0', color: '#64748b', fontStyle: 'italic' }}>
+                Ahora mismo no hay talleres programados. Síguenos en Instagram para enterarte de los próximos.
+              </p>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px', margin: '0 auto 32px auto' }}>
+                {activeWorkshops.map(w => (
+                  <a 
+                    key={w.id}
+                    href={w.stripeLink} 
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      backgroundColor: 'var(--color-cyan)', 
+                      color: 'white', 
+                      padding: '16px', 
+                      borderRadius: '12px', 
+                      textDecoration: 'none', 
+                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                      transition: 'transform 0.2s'
+                    }}
+                  >
+                    <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>{w.title}</span>
+                    <span style={{ fontSize: '0.9rem', opacity: '0.9' }}>{w.dateText}</span>
+                  </a>
+                ))}
+              </div>
+            )}
+            
             <Link 
               href="/" 
-              style={{ display: 'inline-block', backgroundColor: 'var(--color-cyan)', color: 'white', padding: '16px 32px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
+              style={{ display: 'inline-block', color: 'var(--color-cyan)', textDecoration: 'underline', fontWeight: '500' }}
             >
               Volver al inicio
             </Link>
