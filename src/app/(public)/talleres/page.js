@@ -13,7 +13,7 @@ export default function TalleresPage() {
         
         {/* Cabecera visual */}
         <div style={{ backgroundColor: 'var(--color-yellow)', padding: '60px 40px', textAlign: 'center' }}>
-          <img src="/logo_colores.png" alt="Musicabalú Logo" style={{ maxWidth: '120px', marginBottom: '16px', display: 'inline-block' }} />
+          <img src="/og-logo.png" alt="Musicabalú Logo" style={{ maxWidth: '80px', marginBottom: '16px', display: 'inline-block', borderRadius: '50%' }} />
           <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: '2.5rem', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>
             Taller de Música en Familia
           </h1>
