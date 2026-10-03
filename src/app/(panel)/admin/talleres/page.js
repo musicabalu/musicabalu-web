@@ -123,9 +123,7 @@ export default async function AdminTalleresPage() {
                         {w.isActive ? 'Ocultar' : 'Mostrar'}
                       </button>
                     </form>
-                    <form action={deleteWorkshop.bind(null, w.id)} onSubmit={(e) => {
-                      if(!confirm("¿Seguro que quieres borrar este taller definitivamente?")) e.preventDefault();
-                    }}>
+                    <form action={deleteWorkshop.bind(null, w.id)}>
                       <button type="submit" style={{ padding: '6px 12px', borderRadius: '6px', border: 'none', backgroundColor: '#ef4444', color: 'white', cursor: 'pointer' }}>
                         Borrar
                       </button>
