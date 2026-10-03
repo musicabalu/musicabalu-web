@@ -13,69 +13,120 @@ export default function TalleresPage() {
         
         {/* Cabecera visual */}
         <div style={{ backgroundColor: 'var(--color-yellow)', padding: '60px 40px', textAlign: 'center' }}>
-          <span style={{ fontSize: '3rem', display: 'block', marginBottom: '16px' }}>🧸</span>
+          <img src="/logo_colores.png" alt="Musicabalú Logo" style={{ maxWidth: '120px', marginBottom: '16px', display: 'inline-block' }} />
           <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: '2.5rem', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>
             Taller de Música en Familia
           </h1>
           <p style={{ color: '#92400e', fontSize: '1.2rem', marginTop: '16px', fontWeight: '500' }}>
-            Una experiencia musical de 45 minutos para conectar, disfrutar y aprender jugando.
+            Una experiencia musical de unos 45 minutos para conectar, disfrutar y aprender jugando.
           </p>
         </div>
 
         {/* Contenido y normas */}
         <div style={{ padding: '40px' }}>
           <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', marginBottom: '24px', fontFamily: 'var(--font-heading)' }}>
-            Antes de reservar, lee nuestras 4 normas de oro:
+            Queridas familias:
           </h2>
+          <p style={{ margin: '0 0 20px 0', color: '#475569', lineHeight: '1.6' }}>
+            Gracias, gracias, gracias por venir a disfrutar con nosotros a este espacio de conexión musical. 
+            Os he preparado alguna información importante para que la sesión se desarrolle de la mejor manera posible y con el mayor beneficio y disfrute para los niños:
+          </p>
           
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
             <div style={{ display: 'flex', gap: '16px' }}>
-              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>📵</div>
-              <div>
-                <strong style={{ color: 'var(--color-dark)', display: 'block', marginBottom: '4px' }}>1. Atención plena</strong>
-                <p style={{ margin: 0, color: '#475569', lineHeight: '1.5' }}>Este es un espacio de conexión exclusiva con tu peque. Te pedimos que guardes el móvil durante toda la sesión.</p>
-              </div>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>✨</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                La energía con la que vengáis a las clases marca la diferencia. ¡Disfrutad de ese momento y espacio familiar especial y dejaos llevar!
+              </p>
             </div>
 
             <div style={{ display: 'flex', gap: '16px' }}>
-              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🏃‍♀️</div>
-              <div>
-                <strong style={{ color: 'var(--color-dark)', display: 'block', marginBottom: '4px' }}>2. Libertad de movimiento</strong>
-                <p style={{ margin: 0, color: '#475569', lineHeight: '1.5' }}>Los niños exploran moviéndose. Si tu peque necesita deambular o prefiere observar de lejos, es normal. No le obligues a participar, aprenderá por absorción.</p>
-              </div>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👕</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Os recomiendo venir con ropa cómoda. Las sesiones se realizan sin calzado.
+              </p>
             </div>
 
             <div style={{ display: 'flex', gap: '16px' }}>
-              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👥</div>
-              <div>
-                <strong style={{ color: 'var(--color-dark)', display: 'block', marginBottom: '4px' }}>3. Un solo acompañante</strong>
-                <p style={{ margin: 0, color: '#475569', lineHeight: '1.5' }}>Para mantener un clima tranquilo, un volumen acústico sano y evitar el exceso de estímulos, pedimos que asista solo 1 adulto por cada niño matriculado.</p>
-              </div>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🤫</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                En nuestras sesiones creamos un espacio no verbal. Aunque el disfrute es una máxima en nuestras clases, trabajamos contenidos musicales fundamentados en la escucha. Es muy importante que, salvo que sea totalmente necesario, tratéis de no hablar ni con vuestro peque ni con otros padres y mantener la atención. El habla distrae de la música. Entre todos buscaremos un clima mágico y especial en el que sólo nos comunicaremos musicalmente.
+              </p>
             </div>
 
             <div style={{ display: 'flex', gap: '16px' }}>
-              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👏</div>
-              <div>
-                <strong style={{ color: 'var(--color-dark)', display: 'block', marginBottom: '4px' }}>4. Participación activa</strong>
-                <p style={{ margin: 0, color: '#475569', lineHeight: '1.5' }}>La mejor forma de que el niño disfrute es verte disfrutar a ti. ¡Anímate a cantar, dar palmas y jugar sin vergüenza!</p>
-              </div>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🤝</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Los padres sois responsables del bienestar de los niños en la clase y de que mantengan un comportamiento respetuoso hacia los objetos y los compañeros.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🕊️</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Es importante dejar al niño a su aire. No intentar presionarle para que haga algo en concreto ni corregirle. No moverle piernas o brazos para hacer ritmos ni hacer las cosas por él.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🏃</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                No llamarle si se aleja de vosotros ni ir detrás de él. Mientras su comportamiento no sea molesto para los demás, es bueno dejarle que se mueva libremente. Él regresará al lugar de referencia cuando quiera.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🤍</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Si un niño comienza a gritar, llorar, correr descontroladamente, lanzar materiales a otros o impide de alguna manera el buen funcionamiento de la clase: no está haciendo nada malo :) Está siendo puro (como son los peques) y tal vez explorando los límites de una actividad tan "lúdica" en la que no siempre es fácil encontrar el límite. En absoluto es motivo para enfadarse con ellos ni significa que no estén disfrutando de la actividad o no puedan hacerlo. Pero sí es importante que en ese momento lo alejéis del tatami o salgáis del aula y después volváis a entrar lo antes posible. 
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🤱</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Las madres pueden sentirse libres de amamantar a sus hijos cuando quieran.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>👨‍👩‍👧</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Los niños pueden venir acompañados sólo de un adulto (padre, madre o alguien con quien tenga un vínculo afectivo importante); en cualquier caso, quien asista a clase debe conocer nuestras normas básicas de funcionamiento y participar activamente en la sesión.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '16px' }}>
+              <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🎵</div>
+              <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
+                Participad en todas las actividades hasta el punto en que os sintáis cómodos.
+              </p>
+            </div>
+            
+            <div style={{ backgroundColor: '#fff5f5', borderLeft: '4px solid #f56565', padding: '16px', borderRadius: '0 8px 8px 0', marginTop: '16px' }}>
+              <strong style={{ color: '#c53030', display: 'block', marginBottom: '12px' }}>⚠️ EN EL AULA NO ESTÁ PERMITIDO:</strong>
+              <ul style={{ margin: 0, paddingLeft: '20px', color: '#c53030', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                <li>🧸 Que los niños traigan juguetes u objetos personales.</li>
+                <li>📸 Hacer grabaciones o fotos.</li>
+                <li>📱 Utilizar el teléfono (debe estar en silencio).</li>
+                <li>🥪 Comer dentro del aula (los peques sí pueden beber agua dentro del aula, pero no sobre el tatami sino en el lugar que habilitemos para ello).</li>
+              </ul>
             </div>
           </div>
 
-          <hr style={{ border: 'none', borderTop: '2px dashed #e2e8f0', margin: '40px 0' }} />
-
-          {/* Formulario (Mockup estático por ahora hasta conectar con DB) */}
-          <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', marginBottom: '24px', fontFamily: 'var(--font-heading)' }}>
-            Reserva tu plaza (20€ / familia)
-          </h2>
-
-          <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0' }}>
+          <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+            <p style={{ margin: '0 0 20px 0', color: '#64748b', fontWeight: 'bold' }}>
+              La inscripción en esta sesión supone la aceptación del funcionamiento y las normas descritas.
+            </p>
+            <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', margin: '0 0 20px 0', fontFamily: 'var(--font-heading)' }}>
+              Reserva tu plaza (20€ / familia)
+            </h2>
             <p style={{ margin: '0 0 20px 0', color: '#64748b' }}>
               Pronto activaremos las inscripciones automáticas con tarjeta. Si tienes dudas mientras tanto, escríbenos.
             </p>
             <Link 
               href="/" 
-              style={{ display: 'block', textAlign: 'center', backgroundColor: 'var(--color-cyan)', color: 'white', padding: '16px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
+              style={{ display: 'inline-block', backgroundColor: 'var(--color-cyan)', color: 'white', padding: '16px 32px', borderRadius: '12px', textDecoration: 'none', fontWeight: 'bold', fontSize: '1.1rem', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }}
             >
               Volver al inicio
             </Link>
