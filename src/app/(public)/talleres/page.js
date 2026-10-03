@@ -34,18 +34,17 @@ export default async function TalleresPage() {
 
         {/* Contenido y normas */}
         <div style={{ padding: '40px' }}>
+          <p style={{ color: '#c53030', fontWeight: 'bold', marginBottom: '24px', backgroundColor: '#fff5f5', padding: '12px', borderRadius: '8px', borderLeft: '4px solid #f56565' }}>
+            Límite de edad: Este taller está diseñado exclusivamente para peques de 0 a 36 meses.
+          </p>
+
           <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', marginBottom: '24px', fontFamily: 'var(--font-heading)' }}>
             Queridas familias:
           </h2>
-          <p style={{ margin: '0 0 16px 0', color: '#475569', lineHeight: '1.6' }}>
+          <p style={{ margin: '0 0 24px 0', color: '#475569', lineHeight: '1.6' }}>
             Gracias, gracias, gracias por venir a disfrutar con nosotros a este espacio de conexión musical. 
             Os he preparado alguna información importante para que la sesión se desarrolle de la mejor manera posible y con el mayor beneficio y disfrute para los niños.
           </p>
-          <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '16px', borderRadius: '12px', marginBottom: '32px' }}>
-            <p style={{ margin: 0, color: '#166534', fontWeight: '500' }}>
-              🎁 Además, <strong style={{ textDecoration: 'underline' }}>la inscripción a este taller te da acceso a nuestra plataforma web</strong>. Podrás escuchar algunas de nuestras canciones de estudio, recitados y píldoras formativas desde casa. Cuando se abra el plazo, también te saldrá la opción de suscribirte por 5,90€/mes para desbloquear el 100% del catálogo.
-            </p>
-          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
             
@@ -126,8 +125,13 @@ export default async function TalleresPage() {
                 <li>📸 Hacer grabaciones o fotos.</li>
                 <li>📱 Utilizar el teléfono (debe estar en silencio).</li>
                 <li>🥪 Comer dentro del aula (los peques sí pueden beber agua dentro del aula, pero no sobre el tatami sino en el lugar que habilitemos para ello).</li>
-                <li>🎂 <strong style={{ textDecoration: 'underline' }}>Límite de edad:</strong> Este taller está diseñado exclusivamente para niños y niñas de 0 a 36 meses. No está permitida la asistencia de niños mayores.</li>
               </ul>
+            </div>
+            
+            <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '16px', borderRadius: '12px', marginTop: '16px' }}>
+              <p style={{ margin: 0, color: '#166534', fontWeight: '500' }}>
+                🎁 <strong style={{ textDecoration: 'underline' }}>La inscripción a este taller te da acceso a nuestra plataforma web</strong> en la que podrás escuchar algunas de nuestras canciones de estudio, recitados y píldoras formativas desde casa.
+              </p>
             </div>
 
           </div>
