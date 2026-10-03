@@ -37,10 +37,15 @@ export default async function TalleresPage() {
           <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', marginBottom: '24px', fontFamily: 'var(--font-heading)' }}>
             Queridas familias:
           </h2>
-          <p style={{ margin: '0 0 20px 0', color: '#475569', lineHeight: '1.6' }}>
+          <p style={{ margin: '0 0 16px 0', color: '#475569', lineHeight: '1.6' }}>
             Gracias, gracias, gracias por venir a disfrutar con nosotros a este espacio de conexión musical. 
-            Os he preparado alguna información importante para que la sesión se desarrolle de la mejor manera posible y con el mayor beneficio y disfrute para los niños:
+            Os he preparado alguna información importante para que la sesión se desarrolle de la mejor manera posible y con el mayor beneficio y disfrute para los niños.
           </p>
+          <div style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', padding: '16px', borderRadius: '12px', marginBottom: '32px' }}>
+            <p style={{ margin: 0, color: '#166534', fontWeight: '500' }}>
+              🎁 Además, <strong style={{ textDecoration: 'underline' }}>la inscripción a este taller te da acceso a nuestra plataforma web</strong>. Podrás escuchar algunas de nuestras canciones de estudio, recitados y píldoras formativas desde casa. Cuando se abra el plazo, también te saldrá la opción de suscribirte por 5,90€/mes para desbloquear el 100% del catálogo.
+            </p>
+          </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '40px' }}>
             
