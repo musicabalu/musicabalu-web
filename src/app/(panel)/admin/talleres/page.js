@@ -51,7 +51,7 @@ async function deleteWorkshop(id) {
 // --- Page Component ---
 export default async function AdminTalleresPage() {
   const session = await getServerSession(authOptions)
-  if (!session || session.user.email !== "marian.alvcon@gmail.com" && session.user.email !== "hola@musicabalu.com") {
+  if (!session || session.user.role !== "admin") {
     redirect("/login")
   }
 
