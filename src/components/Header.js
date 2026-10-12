@@ -21,14 +21,13 @@ export default function Header() {
         <Link href="/conocenos" className={styles.navLink}>Conócenos</Link>
         <Link href="/presencial" className={styles.navLink}>Clases</Link>
         <Link href="/formaciones" className={styles.navLink}>Formaciones</Link>
-        {/* Oculto hasta 1 oct 
         <Link href="/tienda" className={styles.navLink}>Tienda</Link>
         
         <button 
           onClick={() => setIsCartOpen(true)}
           style={{ 
             background: "none", border: "none", cursor: "pointer", 
-            position: "relative", fontSize: "1.5rem", marginLeft: "10px", marginRight: "10px"
+            position: "relative", fontSize: "1.4rem", marginLeft: "5px", marginRight: "5px"
           }}
           aria-label="Abrir carrito"
         >
@@ -43,7 +42,6 @@ export default function Header() {
             </span>
           )}
         </button>
-        */}
 
         {session ? (
           <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>

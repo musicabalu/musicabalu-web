@@ -39,6 +39,16 @@ async function toggleWorkshop(id, currentStatus) {
   revalidatePath('/talleres')
 }
 
+async function toggleSoldOut(id, currentStatus) {
+  "use server"
+  await prisma.workshop.update({
+    where: { id },
+    data: { isSoldOut: !currentStatus }
+  })
+  revalidatePath('/admin/talleres')
+  revalidatePath('/talleres')
+}
+
 async function deleteWorkshop(id) {
   "use server"
   await prisma.workshop.delete({
@@ -112,12 +122,18 @@ export default async function AdminTalleresPage() {
                     <h3 style={{ margin: '0 0 4px 0', fontSize: '1.1rem', color: w.isActive ? '#0f172a' : '#94a3b8' }}>
                       {w.title}
                       {!w.isActive && <span style={{ marginLeft: '8px', fontSize: '0.8rem', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '12px' }}>Oculto</span>}
+                      {w.isSoldOut && <span style={{ marginLeft: '8px', fontSize: '0.8rem', backgroundColor: '#fee2e2', color: '#ef4444', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>Completo</span>}
                     </h3>
                     <p style={{ margin: '0 0 4px 0', fontSize: '0.9rem', color: '#475569' }}>{w.dateText}</p>
                     <a href={w.stripeLink} target="_blank" rel="noreferrer" style={{ fontSize: '0.8rem', color: '#2563eb' }}>Ver Stripe</a>
                   </div>
                   
                   <div style={{ display: 'flex', gap: '8px' }}>
+                    <form action={toggleSoldOut.bind(null, w.id, w.isSoldOut)}>
+                      <button type="submit" style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', backgroundColor: w.isSoldOut ? '#fff' : '#fee2e2', color: w.isSoldOut ? '#334155' : '#ef4444', cursor: 'pointer' }}>
+                        {w.isSoldOut ? 'Reabrir' : '¡Lleno!'}
+                      </button>
+                    </form>
                     <form action={toggleWorkshop.bind(null, w.id, w.isActive)}>
                       <button type="submit" style={{ padding: '6px 12px', borderRadius: '6px', border: '1px solid #cbd5e1', backgroundColor: w.isActive ? '#fff' : '#f8fafc', cursor: 'pointer' }}>
                         {w.isActive ? 'Ocultar' : 'Mostrar'}

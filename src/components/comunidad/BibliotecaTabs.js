@@ -15,7 +15,7 @@ export default function BibliotecaTabs({ isPresential, role }) {
   const tabs = [
     { id: 'canciones', label: 'Canciones', path: '/comunidad/canciones', color: 'var(--color-pink)' },
     { id: 'recitados', label: 'Recitados', path: '/comunidad/recitados', color: 'var(--color-cyan)' },
-    { id: 'pildoras', label: 'Píldoras y FAQs', path: '/comunidad/pildoras', color: 'var(--color-yellow)' }
+    { id: 'pildoras', label: 'Píldoras', path: '/comunidad/pildoras', color: 'var(--color-yellow)' }
   ];
 
   if (isComunidad) {

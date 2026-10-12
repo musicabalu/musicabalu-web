@@ -137,6 +137,13 @@ export default async function TalleresPage() {
           </div>
 
           <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+            <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', padding: '16px', borderRadius: '12px', marginBottom: '24px', textAlign: 'left' }}>
+              <p style={{ margin: 0, color: '#b45309', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                <strong style={{ display: 'block', marginBottom: '4px' }}>⚠️ Política de Cancelación:</strong>
+                En caso de no asistir finalmente, el dinero no se devuelve bajo ninguna circunstancia salvo que haya un justificante médico y se haya avisado con al menos 24 horas de antelación al inicio de la sesión para poder ofrecer la plaza a otra familia.
+              </p>
+            </div>
+            
             <p style={{ margin: '0 0 24px 0', color: '#64748b', fontWeight: 'bold' }}>
               La inscripción en esta sesión supone la aceptación del funcionamiento y las normas descritas.
             </p>
@@ -150,28 +157,57 @@ export default async function TalleresPage() {
               </p>
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px', margin: '0 auto 32px auto' }}>
-                {activeWorkshops.map(w => (
-                  <a 
-                    key={w.id}
-                    href={w.stripeLink} 
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      backgroundColor: 'var(--color-cyan)', 
-                      color: 'white', 
-                      padding: '16px', 
-                      borderRadius: '12px', 
-                      textDecoration: 'none', 
-                      boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                      transition: 'transform 0.2s'
-                    }}
-                  >
-                    <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>{w.title}</span>
-                    <span style={{ fontSize: '0.9rem', opacity: '0.9' }}>{w.dateText}</span>
-                  </a>
-                ))}
+                {activeWorkshops.map(w => {
+                  if (w.isSoldOut) {
+                    return (
+                      <a 
+                        key={w.id}
+                        href={`https://wa.me/34633715302?text=Hola%20Musicabalú,%20quería%20apuntarme%20a%20la%20lista%20de%20espera%20del%20taller%20${encodeURIComponent(w.title)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ 
+                          display: 'flex', 
+                          flexDirection: 'column',
+                          backgroundColor: '#f1f5f9', 
+                          color: '#64748b', 
+                          padding: '16px', 
+                          borderRadius: '12px', 
+                          textDecoration: 'none', 
+                          border: '2px dashed #cbd5e1',
+                          transition: 'transform 0.2s',
+                          alignItems: 'center'
+                        }}
+                      >
+                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px', textDecoration: 'line-through', color: '#94a3b8' }}>{w.title}</span>
+                        <span style={{ fontSize: '0.9rem', marginBottom: '8px', color: '#94a3b8' }}>{w.dateText}</span>
+                        <span style={{ backgroundColor: '#e2e8f0', color: '#475569', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>Taller Completo - Apuntarse a la lista</span>
+                      </a>
+                    );
+                  }
+                  
+                  return (
+                    <a 
+                      key={w.id}
+                      href={w.stripeLink} 
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column',
+                        backgroundColor: 'var(--color-cyan)', 
+                        color: 'white', 
+                        padding: '16px', 
+                        borderRadius: '12px', 
+                        textDecoration: 'none', 
+                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+                        transition: 'transform 0.2s'
+                      }}
+                    >
+                      <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>{w.title}</span>
+                      <span style={{ fontSize: '0.9rem', opacity: '0.9' }}>{w.dateText}</span>
+                    </a>
+                  );
+                })}
               </div>
             )}
             

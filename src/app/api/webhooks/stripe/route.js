@@ -243,11 +243,83 @@ export async function POST(request) {
           
         } else if (metadata.productType === 'subscription') {
           // 2. Suscripción recurrente (Comunidad)
-          await prisma.user.update({
-            where: { id: metadata.userId },
-            data: { hasActiveSub: true, stripeId: session.customer }
-          });
-          console.log(`✅ Suscripción Comunidad activada para usuario ${metadata.userId}`);
+          const targetEmail = session.customer_details?.email || session.customer_email;
+          let user = null;
+          if (metadata.userId) {
+            user = await prisma.user.findUnique({ where: { id: metadata.userId } });
+          }
+          if (!user && targetEmail) {
+            user = await prisma.user.findUnique({ where: { email: targetEmail } });
+          }
+
+          if (user) {
+            await prisma.user.update({
+              where: { id: user.id },
+              data: { hasActiveSub: true, stripeId: session.customer }
+            });
+            console.log(`✅ Suscripción Comunidad activada para usuario ${user.email} (${user.id})`);
+          } else if (targetEmail) {
+            // Edge case: crear usuario si no existía previamente
+            user = await prisma.user.create({
+              data: {
+                email: targetEmail,
+                name: session.customer_details?.name || 'Suscriptor Comunidad',
+                hasActiveSub: true,
+                stripeId: session.customer,
+                role: 'user'
+              }
+            });
+            console.log(`✅ Usuario creado y suscrito a Comunidad: ${user.email}`);
+          }
+
+          // Registrar la orden en el panel de ventas
+          try {
+            await prisma.order.create({
+              data: {
+                userId: user ? user.id : (metadata.userId || null),
+                stripeSessionId: session.id,
+                productId: metadata.productId || 'subscription',
+                productName: metadata.productName || 'Suscripción Comunidad Familiar',
+                productType: 'subscription',
+                amountTotal: session.amount_total || 0,
+                currency: session.currency || 'eur',
+                status: 'completed'
+              }
+            });
+            console.log(`✅ Orden de suscripción registrada en panel de ventas`);
+          } catch (orderErr) {
+            console.error("⚠️ Error registrando order de suscripción:", orderErr);
+          }
+
+          // Enviar emails de confirmación
+          try {
+            const transport = createTransport(process.env.EMAIL_SERVER);
+            if (targetEmail) {
+              await transport.sendMail({
+                from: process.env.EMAIL_FROM,
+                to: targetEmail,
+                subject: "¡Bienvenido/a a la Comunidad Familiar Musicabalú! 🎵",
+                html: `<p>¡Hola!</p>
+                       <p>Tu suscripción a la <strong>Comunidad Musicabalú</strong> se ha activado con éxito.</p>
+                       <p>Ya tienes acceso completo e ilimitado a todas nuestras canciones, recitados pedagógicos y píldoras formativas en vídeo.</p>
+                       <p>Puedes acceder en cualquier momento desde tu móvil, tablet u ordenador aquí:<br>
+                       <a href="https://musicabalu.com/comunidad/canciones" style="color: #00B2E3; font-weight: bold;">Acceder a la Biblioteca Musicabalú</a></p>
+                       <p>Si tienes cualquier duda pedagógica o técnica, solo tienes que responder a este correo o escribir a <a href="mailto:hola@musicabalu.com">hola@musicabalu.com</a>.</p>
+                       <p>Un abrazo y bienvenidos,<br>Javi Muñoz · Musicabalú</p>`
+              });
+            }
+
+            // Notificación al administrador
+            await transport.sendMail({
+              from: process.env.EMAIL_FROM,
+              to: "hola@musicabalu.com",
+              subject: "🎉 Nueva Suscripción a la Comunidad Familiar",
+              text: `¡Nueva suscripción!\n\nPlan: ${metadata.productName || "Suscripción"}\nImporte: ${((session.amount_total || 0) / 100).toFixed(2)}€\nEmail: ${targetEmail}\nStripe ID: ${session.id}`
+            });
+            console.log("✅ Emails de confirmación de suscripción enviados");
+          } catch (emailError) {
+            console.error("⚠️ Error enviando emails de suscripción:", emailError);
+          }
 
         } else if (metadata.productType === 'gift' || metadata.productType === 'printful_merch') {
           // 3. Producto de pago único (Regalo o Merchandising)

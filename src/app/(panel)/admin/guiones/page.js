@@ -9,6 +9,9 @@ export default function GuionesAdminPage() {
   const [saving, setSaving] = useState(false);
   const [expandedId, setExpandedId] = useState(null);
   const [draggedIndex, setDraggedIndex] = useState(null);
+  const [editingId, setEditingId] = useState(null);
+  const [editedContent, setEditedContent] = useState('');
+  const [savingContent, setSavingContent] = useState(false);
 
   useEffect(() => {
     fetchScripts();
@@ -110,8 +113,42 @@ export default function GuionesAdminPage() {
   };
 
   const toggleExpand = (id) => {
-    if (expandedId === id) setExpandedId(null);
-    else setExpandedId(id);
+    if (expandedId === id) {
+      setExpandedId(null);
+      setEditingId(null);
+    } else {
+      setExpandedId(id);
+    }
+  };
+
+  const handleEdit = (script) => {
+    setEditingId(script.id);
+    setEditedContent(script.scriptContent);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditedContent('');
+  };
+
+  const saveContent = async (id) => {
+    setSavingContent(true);
+    try {
+      const res = await fetch('/api/admin/scripts', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, scriptContent: editedContent })
+      });
+      if (res.ok) {
+        const updatedScripts = scripts.map(s => s.id === id ? { ...s, scriptContent: editedContent } : s);
+        setScripts(updatedScripts);
+        setEditingId(null);
+      }
+    } catch (error) {
+      console.error('Error saving content:', error);
+    } finally {
+      setSavingContent(false);
+    }
   };
 
   const getStatusColor = (status) => {
@@ -237,18 +274,66 @@ export default function GuionesAdminPage() {
                 )}
                 
                 <div style={{ marginTop: '1.5rem' }}>
-                  <h4 style={{ color: 'var(--color-cyan)', margin: '0 0 10px 0' }}>Guion de Grabación</h4>
-                  <div 
-                    style={{ 
-                      fontSize: '1.1rem', 
-                      lineHeight: '1.8',
-                      backgroundColor: 'white',
-                      padding: '1.5rem',
-                      borderRadius: '8px',
-                      border: '1px dashed var(--color-cyan)'
-                    }} 
-                    dangerouslySetInnerHTML={{ __html: script.scriptContent }} 
-                  />
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <h4 style={{ color: 'var(--color-cyan)', margin: 0 }}>Guion de Grabación</h4>
+                    {editingId !== script.id ? (
+                      <button 
+                        onClick={() => handleEdit(script)}
+                        style={{ padding: '6px 12px', fontSize: '0.85rem', backgroundColor: 'transparent', border: '1px solid var(--color-cyan)', color: 'var(--color-cyan)', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
+                      >
+                        ✏️ Editar texto
+                      </button>
+                    ) : (
+                      <div style={{ display: 'flex', gap: '8px' }}>
+                        <button 
+                          onClick={cancelEdit}
+                          disabled={savingContent}
+                          style={{ padding: '6px 12px', fontSize: '0.85rem', backgroundColor: '#f1f1f1', border: '1px solid #ccc', color: '#555', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
+                        >
+                          Cancelar
+                        </button>
+                        <button 
+                          onClick={() => saveContent(script.id)}
+                          disabled={savingContent}
+                          style={{ padding: '6px 12px', fontSize: '0.85rem', backgroundColor: 'var(--color-cyan)', border: 'none', color: 'white', borderRadius: '6px', cursor: 'pointer', fontWeight: '600' }}
+                        >
+                          {savingContent ? 'Guardando...' : '💾 Guardar'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  
+                  {editingId === script.id ? (
+                    <textarea 
+                      value={editedContent}
+                      onChange={(e) => setEditedContent(e.target.value)}
+                      style={{ 
+                        width: '100%', 
+                        minHeight: '300px', 
+                        padding: '1rem', 
+                        fontSize: '1.05rem', 
+                        lineHeight: '1.6',
+                        border: '2px solid var(--color-cyan)',
+                        borderRadius: '8px',
+                        fontFamily: 'inherit',
+                        resize: 'vertical'
+                      }}
+                    />
+                  ) : (
+                    <div 
+                      style={{ 
+                        fontSize: '1.1rem', 
+                        lineHeight: '1.8',
+                        backgroundColor: 'white',
+                        padding: '1.5rem',
+                        borderRadius: '8px',
+                        border: '1px dashed var(--color-cyan)',
+                        whiteSpace: 'pre-wrap'
+                      }} 
+                    >
+                      {script.scriptContent}
+                    </div>
+                  )}
                 </div>
               </div>
             )}

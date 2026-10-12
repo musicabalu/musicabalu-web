@@ -43,13 +43,17 @@ export async function PUT(req) {
       );
       await prisma.$transaction(updates);
       return NextResponse.json({ success: true, message: 'Orden actualizado' });
-    } else if (data.id && data.status) {
-      // Update single status
+    } else if (data.id && (data.status || data.scriptContent !== undefined)) {
+      // Update single script (status or content)
+      const updateData = {};
+      if (data.status) updateData.status = data.status;
+      if (data.scriptContent !== undefined) updateData.scriptContent = data.scriptContent;
+      
       await prisma.videoScript.update({
         where: { id: data.id },
-        data: { status: data.status }
+        data: updateData
       });
-      return NextResponse.json({ success: true, message: 'Estado actualizado' });
+      return NextResponse.json({ success: true, message: 'Script actualizado' });
     } else {
       return NextResponse.json({ error: 'Datos inválidos' }, { status: 400 });
     }

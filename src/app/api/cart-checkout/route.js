@@ -69,7 +69,8 @@ export async function POST(request) {
       };
 
       if (isSubscription) {
-        priceData.recurring = { interval: 'month' };
+        const isAnnual = dbProd.id === 'sub_anual' || dbProd.name.toLowerCase().includes('anual') || dbProd.price >= 3000;
+        priceData.recurring = { interval: isAnnual ? 'year' : 'month' };
       }
 
       return {

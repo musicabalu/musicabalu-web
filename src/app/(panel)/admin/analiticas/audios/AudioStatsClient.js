@@ -95,11 +95,23 @@ export default function AudioStatsClient({ allAudiosData }) {
 
                   {/* Barra de progreso visual */}
                   <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                      <span style={{ fontWeight: 600, color: '#2d3748' }}>
-                        {audio.name} 
-                        {filter === 'Todos' && <span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#718096', marginLeft: '10px' }}>({audio.category})</span>}
-                      </span>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px', alignItems: 'center' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        <span style={{ fontWeight: 600, color: '#2d3748' }}>
+                          {audio.name} 
+                          {filter === 'Todos' && <span style={{ fontSize: '0.75rem', fontWeight: 'normal', color: '#718096', marginLeft: '10px' }}>({audio.category})</span>}
+                        </span>
+                        {/* Indicador de subida/bajada */}
+                        {audio.change === 'NEW' ? (
+                          <span style={{ fontSize: '0.7rem', background: 'var(--color-pink-light)', color: 'var(--color-pink)', padding: '2px 6px', borderRadius: '4px', fontWeight: 'bold' }}>NUEVA</span>
+                        ) : audio.change > 0 ? (
+                          <span style={{ fontSize: '0.8rem', color: 'var(--color-green)', fontWeight: 'bold' }}>▲ {audio.change}</span>
+                        ) : audio.change < 0 ? (
+                          <span style={{ fontSize: '0.8rem', color: 'var(--color-red)', fontWeight: 'bold' }}>▼ {Math.abs(audio.change)}</span>
+                        ) : (
+                          <span style={{ fontSize: '0.8rem', color: '#a0aec0', fontWeight: 'bold' }}>—</span>
+                        )}
+                      </div>
                       <span style={{ fontWeight: 'bold', color: barColor }}>{audio.reproducciones}</span>
                     </div>
                     <div style={{ width: '100%', background: '#edf2f7', borderRadius: '10px', height: '10px', overflow: 'hidden' }}>

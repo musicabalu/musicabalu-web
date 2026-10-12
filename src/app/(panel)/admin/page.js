@@ -149,6 +149,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Gestor de grabaciones de vídeo</p>
           </div>
         </Link>
+        <Link href="/admin/proyectos" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📓 Lab de Proyectos</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Cuaderno de bitácora centralizado</p>
+          </div>
+        </Link>
       </div>
 
       {/* Desglose de Grupos */}

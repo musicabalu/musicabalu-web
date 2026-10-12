@@ -1,10 +1,12 @@
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from '@prisma/client';
-import styles from './page.module.css';
 import BibliotecaTabs from '@/components/comunidad/BibliotecaTabs';
+import VideoPlaylist from '@/components/comunidad/VideoPlaylist';
+import { VIDEO_PILLS } from '@/data/videoPills';
 
 const prisma = new PrismaClient();
+export const dynamic = 'force-dynamic';
 
 export default async function PildorasPage() {
   const session = await getServerSession(authOptions);
@@ -24,12 +26,8 @@ export default async function PildorasPage() {
     <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
       <BibliotecaTabs isPresential={isPresential} role={role} />
 
-      <div style={{ paddingBottom: '120px', marginTop: '2rem' }}>
-        <div style={{ textAlign: 'center', padding: '4rem 2rem', backgroundColor: 'white', borderRadius: '16px', border: '2px dashed var(--color-border)', boxShadow: 'var(--shadow-sm)' }}>
-          <span style={{ fontSize: '3rem' }}>🚧</span>
-          <h2 style={{ marginTop: '1rem', color: 'var(--color-dark)', fontWeight: 'bold' }}>Lo tenemos casi a punto</h2>
-          <p style={{ color: 'var(--color-text-light)', marginTop: '0.5rem', fontSize: '1.1rem' }}>Enseguida lo tendrás disponible.</p>
-        </div>
+      <div style={{ paddingBottom: '120px', marginTop: '1.5rem' }}>
+        <VideoPlaylist pills={VIDEO_PILLS} hasFullAccess={hasFullAccess} />
       </div>
     </div>
   );

@@ -176,7 +176,7 @@ export default async function DashboardPage({ searchParams }) {
                 <Link href="/comunidad/pildoras" style={{ textDecoration: 'none' }}>
                   <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-yellow)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
                     <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", justifyContent: 'space-between', color: "var(--color-dark)" }}>
-                      <span>💊 Píldoras y FAQs</span>
+                      <span>🎬 Píldoras</span>
                     </h2>
                     <p style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
                       Respuestas rápidas y consejos prácticos.
