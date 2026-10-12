@@ -136,6 +136,39 @@ export default async function Tienda() {
             <ProductCard key={producto.id} producto={producto} />
           ))}
         </div>
+
+        {/* Aviso de licencia para escuelas y centros educativos */}
+        <div style={{
+          marginTop: "50px",
+          backgroundColor: "#f8fafc",
+          border: "1.5px dashed #cbd5e1",
+          borderRadius: "20px",
+          padding: "26px 30px",
+          textAlign: "center",
+          maxWidth: "850px",
+          margin: "50px auto 0"
+        }}>
+          <h3 style={{ fontSize: "1.15rem", color: "var(--color-dark)", fontWeight: "700", marginBottom: "8px", fontFamily: "var(--font-heading)" }}>
+            🏫 ¿Perteneces a una Escuela Infantil, Colegio o Centro Educativo?
+          </h3>
+          <p style={{ color: "var(--color-text-light)", fontSize: "0.95rem", lineHeight: "1.6", maxWidth: "680px", margin: "0 auto 12px" }}>
+            Las opciones anteriores disponen de <strong>licencia individual para uso familiar</strong>. Si te interesa incorporar la música y recursos de Musicabalú en las aulas de tu centro, el uso colectivo requiere una licencia especial. Escríbenos para solicitar una propuesta adaptada a tu equipo docente.
+          </p>
+          <a 
+            href="mailto:hola@musicabalu.com?subject=Consulta%20Licencia%20para%20Centros%20Educativos" 
+            style={{ 
+              display: "inline-flex", 
+              alignItems: "center", 
+              gap: "6px", 
+              color: "var(--color-cyan, #00B2E3)", 
+              fontWeight: "700", 
+              fontSize: "0.95rem", 
+              textDecoration: "underline" 
+            }}
+          >
+            Escríbenos a hola@musicabalu.com →
+          </a>
+        </div>
       </main>
 
       <Footer />

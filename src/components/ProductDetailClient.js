@@ -191,6 +191,17 @@ export default function ProductDetailClient({ product }) {
           <p style={{ color: "var(--color-text-light)", fontSize: "0.95rem", lineHeight: "1.6", margin: 0, whiteSpace: "pre-wrap" }}>
             {product.description}
           </p>
+
+          <div style={{
+            marginTop: "18px",
+            paddingTop: "16px",
+            borderTop: "1px dashed var(--color-border, #e2e8f0)",
+            fontSize: "0.88rem",
+            color: "var(--color-text-light)",
+            lineHeight: "1.5"
+          }}>
+            ℹ️ <strong>Licencia individual de uso familiar:</strong> Esta suscripción está pensada exclusivamente para el ámbito particular en casa. Si perteneces a una escuela infantil, colegio o centro educativo y quieres utilizar estos recursos en tus aulas, se requiere una licencia especial de centro. Escríbenos a <a href="mailto:hola@musicabalu.com?subject=Licencia%20para%20Centros%20Educativos" style={{ color: "var(--color-cyan, #00B2E3)", fontWeight: "bold" }}>hola@musicabalu.com</a> para solicitar una propuesta adaptada a tu equipo.
+          </div>
         </div>
 
         <div style={{
