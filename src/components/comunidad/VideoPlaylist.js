@@ -6,7 +6,8 @@ import Link from 'next/link';
 
 export default function VideoPlaylist({ pills, hasFullAccess }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [activeId, setActiveId] = useState(pills[0]?.id || 1);
+  const defaultPillId = (!hasFullAccess ? pills.find(p => p.isFree)?.id : pills[0]?.id) || pills[0]?.id || 1;
+  const [activeId, setActiveId] = useState(defaultPillId);
 
   // Filter pills based on category
   const filteredPills = selectedCategory === 'all' 
@@ -22,7 +23,8 @@ export default function VideoPlaylist({ pills, hasFullAccess }) {
 
   const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
-    const firstOfCategory = cat === 'all' ? pills[0] : pills.find(p => p.categoria === cat);
+    const categoryPills = cat === 'all' ? pills : pills.filter(p => p.categoria === cat);
+    const firstOfCategory = (!hasFullAccess ? categoryPills.find(p => p.isFree) : categoryPills[0]) || categoryPills[0];
     if (firstOfCategory) {
       setActiveId(firstOfCategory.id);
     }

@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export default async function CancionesPage() {
-  const FREE_CANCIONES = ["La ranita quiere cantar", "Cumbia Balú"];
+  const FREE_CANCIONES = ["Cumbia Balú", "Duérmete"];
   
   const session = await getServerSession(authOptions);
   

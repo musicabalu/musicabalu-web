@@ -8,7 +8,7 @@ export const VIDEO_PILLS = [
     categoriaIcon: "🧠",
     youtubeId: "8cIxWsRx5sc",
     youtubeUrl: "https://youtube.com/shorts/8cIxWsRx5sc",
-    isFree: true,
+    isFree: false,
     ideaClave: "Edwin Gordon, pedagogo e investigador musical, demostró científicamente cómo aprende música el cerebro humano. Su 'Teoría del Aprendizaje Musical' (MLT) nos enseña que los primeros años de vida son críticos, ya que es cuando nuestro cerebro tiene la mayor capacidad de absorber la música como si fuera un segundo idioma materno. Por eso en Musicabalú nos basamos en su ciencia para jugar con sentido.",
     aplicacionPractica: "En casa, canta mirándole a los ojos, balanceaos juntos y llena su día a día de música variada. El cerebro de tu peque absorberá la estructura musical de forma espontánea y sin tensiones."
   },
@@ -60,7 +60,7 @@ export const VIDEO_PILLS = [
     categoriaIcon: "🎯",
     youtubeId: "jmA5AX2QOTo",
     youtubeUrl: "https://youtube.com/shorts/jmA5AX2QOTo",
-    isFree: false,
+    isFree: true,
     ideaClave: "¿Cómo le transmites el ritmo a un bebé que todavía no camina ni da palmas coordinadas? ¡Tú eres su cuerpo! Como el bebé no puede desplazarse de forma autónoma, necesita sentir el flujo y el peso de la música a través del movimiento de quien lo sostiene.",
     aplicacionPractica: "Coge a tu bebé en brazos, apóyalo en tu pecho y balancéate de forma continua y suave mientras cantas o escuchas música. Camina con pasos fluidos (sin marcar golpes secos tipo soldado). Tu cuerpo le enseñará a sentir el pulso de la música sin ninguna rigidez."
   }

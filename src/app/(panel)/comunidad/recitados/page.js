@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 export const dynamic = 'force-dynamic';
 
 export default async function RecitadosPage() {
-  const FREE_RECITADOS = ["Duerme, sueña", "Chiqui Pan"];
+  const FREE_RECITADOS = ["Chiqui Pan", "Cuando te diga"];
   
   const session = await getServerSession(authOptions);
   
