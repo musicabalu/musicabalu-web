@@ -98,9 +98,29 @@ export default function ProductCard({ producto }) {
           </span>
         </div>
 
-        <h2 style={{ fontSize: "1.5rem", color: "var(--color-dark)", marginBottom: "12px", fontFamily: "var(--font-heading)", fontWeight: "800" }}>
+        <h2 style={{ fontSize: "1.5rem", color: "var(--color-dark)", marginBottom: "8px", fontFamily: "var(--font-heading)", fontWeight: "800" }}>
           {producto.name}
         </h2>
+
+        {isSub && (
+          <div style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
+            backgroundColor: "#f8fafc",
+            border: "1.5px solid #cbd5e1",
+            padding: "6px 12px",
+            borderRadius: "10px",
+            fontSize: "0.85rem",
+            color: "#1e293b",
+            fontWeight: "700",
+            marginBottom: "16px",
+            alignSelf: "flex-start"
+          }}>
+            <span>🏡</span>
+            <span>Licencia individual para uso familiar</span>
+          </div>
+        )}
         
         <p style={{
           color: "var(--color-text-light)",

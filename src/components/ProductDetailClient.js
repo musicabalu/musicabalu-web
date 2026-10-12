@@ -98,9 +98,26 @@ export default function ProductDetailClient({ product }) {
           )}
         </div>
 
-        <h1 style={{ fontSize: "2.2rem", color: "var(--color-dark)", marginBottom: "15px", fontFamily: "var(--font-heading)", fontWeight: "800" }}>
+        <h1 style={{ fontSize: "2.2rem", color: "var(--color-dark)", marginBottom: "8px", fontFamily: "var(--font-heading)", fontWeight: "800" }}>
           {product.name}
         </h1>
+
+        <div style={{
+          display: "inline-flex",
+          alignItems: "center",
+          gap: "6px",
+          backgroundColor: "#f8fafc",
+          border: "1.5px solid #cbd5e1",
+          padding: "6px 14px",
+          borderRadius: "10px",
+          fontSize: "0.88rem",
+          color: "#1e293b",
+          fontWeight: "700",
+          marginBottom: "20px"
+        }}>
+          <span>🏡</span>
+          <span>Licencia individual para uso familiar</span>
+        </div>
 
         {/* Sección de Precio */}
         <div style={{ marginBottom: "25px" }}>
@@ -183,6 +200,7 @@ export default function ProductDetailClient({ product }) {
             ¿Qué incluye la suscripción?
           </h3>
           <ul style={{ margin: "0 0 16px", paddingLeft: "20px", color: "var(--color-text)", fontSize: "0.98rem", lineHeight: "1.7" }}>
+            <li><strong>Licencia individual:</strong> Para uso estrictamente familiar y doméstico en casa.</li>
             <li><strong>Repertorio completo:</strong> Más de 30 canciones y recitados en diversos modos y métricas.</li>
             <li><strong>Píldoras en vídeo:</strong> Explicaciones pedagógicas y consejos prácticos para jugar en casa.</li>
             <li><strong>Goteo semanal continuo:</strong> Cada semana incorporamos nuevos contenidos.</li>
@@ -193,14 +211,17 @@ export default function ProductDetailClient({ product }) {
           </p>
 
           <div style={{
-            marginTop: "18px",
-            paddingTop: "16px",
-            borderTop: "1px dashed var(--color-border, #e2e8f0)",
+            marginTop: "20px",
+            padding: "16px",
+            backgroundColor: "#f8fafc",
+            border: "1.5px dashed #cbd5e1",
+            borderRadius: "12px",
             fontSize: "0.88rem",
             color: "var(--color-text-light)",
-            lineHeight: "1.5"
+            lineHeight: "1.55"
           }}>
-            ℹ️ <strong>Licencia individual de uso familiar:</strong> Esta suscripción está pensada exclusivamente para el ámbito particular en casa. Si perteneces a una escuela infantil, colegio o centro educativo y quieres utilizar estos recursos en tus aulas, se requiere una licencia especial de centro. Escríbenos a <a href="mailto:hola@musicabalu.com?subject=Licencia%20para%20Centros%20Educativos" style={{ color: "var(--color-cyan, #00B2E3)", fontWeight: "bold" }}>hola@musicabalu.com</a> para solicitar una propuesta adaptada a tu equipo.
+            🏫 <strong>¿Perteneces a una Escuela Infantil, Colegio o Centro Educativo?</strong><br />
+            Las opciones anteriores disponen de <strong>licencia individual para uso familiar</strong>. Si te interesa incorporar la música y recursos de Musicabalú en las aulas de tu centro, el uso colectivo requiere una licencia especial. Escríbenos para solicitar una propuesta adaptada a tu equipo docente a <a href="mailto:hola@musicabalu.com?subject=Consulta%20Licencia%20para%20Centros%20Educativos" style={{ color: "var(--color-cyan, #00B2E3)", fontWeight: "bold" }}>hola@musicabalu.com</a>.
           </div>
         </div>
 
