@@ -158,7 +158,10 @@ export default function ProyectosAdminPage() {
                   style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #ccc', backgroundColor: 'white' }}
                 >
                   <option value="General">General</option>
+                  <option value="Estrategia">Estrategia</option>
+                  <option value="Editorial">Editorial</option>
                   <option value="Tienda">Tienda</option>
+                  <option value="Contenido">Contenido</option>
                   <option value="Marketing">Marketing</option>
                   <option value="Formaciones">Formaciones</option>
                   <option value="Legal">Legal</option>
@@ -219,7 +222,10 @@ export default function ProyectosAdminPage() {
                         style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #ccc', backgroundColor: 'white' }}
                       >
                         <option value="General">General</option>
+                        <option value="Estrategia">Estrategia</option>
+                        <option value="Editorial">Editorial</option>
                         <option value="Tienda">Tienda</option>
+                        <option value="Contenido">Contenido</option>
                         <option value="Marketing">Marketing</option>
                         <option value="Formaciones">Formaciones</option>
                         <option value="Legal">Legal</option>
