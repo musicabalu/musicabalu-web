@@ -5,8 +5,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const metadata = {
-  title: 'Talleres en Familia | Musicabalú',
-  description: 'Inscripción para los talleres musicales de fin de semana.',
+  title: 'Talleres de Música en Familia en Murcia | Musicabalú',
+  description: 'Inscripción para los talleres musicales en familia (0 a 36 meses) en Murcia.',
 };
 
 export const revalidate = 0; // Ensure fresh data on every load
@@ -19,17 +19,38 @@ export default async function TalleresPage() {
 
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '40px 20px', fontFamily: 'var(--font-body)' }}>
-      <div style={{ maxWidth: '800px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
+      <div style={{ maxWidth: '820px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
         
-        {/* Cabecera visual */}
-        <div style={{ backgroundColor: 'var(--color-yellow)', padding: '60px 40px', textAlign: 'center' }}>
-          <img src="/og-logo.png" alt="Musicabalú Logo" style={{ maxWidth: '80px', marginBottom: '16px', display: 'inline-block', borderRadius: '50%' }} />
-          <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: '2.5rem', fontFamily: 'var(--font-heading)', lineHeight: '1.2' }}>
+        {/* Cabecera visual con foto real de las sesiones */}
+        <div style={{ backgroundColor: 'var(--color-yellow)', padding: '48px 32px 44px', textAlign: 'center' }}>
+          <img src="/og-logo.png" alt="Musicabalú Logo" style={{ maxWidth: '76px', marginBottom: '14px', display: 'inline-block', borderRadius: '50%', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }} />
+          <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: 'clamp(1.9rem, 4vw, 2.5rem)', fontFamily: 'var(--font-heading)', lineHeight: '1.2', fontWeight: '900' }}>
             Taller de Música en Familia
           </h1>
-          <p style={{ color: '#92400e', fontSize: '1.2rem', marginTop: '16px', fontWeight: '500' }}>
+          <p style={{ color: '#92400e', fontSize: '1.15rem', marginTop: '12px', marginBottom: '26px', fontWeight: '600', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
             Una experiencia musical de unos 45 minutos para conectar, disfrutar y aprender jugando.
           </p>
+
+          <div style={{
+            maxWidth: '660px',
+            margin: '0 auto',
+            borderRadius: '20px',
+            overflow: 'hidden',
+            boxShadow: '0 12px 30px rgba(0,0,0,0.15)',
+            border: '4px solid rgba(255, 255, 255, 0.85)'
+          }}>
+            <img
+              src="/imagenes/clases/foto clases 1.jpg"
+              alt="Sesión de música en familia en Musicabalú"
+              style={{
+                width: '100%',
+                height: '320px',
+                objectFit: 'cover',
+                 objectPosition: 'center 35%',
+                display: 'block'
+              }}
+            />
+          </div>
         </div>
 
         {/* Contenido y normas */}
@@ -136,7 +157,7 @@ export default async function TalleresPage() {
 
           </div>
 
-          <div style={{ backgroundColor: '#f8fafc', padding: '24px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+          <div style={{ backgroundColor: '#f8fafc', padding: '28px 24px', borderRadius: '16px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
             <div style={{ backgroundColor: '#fffbeb', border: '1px solid #fde68a', padding: '16px', borderRadius: '12px', marginBottom: '24px', textAlign: 'left' }}>
               <p style={{ margin: 0, color: '#b45309', fontSize: '0.95rem', lineHeight: '1.5' }}>
                 <strong style={{ display: 'block', marginBottom: '4px' }}>⚠️ Política de Cancelación:</strong>
@@ -156,8 +177,12 @@ export default async function TalleresPage() {
                 Ahora mismo no hay talleres programados. Síguenos en Instagram para enterarte de los próximos.
               </p>
             ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '400px', margin: '0 auto 32px auto' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', maxWidth: '560px', margin: '0 auto 32px auto' }}>
                 {activeWorkshops.map(w => {
+                  const parts = (w.dateText || '').split('|').map(s => s.trim());
+                  const schedulePart = parts[0] || w.dateText;
+                  const addressPart = parts[1] || null;
+
                   if (w.isSoldOut) {
                     return (
                       <a 
@@ -170,17 +195,20 @@ export default async function TalleresPage() {
                           flexDirection: 'column',
                           backgroundColor: '#f1f5f9', 
                           color: '#64748b', 
-                          padding: '16px', 
-                          borderRadius: '12px', 
+                          padding: '18px 20px', 
+                          borderRadius: '14px', 
                           textDecoration: 'none', 
                           border: '2px dashed #cbd5e1',
                           transition: 'transform 0.2s',
                           alignItems: 'center'
                         }}
                       >
-                        <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px', textDecoration: 'line-through', color: '#94a3b8' }}>{w.title}</span>
-                        <span style={{ fontSize: '0.9rem', marginBottom: '8px', color: '#94a3b8' }}>{w.dateText}</span>
-                        <span style={{ backgroundColor: '#e2e8f0', color: '#475569', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>Taller Completo - Apuntarse a la lista</span>
+                        <span style={{ fontWeight: '800', fontSize: '1.12rem', marginBottom: '6px', textDecoration: 'line-through', color: '#94a3b8' }}>{w.title}</span>
+                        <span style={{ fontSize: '0.95rem', marginBottom: addressPart ? '4px' : '10px', color: '#94a3b8' }}>🗓️ {schedulePart}</span>
+                        {addressPart && (
+                          <span style={{ fontSize: '0.88rem', marginBottom: '10px', color: '#94a3b8' }}>{addressPart}</span>
+                        )}
+                        <span style={{ backgroundColor: '#e2e8f0', color: '#475569', padding: '5px 14px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>Taller Completo - Apuntarse a la lista de espera</span>
                       </a>
                     );
                   }
@@ -196,15 +224,30 @@ export default async function TalleresPage() {
                         flexDirection: 'column',
                         backgroundColor: 'var(--color-cyan)', 
                         color: 'white', 
-                        padding: '16px', 
-                        borderRadius: '12px', 
+                        padding: '18px 20px', 
+                        borderRadius: '14px', 
                         textDecoration: 'none', 
-                        boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-                        transition: 'transform 0.2s'
+                        boxShadow: '0 6px 14px rgba(0, 178, 227, 0.22)',
+                        transition: 'transform 0.2s',
+                        alignItems: 'center'
                       }}
                     >
-                      <span style={{ fontWeight: 'bold', fontSize: '1.1rem', marginBottom: '4px' }}>{w.title}</span>
-                      <span style={{ fontSize: '0.9rem', opacity: '0.9' }}>{w.dateText}</span>
+                      <span style={{ fontWeight: '800', fontSize: '1.15rem', marginBottom: '6px' }}>{w.title}</span>
+                      <span style={{ fontSize: '0.96rem', fontWeight: '600', marginBottom: addressPart ? '4px' : '10px' }}>🗓️ {schedulePart}</span>
+                      {addressPart && (
+                        <span style={{ fontSize: '0.88rem', opacity: '0.95', marginBottom: '12px' }}>{addressPart}</span>
+                      )}
+                      <span style={{
+                        backgroundColor: 'white',
+                        color: 'var(--color-dark)',
+                        padding: '6px 16px',
+                        borderRadius: '999px',
+                        fontSize: '0.88rem',
+                        fontWeight: '800',
+                        marginTop: '2px'
+                      }}>
+                        Reservar plaza →
+                      </span>
                     </a>
                   );
                 })}
