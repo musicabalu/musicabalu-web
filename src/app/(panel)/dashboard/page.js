@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { PrismaClient } from "@prisma/client";
 import Link from "next/link";
+import PortalButton from "@/components/PortalButton";
 
 const prisma = new PrismaClient();
 
@@ -199,11 +200,11 @@ export default async function DashboardPage({ searchParams }) {
               </Link>
             )}
 
-            {/* 6. Historial de compras (Oculto hasta 1 Octubre) 
+            {/* 6. Historial de compras e inscripciones */}
             <Link href="/dashboard/compras" style={{ textDecoration: 'none' }}>
               <section style={{ backgroundColor: "white", padding: "28px", borderRadius: "16px", boxShadow: "var(--shadow-md)", borderLeft: "4px solid var(--color-text-light)", height: '100%', transition: 'transform 0.2s' }} className="hover-lift">
                 <h2 style={{ fontSize: "1.25rem", margin: 0, display: "flex", alignItems: "center", gap: "10px", color: "var(--color-dark)" }}>
-                  📦 Mi Historial
+                  📦 Mis Compras
                 </h2>
                 <div style={{ color: "var(--color-text-light)", marginTop: "12px", fontSize: "0.9rem", lineHeight: "1.5" }}>
                   {user.orders.length > 0 || user.enrollments.length > 0 ? (
@@ -212,15 +213,49 @@ export default async function DashboardPage({ searchParams }) {
                       {user.enrollments.length > 0 && <li>{user.enrollments.length} inscripción(es) a clases.</li>}
                     </ul>
                   ) : (
-                    <p style={{ margin: 0 }}>Aún no tienes compras ni inscripciones registradas.</p>
+                    <p style={{ margin: 0 }}>Consulta tus pedidos y detalles de inscripción.</p>
                   )}
                 </div>
               </section>
             </Link>
-            */}
+
+            {/* 7. Gestión de suscripción Stripe (Solo para suscriptores digitales de pago) */}
+            {user?.stripeId && hasActiveSub && !isPresential && (
+              <PortalButton />
+            )}
 
           </>
         )}
+      </div>
+
+      {/* Bloque de Ayuda y Soporte por Email */}
+      <div style={{ marginTop: '40px', padding: '24px 28px', backgroundColor: 'white', borderRadius: '16px', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-sm)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '16px' }}>
+        <div>
+          <h3 style={{ fontSize: '1.15rem', color: 'var(--color-dark)', margin: '0 0 6px 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <span>💌</span> ¿Necesitas ayuda o tienes alguna duda?
+          </h3>
+          <p style={{ color: 'var(--color-text-light)', margin: 0, fontSize: '0.9rem', lineHeight: '1.5' }}>
+            Escríbenos con total confianza a <strong style={{ color: 'var(--color-dark)' }}>hola@musicabalu.com</strong> y te responderemos en 24-48h laborables.
+          </p>
+        </div>
+        <a 
+          href="mailto:hola@musicabalu.com?subject=Consulta%20desde%20el%20Panel%20Musicabalú" 
+          style={{ 
+            backgroundColor: 'var(--color-cyan)', 
+            color: 'white', 
+            padding: '10px 22px', 
+            borderRadius: '25px', 
+            textDecoration: 'none', 
+            fontWeight: 'bold', 
+            fontSize: '0.92rem',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            boxShadow: '0 2px 8px rgba(0, 178, 227, 0.25)'
+          }}
+        >
+          ✉️ Enviar un correo
+        </a>
       </div>
     </div>
   );

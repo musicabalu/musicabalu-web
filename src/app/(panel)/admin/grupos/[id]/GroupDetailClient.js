@@ -87,12 +87,19 @@ export default function GroupDetailClient({ group, allGroups }) {
   };
 
   const deleteEnrollment = async (enrollmentId, childName) => {
-    if (!window.confirm(`¿Estás seguro de que quieres eliminar la inscripción de ${childName}? Esta acción no se puede deshacer.`)) return;
+    if (!window.confirm(`¿Estás seguro de que quieres dar de baja la inscripción de ${childName}? Se liberará su plaza, se cancelará su cuota periódica en Stripe (si la tiene) y se le enviará el email de despedida.`)) return;
     setIsDeleting(true);
     try {
       const res = await fetch(`/api/admin/enrollments/${enrollmentId}`, { method: 'DELETE' });
-      if (res.ok) router.refresh();
-      else alert('Error al eliminar la inscripción');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.stripeCancelled) {
+          alert(`Baja completada para ${childName}. ✅ Se ha cancelado automáticamente su suscripción de cuota en Stripe y se ha enviado el email de despedida.`);
+        }
+        router.refresh();
+      } else {
+        alert('Error al eliminar la inscripción');
+      }
     } catch (e) {
       alert('Error de conexión');
     }

@@ -131,6 +131,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Generador de estado de WhatsApp</p>
           </div>
         </Link>
+        <Link href="/admin/cartel-empi" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
+            <h3 className={styles.statTitle}>📄 Cartel A4 EMPI</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Imprimir cartel con código QR</p>
+          </div>
+        </Link>
         <Link href="/admin/precios" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>💶 Precios y Cuotas</h3>

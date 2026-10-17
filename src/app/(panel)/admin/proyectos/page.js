@@ -265,7 +265,7 @@ export default function ProyectosAdminPage() {
                         padding: '1.5rem',
                         borderRadius: '8px',
                         border: '1px dashed var(--color-cyan)',
-                        whiteSpace: 'pre-wrap'
+                        whiteSpace: 'normal'
                       }} 
                       dangerouslySetInnerHTML={{ __html: note.content }} 
                     />

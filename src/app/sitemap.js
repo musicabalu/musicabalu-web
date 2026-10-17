@@ -1,5 +1,14 @@
+import { BLOG_POSTS } from "@/data/blogPosts";
+
 export default function sitemap() {
   const baseUrl = "https://musicabalu.com";
+
+  const blogEntries = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: "monthly",
+    priority: 0.7,
+  }));
 
   return [
     {
@@ -36,7 +45,14 @@ export default function sitemap() {
       url: `${baseUrl}/tienda`,
       lastModified: new Date(),
       changeFrequency: "weekly",
-      priority: 0.6,
+      priority: 0.8,
     },
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    },
+    ...blogEntries,
   ];
 }
