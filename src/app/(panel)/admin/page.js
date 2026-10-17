@@ -89,6 +89,12 @@ export default async function AdminDashboard() {
       {/* Herramientas de Gestión */}
       <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+        <Link href="/admin/comunicaciones" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid var(--color-cyan)' }}>
+            <h3 className={styles.statTitle}>📧 Correo de los Viernes</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Enviar novedades a la Comunidad</p>
+          </div>
+        </Link>
         <Link href="/admin/lista-espera" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>⏳ Lista de Espera</h3>

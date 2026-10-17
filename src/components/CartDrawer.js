@@ -202,6 +202,13 @@ export default function CartDrawer() {
             >
               {isProcessing ? "Procesando..." : "Finalizar Compra"}
             </button>
+            <p style={{ margin: "12px 0 0", fontSize: "0.78rem", color: "#64748b", lineHeight: "1.45", textAlign: "center" }}>
+              Al finalizar la compra aceptas nuestra{" "}
+              <Link href="/legal/privacidad" target="_blank" style={{ color: "var(--color-cyan)", textDecoration: "underline" }}>
+                Política de Privacidad
+              </Link>
+              . Recibirás por email tus accesos y las novedades semanales de la Comunidad (con opción de baja en 1 clic en cada correo).
+            </p>
           </div>
         )}
       </div>

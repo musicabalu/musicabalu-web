@@ -293,6 +293,7 @@ export async function POST(request) {
 
           // Enviar emails de confirmación
           try {
+            const { getNewsletterFooterHtml } = await import("@/lib/emailUnsubscribe");
             const transport = createTransport(process.env.EMAIL_SERVER);
             if (targetEmail) {
               await transport.sendMail({
@@ -304,8 +305,10 @@ export async function POST(request) {
                        <p>Ya tienes acceso completo e ilimitado a todas nuestras canciones, recitados pedagógicos y píldoras formativas en vídeo.</p>
                        <p>Puedes acceder en cualquier momento desde tu móvil, tablet u ordenador aquí:<br>
                        <a href="https://musicabalu.com/comunidad/canciones" style="color: #00B2E3; font-weight: bold;">Acceder a la Biblioteca Musicabalú</a></p>
+                       <p>Cada viernes añadimos nuevos contenidos a la plataforma y te avisaremos por correo para que podáis disfrutarlos en casa.</p>
                        <p>Si tienes cualquier duda pedagógica o técnica, solo tienes que responder a este correo o escribir a <a href="mailto:hola@musicabalu.com">hola@musicabalu.com</a>.</p>
-                       <p>Un abrazo y bienvenidos,<br>Javi Muñoz · Musicabalú</p>`
+                       <p>Un abrazo y bienvenidos,<br>Javi.</p>
+                       ${getNewsletterFooterHtml(targetEmail, true)}`
               });
             }
 

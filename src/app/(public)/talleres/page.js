@@ -144,8 +144,8 @@ export default async function TalleresPage() {
               </p>
             </div>
             
-            <p style={{ margin: '0 0 24px 0', color: '#64748b', fontWeight: 'bold' }}>
-              La inscripción en esta sesión supone la aceptación del funcionamiento y las normas descritas.
+            <p style={{ margin: '0 0 24px 0', color: '#64748b', fontSize: '0.92rem', lineHeight: '1.55' }}>
+              <strong>La inscripción en esta sesión supone la aceptación del funcionamiento, las normas descritas y nuestra <Link href="/legal/privacidad" target="_blank" style={{ color: 'var(--color-cyan)', textDecoration: 'underline' }}>Política de Privacidad</Link>.</strong> Te enviaremos por correo electrónico tu acceso a la plataforma web y las novedades o próximos talleres de Musicabalú (podrás darte de baja de estas comunicaciones en cualquier momento con un solo clic).
             </p>
             <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', margin: '0 0 24px 0', fontFamily: 'var(--font-heading)' }}>
               Elige tu sesión y reserva tu plaza
