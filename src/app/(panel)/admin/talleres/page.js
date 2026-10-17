@@ -12,9 +12,9 @@ async function addWorkshop(formData) {
   "use server"
   const title = formData.get("title")
   const dateText = formData.get("dateText")
-  const stripeLink = formData.get("stripeLink")
+  const stripeLink = formData.get("stripeLink") || "/api/workshop-checkout"
   
-  if (!title || !dateText || !stripeLink) return
+  if (!title || !dateText) return
 
   await prisma.workshop.create({
     data: {
@@ -34,9 +34,9 @@ async function updateWorkshop(formData) {
   const id = formData.get("id")
   const title = formData.get("title")
   const dateText = formData.get("dateText")
-  const stripeLink = formData.get("stripeLink")
+  const stripeLink = formData.get("stripeLink") || "/api/workshop-checkout"
 
-  if (!id || !title || !dateText || !stripeLink) return
+  if (!id || !title || !dateText) return
 
   await prisma.workshop.update({
     where: { id },
@@ -124,8 +124,8 @@ export default async function AdminTalleresPage() {
               <input name="dateText" required placeholder="Ej: Sábado 21 Nov · 11:00 a 11:45 h | 📍 P.º Gabriel Císcar, 22" style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 'bold', marginBottom: '4px' }}>Enlace de Pago de Stripe (o WhatsApp)</label>
-              <input name="stripeLink" type="url" required placeholder="https://buy.stripe.com/..." style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
+              <label style={{ display: 'block', fontSize: '0.88rem', fontWeight: 'bold', marginBottom: '4px' }}>Enlace de Pago (Opcional)</label>
+              <input name="stripeLink" type="text" placeholder="Déjalo vacío para pago automático en Stripe (20 €)" style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #cbd5e1' }} />
             </div>
             <button type="submit" style={{ backgroundColor: '#2563eb', color: 'white', padding: '12px', borderRadius: '6px', border: 'none', fontWeight: 'bold', cursor: 'pointer', marginTop: '4px' }}>
               + Publicar Taller
@@ -190,8 +190,8 @@ export default async function AdminTalleresPage() {
                         <input name="dateText" defaultValue={w.dateText} required style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
                       </div>
                       <div>
-                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 'bold', color: '#475569', marginBottom: '2px' }}>Enlace de Pago (Stripe o WhatsApp)</label>
-                        <input name="stripeLink" type="url" defaultValue={w.stripeLink} required style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
+                        <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 'bold', color: '#475569', marginBottom: '2px' }}>Enlace de Pago (Si lo dejas vacío o en automático usa Stripe Checkout 20 €)</label>
+                        <input name="stripeLink" type="text" defaultValue={w.stripeLink && w.stripeLink.includes("stripe.com") ? w.stripeLink : ""} placeholder="Automático (Stripe Checkout 20 €)" style={{ width: '100%', padding: '8px 10px', borderRadius: '6px', border: '1px solid #cbd5e1', fontSize: '0.9rem' }} />
                       </div>
                       <button type="submit" style={{ alignSelf: 'flex-start', backgroundColor: '#0f172a', color: 'white', padding: '8px 16px', borderRadius: '6px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '0.85rem' }}>
                         Guardar cambios

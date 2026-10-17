@@ -40,13 +40,13 @@ export default async function TalleresPage() {
             border: '4px solid rgba(255, 255, 255, 0.85)'
           }}>
             <img
-              src="/imagenes/clases/foto clases 1.jpg"
+              src="/imagenes/clases/foto clases 2.jpg"
               alt="Sesión de música en familia en Musicabalú"
               style={{
                 width: '100%',
-                height: '320px',
+                height: '340px',
                 objectFit: 'cover',
-                 objectPosition: 'center 35%',
+                objectPosition: 'center 30%',
                 display: 'block'
               }}
             />
@@ -213,12 +213,15 @@ export default async function TalleresPage() {
                     );
                   }
                   
+                  const checkoutHref =
+                    w.stripeLink && w.stripeLink.includes("stripe.com")
+                      ? w.stripeLink
+                      : `/api/workshop-checkout?workshopId=${w.id}`;
+
                   return (
                     <a 
                       key={w.id}
-                      href={w.stripeLink} 
-                      target="_blank"
-                      rel="noreferrer"
+                      href={checkoutHref} 
                       style={{ 
                         display: 'flex', 
                         flexDirection: 'column',

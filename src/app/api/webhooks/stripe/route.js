@@ -361,6 +361,80 @@ export async function POST(request) {
             console.error("❌ Error enviando emails de confirmación:", emailError);
           }
 
+        } else if (metadata.type === 'workshop' || metadata.productType === 'workshop') {
+          // 4. Inscripción en Taller Familiar Pop-up
+          const targetEmail = session.customer_details?.email || session.customer_email;
+          const customerName = session.customer_details?.name || "Familia";
+          const customerPhone = session.customer_details?.phone || "No indicado";
+          const childField = (session.custom_fields || []).find(f => f.key === "child_name");
+          const childInfo = childField?.text?.value || "No indicado";
+
+          let user = null;
+          if (targetEmail) {
+            user = await prisma.user.findUnique({ where: { email: targetEmail } });
+            if (!user) {
+              user = await prisma.user.create({
+                data: {
+                  email: targetEmail,
+                  name: customerName,
+                  stripeId: session.customer || undefined,
+                  role: "familia"
+                }
+              });
+            }
+          }
+
+          try {
+            if (user) {
+              await prisma.order.create({
+                data: {
+                  userId: user.id,
+                  stripeSessionId: session.id,
+                  productId: metadata.workshopId || "workshop",
+                  productName: metadata.productName || "Taller Música en Familia",
+                  productType: "workshop",
+                  amountTotal: session.amount_total || 2000,
+                  currency: session.currency || "eur",
+                  status: "completed"
+                }
+              });
+            }
+          } catch (orderErr) {
+            console.error("⚠️ Error registrando order de taller:", orderErr);
+          }
+
+          try {
+            const { getNewsletterFooterHtml } = await import("@/lib/emailUnsubscribe");
+            const transport = createTransport(process.env.EMAIL_SERVER);
+            if (targetEmail) {
+              await transport.sendMail({
+                from: process.env.EMAIL_FROM,
+                to: targetEmail,
+                subject: "¡Plaza confirmada para el Taller de Música en Familia! 🎵💛",
+                html: `<p>Hola ${customerName},</p>
+                       <p>¡Qué alegría! Hemos recibido correctamente tu inscripción para el <strong>${metadata.productName || "Taller de Música en Familia"}</strong>.</p>
+                       <p>Como te comentábamos en la inscripción, tienes incluido el acceso gratuito a la versión abierta de nuestra plataforma web, donde ya puedes escuchar una selección de nuestras canciones de estudio, recitados y píldoras formativas desde casa:</p>
+                       <ul>
+                         <li><strong>Enlace de acceso:</strong> <a href="https://musicabalu.com/login" style="color: #00B2E3; font-weight: bold;">www.musicabalu.com/login</a></li>
+                         <li><strong>Tu email de acceso:</strong> ${targetEmail}</li>
+                       </ul>
+                       <p>Recuerda venir con ropa cómoda (entraremos sin calzado) y llegar unos 5-10 minutos antes para acomodarnos con calma.</p>
+                       <p>¡Estoy deseando compartir este ratito de música con vosotros!</p>
+                       <p>Un abrazo,<br>Javi.</p>
+                       ${getNewsletterFooterHtml(targetEmail, true)}`
+              });
+            }
+
+            await transport.sendMail({
+              from: process.env.EMAIL_FROM,
+              to: "hola@musicabalu.com",
+              subject: `🧸 Nueva Inscripción a Taller: ${customerName}`,
+              text: `¡Nueva plaza reservada en Taller!\n\nTaller: ${metadata.productName}\nAdulto: ${customerName}\nPeque: ${childInfo}\nTeléfono: ${customerPhone}\nEmail: ${targetEmail}\nImporte: ${((session.amount_total || 2000) / 100).toFixed(2)} €`
+            });
+          } catch (emailErr) {
+            console.error("⚠️ Error enviando emails de taller:", emailErr);
+          }
+
         } else {
           // Fallback legacy por si acaso
           const userEmail = session.customer_details?.email;
