@@ -17,6 +17,19 @@ export default async function TalleresPage() {
     orderBy: { createdAt: 'desc' }
   });
 
+  const workshopOrders = await prisma.order.findMany({
+    where: {
+      productType: 'workshop',
+      status: 'completed'
+    },
+    select: { productId: true }
+  });
+
+  const countByWorkshopId = {};
+  for (const o of workshopOrders) {
+    countByWorkshopId[o.productId] = (countByWorkshopId[o.productId] || 0) + 1;
+  }
+
   return (
     <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '40px 20px', fontFamily: 'var(--font-body)' }}>
       <div style={{ maxWidth: '820px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
@@ -182,8 +195,10 @@ export default async function TalleresPage() {
                   const parts = (w.dateText || '').split('|').map(s => s.trim());
                   const schedulePart = parts[0] || w.dateText;
                   const addressPart = parts[1] || null;
+                  const soldCount = countByWorkshopId[w.id] || 0;
+                  const isFull = w.isSoldOut || soldCount >= 12;
 
-                  if (w.isSoldOut) {
+                  if (isFull) {
                     return (
                       <a 
                         key={w.id}

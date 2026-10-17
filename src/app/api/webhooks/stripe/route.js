@@ -384,6 +384,7 @@ export async function POST(request) {
             }
           }
 
+          let soldCount = 1;
           try {
             if (user) {
               await prisma.order.create({
@@ -395,9 +396,32 @@ export async function POST(request) {
                   productType: "workshop",
                   amountTotal: session.amount_total || 2000,
                   currency: session.currency || "eur",
+                  status: "completed",
+                  shippingData: JSON.stringify({
+                    adultName: customerName,
+                    phone: customerPhone,
+                    childInfo
+                  })
+                }
+              });
+            }
+
+            if (metadata.workshopId) {
+              soldCount = await prisma.order.count({
+                where: {
+                  productType: "workshop",
+                  productId: metadata.workshopId,
                   status: "completed"
                 }
               });
+
+              if (soldCount >= 12) {
+                await prisma.workshop.update({
+                  where: { id: metadata.workshopId },
+                  data: { isSoldOut: true }
+                });
+                console.log(`🔒 Taller ${metadata.workshopId} marcado automáticamente como COMPLETO (12/12 plazas)`);
+              }
             }
           } catch (orderErr) {
             console.error("⚠️ Error registrando order de taller:", orderErr);
@@ -428,8 +452,8 @@ export async function POST(request) {
             await transport.sendMail({
               from: process.env.EMAIL_FROM,
               to: "hola@musicabalu.com",
-              subject: `🧸 Nueva Inscripción a Taller: ${customerName}`,
-              text: `¡Nueva plaza reservada en Taller!\n\nTaller: ${metadata.productName}\nAdulto: ${customerName}\nPeque: ${childInfo}\nTeléfono: ${customerPhone}\nEmail: ${targetEmail}\nImporte: ${((session.amount_total || 2000) / 100).toFixed(2)} €`
+              subject: `🧸 Nueva Inscripción a Taller (${soldCount}/12): ${customerName}`,
+              text: `¡Nueva plaza reservada en Taller!\n\nOcupación actual: ${soldCount} / 12 plazas${soldCount >= 12 ? " (¡TALLER COMPLETO! Cerrado automáticamente)" : ""}\nTaller: ${metadata.productName}\nAdulto: ${customerName}\nPeque: ${childInfo}\nTeléfono: ${customerPhone}\nEmail: ${targetEmail}\nImporte: ${((session.amount_total || 2000) / 100).toFixed(2)} €`
             });
           } catch (emailErr) {
             console.error("⚠️ Error enviando emails de taller:", emailErr);

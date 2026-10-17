@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
 
 const prisma = new PrismaClient();
+const MAX_WORKSHOP_CAPACITY = 12;
+
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY || "sk_test_dummy_key_until_configured",
   {
@@ -24,6 +26,23 @@ export async function GET(request) {
     });
 
     if (!workshop || !workshop.isActive || workshop.isSoldOut) {
+      return NextResponse.redirect(new URL("/talleres", request.url));
+    }
+
+    // Verificar aforo máximo de 12 plazas antes de abrir pasarela
+    const soldCount = await prisma.order.count({
+      where: {
+        productType: "workshop",
+        productId: workshop.id,
+        status: "completed",
+      },
+    });
+
+    if (soldCount >= MAX_WORKSHOP_CAPACITY) {
+      await prisma.workshop.update({
+        where: { id: workshop.id },
+        data: { isSoldOut: true },
+      });
       return NextResponse.redirect(new URL("/talleres", request.url));
     }
 
