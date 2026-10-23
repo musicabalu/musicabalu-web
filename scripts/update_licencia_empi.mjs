@@ -40,9 +40,8 @@ async function main() {
 <ul>
   <li><strong>Lo que entrega Musicabalú a EMPI:</strong>
     <ul>
-      <li>Licencia de Centro Institucional <strong>100% de cortesía</strong> (ahorro de ~200 €/año para EMPI).</li>
-      <li>Permiso para usar las canciones en asambleas, siestas y patios, y presumir de proyecto musical MLT en sus matriculaciones.</li>
-      <li>Mini-guía de apoyo a las educadoras para sacar el máximo partido a las canciones en el aula matinal.</li>
+      <li>Licencia de Centro Institucional <strong>100% de cortesía</strong> (ahorro de ~200 €/año para EMPI) para ser el primer Centro Oficial Musicabalú.</li>
+      <li>Acceso completo a todas las canciones, recitados rítmicos y píldoras formativas para usarlos libremente en las aulas (asambleas, juegos, recogida, siestas y despedida).</li>
     </ul>
   </li>
   <li><strong>Lo que aporta EMPI a cambio (Compromiso de Difusión Activa):</strong>
@@ -90,11 +89,11 @@ Familias de EMPI:
 
 ¿Habéis notado cómo vuestros peques reconocen las canciones que cantamos cada mañana en la asamblea o cómo se mecen y sonríen con ciertas melodías? 🥰
 
-Desde la escuela cuidamos con mucho mimo cada detalle de su desarrollo sensorial y emocional. Por eso, en las aulas compartimos a diario las canciones y juegos de *Musicabalú*, el proyecto pedagógico de estimulación musical temprana creado por *Javi Muñoz* (a quien muchas familias ya conocéis por sus clases presenciales de las tardes en EMPI).
+Desde la escuela cuidamos con mucho mimo cada detalle de su desarrollo sensorial y emocional. Por eso, en las aulas compartimos a diario las canciones y juegos de *Musicabalú*, el proyecto pedagógico de estimulación musical temprana creado por *Javi* (a quien muchas familias ya conocéis por sus clases presenciales de las tardes en EMPI).
 
 Hoy os traemos una noticia muy especial: *hemos conseguido un beneficio exclusivo para las familias de nuestra escuela.* 🎉
 
-Para que podáis continuar en casa esas mismas melodías, juegos corporales y momentos de calma que viven en el aula, Javier nos ha facilitado un acceso preferente a su plataforma digital:
+Para que podáis continuar en casa esas mismas melodías, juegos corporales y momentos de calma que viven en el aula, Javi nos ha facilitado un acceso preferente a su plataforma digital:
 
 💛 *100% libre de pantallas:* Solo música pura, sesiones guiadas en audio, nanas y juegos de regazo diseñados para su oído en desarrollo (0 a 3 años).
 🎶 *Las mismas canciones del aula:* La emoción de reconocer en casa lo que ha cantado por la mañana con su seño.

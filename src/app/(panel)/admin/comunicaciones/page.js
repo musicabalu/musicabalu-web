@@ -11,7 +11,7 @@ Ya tenéis disponible en la Comunidad Musicabalú el nuevo contenido de esta sem
 🎬 Nueva píldora: [Título de la píldora]
 
 Podéis escucharlos directamente desde aquí:
-https://musicabalu.com/comunidad
+https://musicabalu.com/comunidad/canciones
 
 ¡Que paséis un feliz fin de semana lleno de música! 🤗❤️
 
@@ -95,7 +95,14 @@ export default function AdminComunicacionesPage() {
     }
   };
 
-  const activeAudienceList = audience === "presencial" ? lists.presencial : lists.comunidad;
+  const activeAudienceList =
+    audience === "presencial"
+      ? lists.presencial
+      : audience === "talleres"
+      ? lists.talleres || []
+      : audience === "todos"
+      ? lists.todos || []
+      : lists.comunidad;
 
   return (
     <div style={{ maxWidth: "920px", margin: "0 auto", padding: "30px 20px" }}>
@@ -109,49 +116,89 @@ export default function AdminComunicacionesPage() {
         📧 Correo de los Viernes y Comunicaciones
       </h1>
       <p style={{ color: "#64748b", marginBottom: "28px", lineHeight: "1.6" }}>
-        Envía las novedades semanales de los viernes a toda la Comunidad (familias presenciales + suscriptores de 3,90 €/39 €). El sistema añade automáticamente al pie el texto de Protección de Datos y el enlace para darse de baja de los boletines en 1 clic.
+        Envía las novedades semanales de los viernes a la Comunidad, avisos especiales a familias de talleres o comunicados generales. El sistema añade automáticamente al pie el texto de Protección de Datos y el enlace para darse de baja en 1 clic.
       </p>
 
       {/* Selector de Destinatarios */}
       <div style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
         gap: "16px",
         marginBottom: "28px"
       }}>
         <div
           onClick={() => setAudience("comunidad")}
           style={{
-            padding: "20px",
+            padding: "18px",
             borderRadius: "16px",
             cursor: "pointer",
             backgroundColor: audience === "comunidad" ? "#f0f9ff" : "white",
             border: audience === "comunidad" ? "2px solid var(--color-cyan)" : "1px solid #e2e8f0",
+            boxShadow: audience === "comunidad" ? "0 4px 12px rgba(0, 178, 227, 0.15)" : "none",
           }}
         >
-          <div style={{ fontWeight: "800", fontSize: "1.05rem", color: "var(--color-dark)", marginBottom: "6px" }}>
-            🌍 Toda la Comunidad ({loadingLists ? "..." : lists.comunidad.length} emails)
+          <div style={{ fontWeight: "800", fontSize: "1rem", color: "var(--color-dark)", marginBottom: "6px" }}>
+            🌍 Comunidad ({loadingLists ? "..." : (lists.comunidad || []).length} emails)
           </div>
-          <p style={{ margin: 0, fontSize: "0.88rem", color: "#475569", lineHeight: "1.5" }}>
-            Familias de clases semanales + Suscriptores online (3,90 €/39 €). Excluye automáticamente a quienes se hayan dado de baja de los boletines ({lists.unsubscribed.length} bajas).
+          <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569", lineHeight: "1.4" }}>
+            Viernes de novedades: Familias de clases presenciales + Suscriptores online (3,90 € / 39 €).
+          </p>
+        </div>
+
+        <div
+          onClick={() => setAudience("talleres")}
+          style={{
+            padding: "18px",
+            borderRadius: "16px",
+            cursor: "pointer",
+            backgroundColor: audience === "talleres" ? "#fdf2f8" : "white",
+            border: audience === "talleres" ? "2px solid #ec4899" : "1px solid #e2e8f0",
+            boxShadow: audience === "talleres" ? "0 4px 12px rgba(236, 72, 153, 0.15)" : "none",
+          }}
+        >
+          <div style={{ fontWeight: "800", fontSize: "1rem", color: "var(--color-dark)", marginBottom: "6px" }}>
+            🧸 Familias de Talleres ({loadingLists ? "..." : (lists.talleres || []).length} emails)
+          </div>
+          <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569", lineHeight: "1.4" }}>
+            Familias inscritas en los talleres de música en familia (La Flota, El Ranero, etc.).
+          </p>
+        </div>
+
+        <div
+          onClick={() => setAudience("todos")}
+          style={{
+            padding: "18px",
+            borderRadius: "16px",
+            cursor: "pointer",
+            backgroundColor: audience === "todos" ? "#faf5ff" : "white",
+            border: audience === "todos" ? "2px solid #8b5cf6" : "1px solid #e2e8f0",
+            boxShadow: audience === "todos" ? "0 4px 12px rgba(139, 92, 246, 0.15)" : "none",
+          }}
+        >
+          <div style={{ fontWeight: "800", fontSize: "1rem", color: "var(--color-dark)", marginBottom: "6px" }}>
+            📣 Todos los Contactos ({loadingLists ? "..." : (lists.todos || []).length} emails)
+          </div>
+          <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569", lineHeight: "1.4" }}>
+            Toda tu base de datos: Comunidad, clases y talleres juntos (sin duplicados).
           </p>
         </div>
 
         <div
           onClick={() => setAudience("presencial")}
           style={{
-            padding: "20px",
+            padding: "18px",
             borderRadius: "16px",
             cursor: "pointer",
             backgroundColor: audience === "presencial" ? "#fffbeb" : "white",
             border: audience === "presencial" ? "2px solid #f59e0b" : "1px solid #e2e8f0",
+            boxShadow: audience === "presencial" ? "0 4px 12px rgba(245, 158, 11, 0.15)" : "none",
           }}
         >
-          <div style={{ fontWeight: "800", fontSize: "1.05rem", color: "var(--color-dark)", marginBottom: "6px" }}>
-            🏫 Aviso Operativo Clases Presenciales ({loadingLists ? "..." : lists.presencial.length} emails)
+          <div style={{ fontWeight: "800", fontSize: "1rem", color: "var(--color-dark)", marginBottom: "6px" }}>
+            🏫 Clases Presenciales ({loadingLists ? "..." : (lists.presencial || []).length} emails)
           </div>
-          <p style={{ margin: 0, fontSize: "0.88rem", color: "#475569", lineHeight: "1.5" }}>
-            Solo para avisos importantes de las clases en Murcia (festivos, recuperaciones, normas). Llega a todas las familias matriculadas.
+          <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569", lineHeight: "1.4" }}>
+            Avisos operativos urgentes de aula (festivos, recuperaciones, cambios de horario).
           </p>
         </div>
       </div>

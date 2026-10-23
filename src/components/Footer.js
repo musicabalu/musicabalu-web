@@ -10,6 +10,8 @@ export default function Footer() {
           <p>Educación Musical Temprana</p>
         </div>
         <div className={styles.footerLinks}>
+          <Link href="/talleres">Talleres</Link>
+          <Link href="/presencial">Clases</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/legal/privacidad">Privacidad</Link>
           <Link href="/legal/aviso-legal">Aviso Legal</Link>

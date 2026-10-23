@@ -171,21 +171,43 @@ export default async function ActividadPage({ searchParams }) {
             <table style={{ width: '100%', minWidth: '600px', borderCollapse: 'collapse', textAlign: 'left' }}>
             <thead>
               <tr style={{ borderBottom: '2px solid #edf2f7' }}>
-                <th style={{ padding: '1rem', color: '#4a5568' }}>Hora</th>
+                <th style={{ padding: '1rem', color: '#4a5568' }}>Fecha y Hora</th>
                 <th style={{ padding: '1rem', color: '#4a5568' }}>Usuario</th>
                 <th style={{ padding: '1rem', color: '#4a5568' }}>Acción</th>
                 <th style={{ padding: '1rem', color: '#4a5568' }}>Detalles</th>
               </tr>
             </thead>
             <tbody>
-              {logs.map((log) => (
+              {logs.map((log) => {
+                const logDate = new Date(log.createdAt);
+                const logDayStr = formatter.format(logDate);
+                const isLogToday = logDayStr === todayStr;
+                const formattedDate = logDate.toLocaleDateString('es-ES', {
+                  timeZone: 'Europe/Madrid',
+                  day: '2-digit',
+                  month: 'short',
+                  year: 'numeric'
+                });
+                const formattedTime = logDate.toLocaleTimeString('es-ES', {
+                  timeZone: 'Europe/Madrid',
+                  hour: '2-digit',
+                  minute: '2-digit'
+                });
+
+                return (
                 <tr key={log.id} style={{ borderBottom: '1px solid #edf2f7' }}>
-                  <td style={{ padding: '1rem', fontSize: '1rem', color: '#2d3748', fontWeight: 'bold' }}>
-                    {new Date(log.createdAt).toLocaleTimeString('es-ES', { 
-                      timeZone: 'Europe/Madrid',
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
+                  <td style={{ padding: '1rem', whiteSpace: 'nowrap' }}>
+                    <div style={{ fontSize: '1rem', color: '#2d3748', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span>{formattedTime}</span>
+                      {isLogToday && (
+                        <span style={{ fontSize: '0.7rem', backgroundColor: '#fff5f7', color: 'var(--color-pink)', border: '1px solid #fed7e2', padding: '1px 6px', borderRadius: '999px', fontWeight: 'bold' }}>
+                          HOY
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: '#718096', marginTop: '2px' }}>
+                      📅 {formattedDate}
+                    </div>
                   </td>
                   <td style={{ padding: '1rem' }}>
                     <div style={{ fontWeight: '500' }}>{log.user?.name || 'Desconocido'}</div>
@@ -219,7 +241,8 @@ export default async function ActividadPage({ searchParams }) {
                     {log.details || '-'}
                   </td>
                 </tr>
-              ))}
+                );
+              })}
             </tbody>
           </table>
           </div>

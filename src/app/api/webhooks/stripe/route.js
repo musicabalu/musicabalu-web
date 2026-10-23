@@ -367,7 +367,10 @@ export async function POST(request) {
           const customerName = session.customer_details?.name || "Familia";
           const customerPhone = session.customer_details?.phone || "No indicado";
           const childField = (session.custom_fields || []).find(f => f.key === "child_name");
-          const childInfo = childField?.text?.value || "No indicado";
+          const birthField = (session.custom_fields || []).find(f => f.key === "child_birth_date");
+          const childName = childField?.text?.value || "Peque";
+          const childBirthDate = birthField?.text?.value || "";
+          const childInfo = childBirthDate ? `${childName} (${childBirthDate})` : childName;
 
           let user = null;
           if (targetEmail) {
@@ -399,8 +402,13 @@ export async function POST(request) {
                   status: "completed",
                   shippingData: JSON.stringify({
                     adultName: customerName,
+                    email: targetEmail,
                     phone: customerPhone,
-                    childInfo
+                    childName,
+                    childBirthDate,
+                    childInfo,
+                    notes: "",
+                    attended: null
                   })
                 }
               });

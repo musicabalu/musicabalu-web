@@ -32,6 +32,13 @@ export default async function AdminDashboard() {
     }
   });
 
+  const activeSubscribers = await prisma.user.count({
+    where: {
+      hasActiveSub: true,
+      email: { notIn: ['musicabalu@gmail.com', 'hola@musicabalu.com', 'jamusanchez@gmail.com'] }
+    }
+  });
+
   // 2. Cálculos
   const totalCapacity = groups.reduce((acc, g) => acc + g.capacity, 0);
   const totalEnrolled = enrollments.length;
@@ -83,12 +90,26 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail}>{orders.length} pedidos completados (Click para ver detalles)</p>
           </div>
         </Link>
+
+        <Link href="/admin/suscriptores" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', ':hover': { transform: 'translateY(-2px)' }, borderTop: '4px solid #805AD5' }}>
+            <h3 className={styles.statTitle}>⭐ Suscriptores</h3>
+            <p className={styles.statValue} style={{ color: '#805AD5' }}>{activeSubscribers}</p>
+            <p className={styles.statDetail}>Suscripciones Comunidad (Click para ver listado)</p>
+          </div>
+        </Link>
         
       </div>
       
       {/* Herramientas de Gestión */}
       <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+        <Link href="/admin/suscriptores" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #805AD5' }}>
+            <h3 className={styles.statTitle}>⭐ Suscriptores Comunidad</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Planes anuales y mensuales activos</p>
+          </div>
+        </Link>
         <Link href="/admin/comunicaciones" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid var(--color-cyan)' }}>
             <h3 className={styles.statTitle}>📧 Correo de los Viernes</h3>
@@ -151,8 +172,8 @@ export default async function AdminDashboard() {
         </Link>
         <Link href="/admin/talleres" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🧸 Talleres Pop-up</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Gestionar Enlaces de Stripe</p>
+            <h3 className={styles.statTitle}>🧸 Talleres</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Grupos en marcha y gestión de talleres</p>
           </div>
         </Link>
         <Link href="/admin/guiones" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -165,6 +186,12 @@ export default async function AdminDashboard() {
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>📓 Lab de Proyectos</h3>
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Cuaderno de bitácora centralizado</p>
+          </div>
+        </Link>
+        <Link href="/admin/guia-aula" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid var(--color-pink)' }}>
+            <h3 className={styles.statTitle}>🏫 Guía Rutinas de Aula</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Borrador HTML para escuelas (0-3 años)</p>
           </div>
         </Link>
       </div>

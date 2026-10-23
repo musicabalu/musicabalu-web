@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 const COLORS = ['#F4436C', '#AADB1E', '#38B2AC', '#F6E05E', '#ED8936', '#9F7AEA', '#4299E1', '#E53E3E', '#319795', '#D69E2E'];
 
-export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, usersData }) {
+export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, pillViewsData = [], pildorasVisitorsData = [], usersData }) {
   // Manejo de hidratación para evitar errores de mismatch en SVG de Recharts
   const [mounted, setMounted] = useState(false);
   const [selectedUserEmail, setSelectedUserEmail] = useState('');
@@ -57,9 +57,14 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
             }}
           >
             <option value="">{emptyText}</option>
-            {usersList?.map(u => (
-              <option key={u.email} value={u.email}>{u.name} ({u.email})</option>
-            ))}
+            {usersList?.map(u => {
+              const tag = u.isDigitalSubscriber ? '⭐ Suscriptor Digital' : (u.isPresential ? '🏫 Presencial' : '');
+              return (
+                <option key={u.email} value={u.email}>
+                  {u.name} {tag ? `[${tag}]` : ''} ({u.email})
+                </option>
+              );
+            })}
           </select>
         </div>
 
@@ -69,18 +74,21 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
 
         {selectedUser && (
           <div style={{ animation: 'fadeInUp 0.4s ease-out' }}>
-            <div style={{ display: 'flex', gap: '10px', marginBottom: '1.5rem', flexWrap: 'wrap' }}>
-              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#4a5568', marginRight: '10px' }}>Nivel de Acceso:</span>
-              {selectedUser.hasComunidad ? (
-                <span style={{ background: '#e6fffa', color: '#319795', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✓ Comunidad / Presencial</span>
-              ) : (
-                <span style={{ background: '#fff5f5', color: '#e53e3e', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✕ Sin Comunidad</span>
+            <div style={{ display: 'flex', gap: '10px', marginBottom: '1.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#4a5568', marginRight: '5px' }}>Tipo de Usuario:</span>
+              {selectedUser.isDigitalSubscriber && (
+                <span style={{ background: '#FAF5FF', color: '#805AD5', border: '1px solid #D6BCFA', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+                  ⭐ Suscriptor Digital Activo
+                </span>
+              )}
+              {selectedUser.isPresential && (
+                <span style={{ background: '#e6fffa', color: '#319795', border: '1px solid #B2F5EA', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+                  🏫 Alumno Clases Presenciales
+                </span>
               )}
               {selectedUser.hasFormaciones ? (
                 <span style={{ background: '#ebf4ff', color: '#3182ce', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✓ Formaciones</span>
-              ) : (
-                <span style={{ background: '#fff5f5', color: '#e53e3e', padding: '4px 12px', borderRadius: '20px', fontSize: '0.85rem', fontWeight: 'bold' }}>✕ Sin Formaciones</span>
-              )}
+              ) : null}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
@@ -116,6 +124,27 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
                   </ul>
                 ) : (
                   <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>Sin audios registrados.</p>
+                )}
+              </div>
+
+              {/* Píldoras Vistas del Usuario */}
+              <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px' }}>
+                <h3 style={{ fontSize: '1.1rem', color: '#4a5568', margin: '0 0 1rem 0' }}>🎬 Píldoras Vistas</h3>
+                {selectedUser.topPills && selectedUser.topPills.length > 0 ? (
+                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                    {selectedUser.topPills.map((pill, idx) => (
+                      <li key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '8px 0', borderBottom: idx !== selectedUser.topPills.length - 1 ? '1px solid #e2e8f0' : 'none' }}>
+                        <span style={{ fontWeight: 500, color: '#2d3748', fontSize: '0.9rem' }}>{pill.name}</span>
+                        <span style={{ color: '#38B2AC', fontWeight: 'bold' }}>{pill.visualizaciones}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p style={{ color: '#a0aec0', margin: 0, fontSize: '0.9rem' }}>
+                    {selectedUser.totalPildoras > 0
+                      ? `Entró ${selectedUser.totalPildoras} ${selectedUser.totalPildoras === 1 ? 'vez' : 'veces'} a la sección Píldoras.`
+                      : 'Sin píldoras registradas.'}
+                  </p>
                 )}
               </div>
 
@@ -206,6 +235,120 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
           )}
         </div>
       </div>
+
+      {/* Nueva Sección: Píldoras Formativas (Gráfica de las 5 Píldoras + Usuarios que las ven) */}
+      <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)', borderTop: '4px solid var(--color-cyan)' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '10px', marginBottom: '1.5rem' }}>
+          <div>
+            <h2 style={{ fontSize: '1.4rem', color: '#2d3748', margin: '0 0 4px 0', display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <span>🎬</span> Píldoras Formativas (¿Se están viendo las primeras píldoras?)
+            </h2>
+            <p style={{ margin: 0, fontSize: '0.9rem', color: '#718096' }}>
+              Visualizaciones por cada píldora (#1 a #5) y listado de familias que han entrado a la sección de Píldoras en los últimos 30 días.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <span style={{ background: '#e6fffa', color: '#234e52', padding: '6px 14px', borderRadius: '999px', fontSize: '0.85rem', fontWeight: 'bold' }}>
+              👥 {pildorasVisitorsData.length} {pildorasVisitorsData.length === 1 ? 'usuario ha entrado' : 'usuarios han entrado'}
+            </span>
+          </div>
+        </div>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '2rem', alignItems: 'start' }}>
+          {/* Gráfica de las 5 Píldoras */}
+          <div>
+            <h3 style={{ fontSize: '1.05rem', color: '#4a5568', margin: '0 0 1rem 0' }}>
+              📊 Aperturas por Píldora (#1 a #5)
+            </h3>
+            <div style={{ width: '100%', height: 260 }}>
+              <ResponsiveContainer>
+                <BarChart
+                  data={pillViewsData}
+                  layout="vertical"
+                  margin={{ top: 5, right: 30, left: 150, bottom: 5 }}
+                >
+                  <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="#e2e8f0" />
+                  <XAxis type="number" allowDecimals={false} tick={{ fill: '#718096' }} axisLine={false} tickLine={false} />
+                  <YAxis
+                    dataKey="name"
+                    type="category"
+                    tick={{ fill: '#2d3748', fontSize: 12, fontWeight: 600 }}
+                    axisLine={false}
+                    tickLine={false}
+                    width={145}
+                  />
+                  <RechartsTooltip content={<CustomTooltip />} cursor={{ fill: '#f7fafc' }} />
+                  <Bar dataKey="visualizaciones" fill="#38B2AC" radius={[0, 6, 6, 0]}>
+                    {pillViewsData.map((entry, index) => (
+                      <Cell key={`pill-cell-${index}`} fill={COLORS[(index + 2) % COLORS.length]} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          {/* Tabla de quiénes han entrado a Píldoras y tiempo de permanencia */}
+          <div>
+            <h3 style={{ fontSize: '1.05rem', color: '#4a5568', margin: '0 0 1rem 0' }}>
+              👀 ¿Quién ha entrado a ver las Píldoras?
+            </h3>
+            {pildorasVisitorsData.length === 0 ? (
+              <div style={{ background: '#f7fafc', padding: '1.5rem', borderRadius: '12px', textAlign: 'center', color: '#718096' }}>
+                Nadie ha entrado todavía a la sección de Píldoras en los últimos 30 días.
+              </div>
+            ) : (
+              <div style={{ maxHeight: '260px', overflowY: 'auto', border: '1px solid #edf2f7', borderRadius: '12px' }}>
+                <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.88rem', textAlign: 'left' }}>
+                  <thead>
+                    <tr style={{ background: '#f7fafc', borderBottom: '1px solid #e2e8f0', color: '#4a5568' }}>
+                      <th style={{ padding: '10px 12px' }}>Usuario</th>
+                      <th style={{ padding: '10px 8px', textAlign: 'center' }}>Veces que entró</th>
+                      <th style={{ padding: '10px 8px' }}>Píldoras vistas y Tiempo por visita</th>
+                      <th style={{ padding: '10px 12px' }}>Última vez</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {pildorasVisitorsData.map((v, i) => {
+                      const countEntries = v.sectionVisits || v.pillsOpened;
+                      return (
+                      <tr key={v.email} style={{ borderBottom: '1px solid #edf2f7', background: i % 2 === 0 ? 'white' : '#fcfcfc' }}>
+                        <td style={{ padding: '10px 12px' }}>
+                          <div style={{ fontWeight: '600', color: '#2d3748' }}>{v.name}</div>
+                          <div style={{ fontSize: '0.75rem', color: '#718096' }}>{v.email}</div>
+                        </td>
+                        <td style={{ padding: '10px 8px', textAlign: 'center', fontWeight: 'bold', color: '#319795', whiteSpace: 'nowrap' }}>
+                          {countEntries} {countEntries === 1 ? 'vez' : 'veces'}
+                        </td>
+                        <td style={{ padding: '10px 8px', color: '#4a5568', fontSize: '0.8rem' }}>
+                          {v.pillsList && v.pillsList.length > 0 ? (
+                            <div style={{ fontWeight: 600, color: '#2b6cb0', marginBottom: '3px' }}>
+                              🎬 {v.pillsList.join(', ')}
+                            </div>
+                          ) : (
+                            <div style={{ color: '#94a3b8', fontSize: '0.76rem', marginBottom: '2px' }}>
+                              (Visita anterior al rastreo por vídeo)
+                            </div>
+                          )}
+                          {v.durations && v.durations.length > 0 && (
+                            <div style={{ color: '#475569' }}>
+                              ⏱️ Tiempo en cada entrada: <strong>{v.durations.join(' · ')}</strong>
+                            </div>
+                          )}
+                        </td>
+                        <td style={{ padding: '10px 12px', whiteSpace: 'nowrap', color: '#718096', fontSize: '0.8rem' }}>
+                          {v.lastVisit ? new Date(v.lastVisit).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-'}
+                        </td>
+                      </tr>
+                    );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
       
       {/* Resumen Global de Usuarios */}
       <div style={{ background: 'white', padding: '2rem', borderRadius: '16px', boxShadow: '0 4px 6px rgba(0,0,0,0.05)' }}>
@@ -222,6 +365,7 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
                   { label: 'Perfil', key: 'profile' },
                   { label: 'Vistas', key: 'totalViews', center: true },
                   { label: 'Audios', key: 'totalAudios', center: true },
+                  { label: 'Píldoras', key: 'totalPildoras', center: true },
                   { label: 'Última conexión', key: 'lastConnection' }
                 ].map((col) => (
                   <th 
@@ -247,7 +391,7 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
             </thead>
             <tbody>
               {(() => {
-                let sortableUsers = [...usersData].filter(u => u.totalViews > 0 || u.totalAudios > 0);
+                let sortableUsers = [...usersData].filter(u => u.totalViews > 0 || u.totalAudios > 0 || u.totalPildoras > 0);
                 sortableUsers.sort((a, b) => {
                   let aVal, bVal;
                   if (sortConfig.key === 'name') {
@@ -262,12 +406,15 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
                   } else if (sortConfig.key === 'totalAudios') {
                     aVal = a.totalAudios;
                     bVal = b.totalAudios;
+                  } else if (sortConfig.key === 'totalPildoras') {
+                    aVal = a.totalPildoras || 0;
+                    bVal = b.totalPildoras || 0;
                   } else if (sortConfig.key === 'lastConnection') {
                     aVal = a.lastConnection ? new Date(a.lastConnection).getTime() : 0;
                     bVal = b.lastConnection ? new Date(b.lastConnection).getTime() : 0;
                   } else {
-                    aVal = a.totalViews + a.totalAudios;
-                    bVal = b.totalViews + b.totalAudios;
+                    aVal = a.totalViews + a.totalAudios + (a.totalPildoras || 0);
+                    bVal = b.totalViews + b.totalAudios + (b.totalPildoras || 0);
                   }
                   if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
                   if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
@@ -288,6 +435,7 @@ export default function AnalyticsDashboard({ pageViewsData, audioPlaysData, user
                   </td>
                   <td style={{ padding: '12px 8px', textAlign: 'center', fontWeight: 'bold', color: 'var(--color-pink)' }}>{u.totalViews}</td>
                   <td style={{ padding: '12px 8px', textAlign: 'center', fontWeight: 'bold', color: 'var(--color-green)' }}>{u.totalAudios}</td>
+                  <td style={{ padding: '12px 8px', textAlign: 'center', fontWeight: 'bold', color: '#38B2AC' }}>{u.totalPildoras || 0}</td>
                   <td style={{ padding: '12px 8px', fontSize: '0.85rem', color: '#718096' }}>
                     {u.lastConnection ? new Date(u.lastConnection).toLocaleString('es-ES', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : '-'}
                   </td>

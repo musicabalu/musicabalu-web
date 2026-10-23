@@ -51,6 +51,11 @@ export async function GET(request) {
       request.headers.get("origin") ||
       `https://${request.headers.get("host")}`;
 
+    const locationAndSession = (workshop.title || "").replace(/^Taller en\s+/i, "");
+    const cleanDescription = locationAndSession
+      ? `${locationAndSession} — ${workshop.dateText}`
+      : workshop.dateText;
+
     // Crear sesión de pago único en Stripe por 20,00 € (Precio del Taller Familiar)
     const checkoutSession = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -63,7 +68,15 @@ export async function GET(request) {
           key: "child_name",
           label: {
             type: "custom",
-            custom: "Nombre y edad del peque (0 a 36 meses)",
+            custom: "Nombre del peque",
+          },
+          type: "text",
+        },
+        {
+          key: "child_birth_date",
+          label: {
+            type: "custom",
+            custom: "Fecha de nacimiento del peque (DD/MM/AAAA)",
           },
           type: "text",
         },
@@ -73,8 +86,8 @@ export async function GET(request) {
           price_data: {
             currency: "eur",
             product_data: {
-              name: workshop.title,
-              description: workshop.dateText,
+              name: "Taller: Un peque (0-36 meses) + un adulto",
+              description: cleanDescription,
             },
             unit_amount: 2000, // 20,00 €
           },
@@ -85,7 +98,7 @@ export async function GET(request) {
         type: "workshop",
         productType: "workshop",
         workshopId: workshop.id,
-        productName: `${workshop.title} (${workshop.dateText})`,
+        productName: `Taller: Un peque + un adulto · ${workshop.title} (${workshop.dateText})`,
       },
       success_url: `${origin}/inscripcion/exito?taller=1`,
       cancel_url: `${origin}/talleres`,

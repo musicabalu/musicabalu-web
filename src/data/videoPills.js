@@ -63,5 +63,18 @@ export const VIDEO_PILLS = [
     isFree: true,
     ideaClave: "¿Cómo le transmites el ritmo a un bebé que todavía no camina ni da palmas coordinadas? ¡Tú eres su cuerpo! Como el bebé no puede desplazarse de forma autónoma, necesita sentir el flujo y el peso de la música a través del movimiento de quien lo sostiene.",
     aplicacionPractica: "Coge a tu bebé en brazos, apóyalo en tu pecho y balancéate de forma continua y suave mientras cantas o escuchas música. Camina con pasos fluidos (sin marcar golpes secos tipo soldado). Tu cuerpo le enseñará a sentir el pulso de la música sin ninguna rigidez."
+  },
+  {
+    id: 6,
+    numero: 6,
+    title: "Contrastar para dormir",
+    categoria: "practica",
+    categoriaLabel: "Consejos Prácticos en Casa",
+    categoriaIcon: "🎯",
+    youtubeId: "VAAepPnXR8U",
+    youtubeUrl: "https://youtube.com/shorts/VAAepPnXR8U",
+    isFree: false,
+    ideaClave: "Intentar pasar directamente del juego activo al sueño suele generar resistencia o sobreestimulación en los peques. Para que el cuerpo y la mente de tu bebé alcancen una relajación real, el secreto está en el contraste: primero canalizamos y liberamos la energía acumulada con un juego musical más dinámico o rítmico, para luego contrastar con una canción de calma, suave y en flujo continuo. Es ese contraste el que activa la relajación natural del sistema nervioso.",
+    aplicacionPractica: "Antes de meterle en la cama, no intentes forzar la calma de golpe. Empieza jugando con una canción dinámica o un recitado con palmadas suaves y movimiento corporal durante 2 o 3 minutos. Después, haz una pausa en silencio y pasa a una canción lenta, balanceándole suavemente en brazos o acurrucados. Notarás cómo su respiración y su tono muscular bajan de golpe hacia el descanso."
   }
 ];

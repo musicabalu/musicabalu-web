@@ -5,6 +5,9 @@ import { PrismaClient } from "@prisma/client";
 import { createTransport } from "nodemailer";
 import { getNewsletterFooterHtml } from "@/lib/emailUnsubscribe";
 
+export const dynamic = "force-dynamic";
+export const maxDuration = 60;
+
 const prisma = new PrismaClient();
 
 async function buildRecipientLists() {
@@ -76,8 +79,45 @@ async function buildRecipientLists() {
     }
   }
 
+  // 4. Obtener familias inscritas en Talleres Pop-up
+  const workshopOrders = await prisma.order.findMany({
+    where: {
+      productType: "workshop",
+      status: "completed",
+    },
+    include: { user: true },
+  });
+
+  const talleresMap = new Map();
+  for (const o of workshopOrders) {
+    let extra = {};
+    try { extra = o.shippingData ? JSON.parse(o.shippingData) : {}; } catch {}
+    const email = (extra.email || o.user?.email || "").trim().toLowerCase();
+    if (!email || email === "jamusanchez@gmail.com" || unsubSet.has(email)) continue;
+    if (!talleresMap.has(email)) {
+      talleresMap.set(email, {
+        email,
+        name: extra.adultName || o.user?.name || "Familia",
+        source: "Taller Familiar",
+      });
+    }
+  }
+
+  // 5. Lista global con todos los contactos (Comunidad + Talleres sin duplicados)
+  const todosMap = new Map();
+  for (const item of comunidadMap.values()) {
+    todosMap.set(item.email, item);
+  }
+  for (const item of talleresMap.values()) {
+    if (!todosMap.has(item.email)) {
+      todosMap.set(item.email, item);
+    }
+  }
+
   return {
     comunidad: Array.from(comunidadMap.values()),
+    talleres: Array.from(talleresMap.values()),
+    todos: Array.from(todosMap.values()),
     presencial: Array.from(presencialMap.values()),
     unsubscribed: Array.from(unsubSet),
   };
@@ -152,8 +192,10 @@ export async function POST(request) {
     }
 
     const lists = await buildRecipientLists();
-    const recipients =
-      audience === "presencial" ? lists.presencial : lists.comunidad;
+    let recipients = lists.comunidad;
+    if (audience === "presencial") recipients = lists.presencial;
+    else if (audience === "talleres") recipients = lists.talleres;
+    else if (audience === "todos") recipients = lists.todos;
 
     // Si es un aviso operativo exclusivo de clases presenciales, no lleva enlace de baja de boletines, solo LOPD
     const includeUnsubscribeLink = audience !== "presencial";
@@ -161,29 +203,36 @@ export async function POST(request) {
     let sentCount = 0;
     const errors = [];
 
-    for (const recipient of recipients) {
-      try {
-        const personalizedBody = formattedHtmlBody.replace(
-          /\[Nombre\]/gi,
-          recipient.name || "familia"
-        );
-        const html = `
-          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-            ${personalizedBody}
-            ${getNewsletterFooterHtml(recipient.email, includeUnsubscribeLink)}
-          </div>
-        `;
-        await transport.sendMail({
-          from: process.env.EMAIL_FROM,
-          to: recipient.email,
-          subject,
-          html,
-        });
-        sentCount++;
-      } catch (err) {
-        console.error(`Error enviando a ${recipient.email}:`, err);
-        errors.push(recipient.email);
-      }
+    // Enviar en lotes concurrentes de 5 para máxima velocidad y evitar timeouts
+    const BATCH_SIZE = 5;
+    for (let i = 0; i < recipients.length; i += BATCH_SIZE) {
+      const batch = recipients.slice(i, i + BATCH_SIZE);
+      await Promise.allSettled(
+        batch.map(async (recipient) => {
+          try {
+            const personalizedBody = formattedHtmlBody.replace(
+              /\[Nombre\]/gi,
+              recipient.name || "familia"
+            );
+            const html = `
+              <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+                ${personalizedBody}
+                ${getNewsletterFooterHtml(recipient.email, includeUnsubscribeLink)}
+              </div>
+            `;
+            await transport.sendMail({
+              from: process.env.EMAIL_FROM,
+              to: recipient.email,
+              subject,
+              html,
+            });
+            sentCount++;
+          } catch (err) {
+            console.error(`Error enviando a ${recipient.email}:`, err);
+            errors.push(recipient.email);
+          }
+        })
+      );
     }
 
     return NextResponse.json({

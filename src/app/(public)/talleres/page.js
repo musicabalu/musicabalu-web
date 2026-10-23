@@ -64,12 +64,27 @@ export default async function TalleresPage() {
               }}
             />
           </div>
+
+          <p style={{
+            margin: '18px auto 0 auto',
+            maxWidth: '660px',
+            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+            color: '#991b1b',
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            padding: '12px 18px',
+            borderRadius: '12px',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+            border: '1px solid #fecaca'
+          }}>
+            Este taller está diseñado exclusivamente para peques de 0 a 36 meses acompañados por un adulto.
+          </p>
         </div>
 
         {/* Contenido y normas */}
         <div style={{ padding: '40px' }}>
-          <p style={{ color: '#c53030', fontWeight: 'bold', marginBottom: '24px', backgroundColor: '#fff5f5', padding: '12px', borderRadius: '8px', borderLeft: '4px solid #f56565' }}>
-            Límite de edad: Este taller está diseñado exclusivamente para peques de 0 a 36 meses.
+          <p style={{ color: '#c53030', fontWeight: 'bold', marginBottom: '24px', backgroundColor: '#fff5f5', padding: '12px 16px', borderRadius: '8px', borderLeft: '4px solid #f56565' }}>
+            Este taller está diseñado exclusivamente para peques de 0 a 36 meses acompañados por un adulto.
           </p>
 
           <h2 style={{ color: 'var(--color-dark)', fontSize: '1.5rem', marginBottom: '24px', fontFamily: 'var(--font-heading)' }}>
@@ -157,7 +172,7 @@ export default async function TalleresPage() {
               <ul style={{ margin: 0, paddingLeft: '20px', color: '#c53030', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <li>🧸 Que los niños traigan juguetes u objetos personales.</li>
                 <li>📸 Hacer grabaciones o fotos.</li>
-                <li>📱 Utilizar el teléfono (debe estar en silencio).</li>
+                <li>📱 Utilizar el teléfono (debe estar guardado y en silencio).</li>
                 <li>🥪 Comer dentro del aula (los peques sí pueden beber agua dentro del aula, pero no sobre el tatami sino en el lugar que habilitemos para ello).</li>
               </ul>
             </div>

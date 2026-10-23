@@ -19,17 +19,33 @@ export default async function VentasDashboard() {
 
   // Combine both into a single array
   const allSales = [
-    ...orders.map(o => ({
-      id: o.id,
-      date: new Date(o.createdAt),
-      productName: o.productName,
-      type: 'Tienda (' + (o.productType === 'digital' ? 'Digital' : 'Físico') + ')',
-      typeColor: o.productType === 'digital' ? { bg: '#E0F6FD', text: '#00B2E3' } : { bg: '#EBF8FF', text: '#3182CE' },
-      user: o.user || { name: 'Invitado', email: '' },
-      amount: (o.amountTotal / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }),
-      status: o.status === 'completed' ? 'Completado' : o.status,
-      shippingData: o.shippingData ? JSON.parse(o.shippingData) : null
-    })),
+    ...orders.map(o => {
+      let typeLabel = 'Tienda (Físico)';
+      let typeColor = { bg: '#EBF8FF', text: '#3182CE' };
+
+      if (o.productType === 'subscription') {
+        typeLabel = '⭐ Suscripción Digital';
+        typeColor = { bg: '#FAF5FF', text: '#805AD5' };
+      } else if (o.productType === 'workshop') {
+        typeLabel = '🧸 Taller Familiar';
+        typeColor = { bg: '#FFFAF0', text: '#DD6B20' };
+      } else if (o.productType === 'digital') {
+        typeLabel = 'Tienda (Digital)';
+        typeColor = { bg: '#E0F6FD', text: '#00B2E3' };
+      }
+
+      return {
+        id: o.id,
+        date: new Date(o.createdAt),
+        productName: o.productName,
+        type: typeLabel,
+        typeColor: typeColor,
+        user: o.user || { name: 'Invitado', email: '' },
+        amount: (o.amountTotal / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' }),
+        status: o.status === 'completed' ? 'Completado' : o.status,
+        shippingData: o.shippingData ? JSON.parse(o.shippingData) : null
+      };
+    }),
     ...enrollments.map(e => ({
       id: e.id,
       date: new Date(e.createdAt),

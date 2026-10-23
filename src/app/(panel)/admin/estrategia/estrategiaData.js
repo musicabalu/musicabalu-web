@@ -796,63 +796,122 @@ export const estrategiaHtml = `<!DOCTYPE html>
     </div>
   </div>
 
-  <h3>5. Base de Datos de Espacios Prospectables en la Región de Murcia</h3>
-  <p>Candidatos ideales para talleres familiares puntuales (escuelas infantiles, centros de atención temprana, espacios Montessori/Waldorf y centros de psicomotricidad/crianza con sala diáfana de suelo cálido):</p>
+  <h3>5. Base de Datos de Espacios y Centros Especiales (Municipio de Murcia)</h3>
+  <p>Selección cualificada de espacios en el <strong>municipio de Murcia (capital y pedanías)</strong> que se alejan del modelo de guardería o bajo comercial urbano estrecho. Se priorizan <strong>fincas en la huerta, espacios con naturaleza, luz natural, pedagogías activas (Montessori, Waldorf, educación viva), casas nido y centros de crianza respetuosa</strong> con salas diáfanas de suelo cálido:</p>
 
   <table>
     <thead>
       <tr>
-        <th>Municipio / Zona</th>
-        <th>Centro / Espacio</th>
-        <th>Tipo de Espacio / Sala</th>
-        <th>Teléfono</th>
-        <th>Email de Contacto</th>
+        <th>Zona / Pedanía</th>
+        <th>Espacio / Proyecto</th>
+        <th>Entorno, Filosofía y Sala</th>
+        <th>Formato Idóneo de Colaboración</th>
+        <th>Contacto Directo</th>
       </tr>
     </thead>
     <tbody>
-      <!-- Murcia Capital & Pedanías -->
-      <tr><td>Murcia (Centro/Norte)</td><td><strong>E.I. Bilingüe Jacky</strong> (C/ José Javier, 12)</td><td>Escuela Infantil Privada · Aula psicomotricidad</td><td>968 29 41 25 / 659 59 51 84</td><td>web@escuelainfantiljacky.com</td></tr>
-      <tr><td>Murcia (San Basilio)</td><td><strong>E.I. Nenos Star</strong> (C/ Catedrático Fernando Piñuela, 5)</td><td>Escuela Infantil Privada · Sala diáfana</td><td>968 07 90 24 / 661 91 32 24</td><td>info@escuelainfantilnenos.com</td></tr>
-      <tr><td>Murcia (Espinardo / JC1)</td><td><strong>CEI JC1</strong> (C/ Monseñor José Manuel Lorca, 2ª)</td><td>Centro Infantil · Espacio polivalente</td><td>640 51 53 23</td><td>jc1centroinfantil@gmail.com</td></tr>
-      <tr><td>Murcia (Juan de Borbón)</td><td><strong>CEI Crecemos</strong> (Av. Francisco Jiménez Ruiz, 10)</td><td>Centro Infantil · Aula de psicomotricidad / tarima</td><td>696 57 71 08 / 968 78 66 79</td><td>info@ceicrecemos.es</td></tr>
-      <tr><td>Murcia (San Basilio)</td><td><strong>E.I. Origami</strong> (Plaza Tomás y Valiente, 4)</td><td>Proyecto respetuoso · Sala diáfana</td><td>968 28 50 15</td><td>info@origamieim.com</td></tr>
-      <tr><td>Murcia (Centro)</td><td><strong>CEI Los Molinos</strong> (Centro urbano)</td><td>Centro Infantil · Estimulación temprana</td><td>968 29 93 42</td><td>info@escuelainfantil-losmolinos.com</td></tr>
-      <tr><td>Murcia (La Flota)</td><td><strong>Centro CRESCERE</strong> (Av. Marina Española / Victoria)</td><td>Desarrollo Infantil · Sala de psicomotricidad acolchada</td><td>868 07 94 35 / 633 27 35 91</td><td>info@centrocrescere.com</td></tr>
-      <tr><td>Murcia (La Alberca)</td><td><strong>Jardín Waldorf Murcia</strong> (C/ de los Caños, 3)</td><td>Pedagogía Waldorf · Suelo de madera / diáfano</td><td>646 97 67 90</td><td>asociacionwaldorfmurcia@gmail.com</td></tr>
-      <tr><td>Murcia (Puente Tocinos)</td><td><strong>Montessori British School</strong> (C/ Ermita Vieja, 26)</td><td>Pedagogía Montessori · Salas diáfanas cálidas</td><td>604 54 77 42 / 629 42 15 88</td><td>hello@montessoribritish.com</td></tr>
-      <tr><td>Murcia (Juan de Borbón)</td><td><strong>CDIAT Fundación ASINTER</strong> (C/ Periodista Encarna Sánchez, 20)</td><td>Atención Temprana · Salas de estimulación sensorial</td><td>968 23 02 84</td><td>asinter@fundacionasinter.com</td></tr>
-      <tr><td>Murcia (Torreagüera)</td><td><strong>CDIAT Sicoedu</strong> (Avda. San Javier, 58)</td><td>Desarrollo Infantil · Sala de psicomotricidad con tatami</td><td>968 82 09 10 / 717 70 82 46</td><td>info@sicoedu.es</td></tr>
-      <tr><td>Murcia (Centro)</td><td><strong>Centro AtemyTea</strong> (C/ Marín Baldo, 1)</td><td>Atención Temprana · Salas acondicionadas</td><td>868 05 01 02 / 635 38 04 27</td><td>info@atemytea.com</td></tr>
-      <tr><td>Murcia (Infante)</td><td><strong>ASTRAPACE Atención Temprana</strong> (C/ Vicente Aleixandre, 11B)</td><td>Desarrollo Infantil · Salas de movimiento</td><td>968 34 00 90</td><td>astrapace@astrapace.com</td></tr>
-      <tr><td>Murcia (San Miguel)</td><td><strong>Centro Juan XXIII / ASSIDO</strong> (Avda. Miguel de Cervantes)</td><td>Centro de Desarrollo Infantil y Familias</td><td>968 29 38 10</td><td>assido@assido.com</td></tr>
-      <tr><td>Murcia (La Flota)</td><td><strong>E.I. Pequeñas Sonrisas</strong> (C/ Abenarabi, 14)</td><td>Escuela Infantil Privada · Sala polivalente</td><td>968 20 42 12</td><td>pequenassonrisas@gmail.com</td></tr>
+      <!-- 1. HUERTA Y NATURALEZA -->
+      <tr class="hl"><td colspan="5" style="background:#f8f9fa; font-weight:700; color:var(--dark);">🌿 1. Espacios en la Huerta y Naturaleza (Talleres al Aire Libre y Encuentros Familiares)</td></tr>
+      <tr>
+        <td>Rincón de Beniscornia (Huerta)</td>
+        <td><strong>Espacio Yobi</strong><br><small>Carril Ortines, 243 (Club Hípico)</small></td>
+        <td>Finca campestre con zonas verdes, cantina familiar y ludoteca de juego libre respetuoso.</td>
+        <td><strong>Sábados en Familia:</strong> Taller musical matinal de 45 min + juego libre al aire libre y desayuno/café familiar.</td>
+        <td>619 69 32 38<br><small>espacioyobi@espacioyobi.com<br>espacioyobi.com</small></td>
+      </tr>
+      <tr>
+        <td>Puente Tocinos (Huerta)</td>
+        <td><strong>La Enredadera Vivencial School</strong><br><small>Huerta de Murcia</small></td>
+        <td>Escuela activa y vivencial homologada en finca huertana con huerto, árboles y salas de madera. Pedagogía Wild / Montessori / Arno Stern.</td>
+        <td><strong>Talleres de temporada al aire libre</strong> (primavera/otoño) e intercambio/alquiler para <strong>formaciones de fin de semana</strong>.</td>
+        <td>652 09 23 88<br><small>info@laenredaderavivencialschool.com</small></td>
+      </tr>
+      <tr>
+        <td>La Alberca (Pie de Sierra)</td>
+        <td><strong>Jardín Waldorf Murcia</strong><br><small>C/ de los Caños, 3</small></td>
+        <td>Pedagogía Waldorf. Gran jardín natural, suelo de madera, materiales nobles (lana, madera, seda) y atmósfera sin pantallas ni ruidos.</td>
+        <td><strong>Talleres musicales 1–4 años</strong> en sala o jardín; sinergia con sus tardes de <em>Martes en el Jardín</em> (comunidad afín).</td>
+        <td>646 97 67 90<br><small>asociacionwaldorfmurcia@gmail.com<br>waldorfmurcia.com</small></td>
+      </tr>
+      <tr>
+        <td>Murcia (Norte)</td>
+        <td><strong>Cuatronaranjos Active School</strong><br><small>C/ Alcalde Gaspar de la Peña, 27</small></td>
+        <td>Escuela activa con huerto escolar, espacios abiertos y enfoque de educación viva y respetuosa.</td>
+        <td><strong>Talleres familiares de fin de semana</strong> y ciclos de música para etapas infantil y familias de la escuela.</td>
+        <td><small>cuatronaranjos.org</small></td>
+      </tr>
 
-      <!-- Cartagena & Mar Menor -->
-      <tr><td>Cartagena (Centro)</td><td><strong>CEI Pepico Paluco</strong> (C/ Jiménez de la Espada, 21B)</td><td>Escuela Infantil Privada · Sala psicomotricidad</td><td>968 50 04 00</td><td>cep.pepicopaluco@gmail.com</td></tr>
-      <tr><td>Cartagena (Pozo Estrecho)</td><td><strong>Escuela Alma Montessori</strong> (Finca La Gregoria, 2)</td><td>Pedagogía Montessori · Espacio diáfano natural</td><td>744 48 55 27</td><td>info@espacioeducativoalmamontessori.es</td></tr>
-      <tr><td>Cartagena (Ciudad Jardín)</td><td><strong>CEI Pipiripao</strong> (C/ Jorge Juan, 39)</td><td>Centro Infantil · Aula de movimiento</td><td>968 31 43 53</td><td>ceipipiripao@gmail.com</td></tr>
-      <tr><td>Cartagena (Sta. Ana)</td><td><strong>Colegio Miralmonte</strong> (Plaza Baden Powell, s/n)</td><td>Etapa 0-3 / Infantil · Gran aula psicomotriz</td><td>968 33 07 03</td><td>info@colegiomiralmonte.com</td></tr>
-      <tr><td>Cartagena (Canteras)</td><td><strong>Colegio La Vaguada</strong> (Avda. La Española, 48 bis)</td><td>Infantil · Sala de usos múltiples</td><td>968 12 65 42</td><td>info@colegiolavaguada.com</td></tr>
-      <tr><td>San Javier (Ribera)</td><td><strong>CAI Santiago de la Ribera</strong> (C/ Alcalá de Henares, s/n)</td><td>Atención a la Infancia · Sala polivalente</td><td>629 62 89 38</td><td>educacion@sanjavier.es</td></tr>
-      <tr><td>San Javier (Centro)</td><td><strong>E.M. Infantil San Javier</strong> (C/ Crucero Baleares, s/n)</td><td>Escuela Municipal 0-3 · Espacio diáfano</td><td>968 19 12 40</td><td>educacion@sanjavier.es</td></tr>
+      <!-- 2. BIENESTAR PERINATAL Y MATERNIDAD -->
+      <tr class="hl"><td colspan="5" style="background:#f8f9fa; font-weight:700; color:var(--dark);">🤱 2. Bienestar Perinatal y Crianza Consciente (Embarazo y Bebés 0–12 meses)</td></tr>
+      <tr>
+        <td>Murcia (Churra / Norte)</td>
+        <td><strong>Maison Mabé</strong><br><small>Avda. de Churra</small></td>
+        <td>Centro integral de salud perinatal. Estética de diseño nórdico impecable, sala diáfana con suelo continuo cálido y grupos de apoyo maternal.</td>
+        <td><strong>Punto clave de captación de familias primerizas:</strong> Taller mensual <em>«Música desde el vientre y primeros meses (0-12m)»</em>.</td>
+        <td>622 75 70 87<br><small>hola@maisonmabe.com<br>maisonmabe.com</small></td>
+      </tr>
+      <tr>
+        <td>Murcia (La Flota)</td>
+        <td><strong>Centro CRESCERE</strong><br><small>Avda. Marina Española</small></td>
+        <td>Centro de desarrollo infantil, psicología y psicomotricidad con sala amplia de suelo acolchado y tarima.</td>
+        <td><strong>Talleres de psicomotricidad relacional y música</strong> en grupos reducidos para peques de 6 a 36 meses.</td>
+        <td>868 07 94 35 / 633 27 35 91<br><small>info@centrocrescere.com</small></td>
+      </tr>
+      <tr>
+        <td>Murcia (La Flota)</td>
+        <td><strong>Escuela Infantil EMPI</strong><br><small>C/ Abenarabi, 14</small></td>
+        <td>Sede central y colaboradora de Musicabalú. Gran sala de psicomotricidad relacional equipada con suelo cálido y material blando.</td>
+        <td><strong>Sede Core de clases regulares</strong> semanales y talleres pop-up para familias del centro y externas.</td>
+        <td>Colaborador principal</td>
+      </tr>
 
-      <!-- Molina de Segura & Vega Media -->
-      <tr><td>Molina de Segura</td><td><strong>E.I. Santa Helena</strong> (C/ Reino Unido, s/n)</td><td>Escuela Infantil Privada · Aula de psicomotricidad</td><td>968 64 36 79</td><td>eisantahelena@gmail.com</td></tr>
-      <tr><td>Molina (Altorreal)</td><td><strong>CAI Altorreal</strong> (Avda. del Golf, s/n)</td><td>Centro Infantil en urbanización · Sala amplia</td><td>696 20 52 32</td><td>consu210@hotmail.com</td></tr>
-      <tr><td>Molina (La Alcayna)</td><td><strong>CAI La Alcayna</strong> (C/ Maracaibo, s/n)</td><td>Atención a la Infancia · Aula diáfana</td><td>606 10 38 82</td><td>inmarubioh@hotmail.com</td></tr>
-      <tr><td>Molina de Segura</td><td><strong>CAI El Llano</strong> (C/ Serreta, s/n)</td><td>Centro Infantil Cativos · Suelo acolchado</td><td>968 20 68 79</td><td>llano@cativos.com</td></tr>
-      <tr><td>Molina de Segura</td><td><strong>E.I. Consolación</strong> (C/ Ermita Nueva, s/n)</td><td>Escuela Infantil Municipal · Sala de usos múltiples</td><td>968 61 18 02</td><td>eiconsolacion@hotmail.com</td></tr>
+      <!-- 3. CASAS NIDO Y CRIANZA RESPETUOSA -->
+      <tr class="hl"><td colspan="5" style="background:#f8f9fa; font-weight:700; color:var(--dark);">🏡 3. Casas Nido en la Huerta (Crianza Respetuosa 0–3 años)</td></tr>
+      <tr>
+        <td>Monteagudo (Huerta)</td>
+        <td><strong>La Luciérnaga en La Cueva</strong><br><small>Carril del Parra, 8</small></td>
+        <td>Casa nido de crianza respetuosa (Montessori / Pikler / apego). Casa huertana con porche, jardín exterior y ambiente cálido.</td>
+        <td><strong>Talleres vivenciales íntimos (5–7 familias):</strong> Ambiente hogareño descalzos para bebés y gateadores.</td>
+        <td><small>Proyecto La Luciérnaga (Asoc. Casas Nido)</small></td>
+      </tr>
+      <tr>
+        <td>Puente Tocinos (Huerta)</td>
+        <td><strong>La Chimenea de los Cuentos</strong><br><small>Carril Ermita Vieja, 47</small></td>
+        <td>Casa nido y madre de día. Mobiliario de madera, ritmo pausado, jardín/patio y filosofía Montessori/Waldorf.</td>
+        <td><strong>Círculos musicales acústicos:</strong> Sesiones sin amplificación de estimulación musical temprana (0–2 años).</td>
+        <td><small>lachimeneadeloscuentos.com</small></td>
+      </tr>
+      <tr>
+        <td>El Palmar (Zona Sur)</td>
+        <td><strong>Casa Nido La Morera</strong><br><small>El Palmar / Huerta Sur</small></td>
+        <td>Proyecto de madre de día integrada en la Red de Madres de Día de Murcia. Entorno familiar y natural.</td>
+        <td><strong>Encuentros de música y crianza en tribu</strong> para familias del entorno de la costera sur.</td>
+        <td><small>madresdediamurcia.es</small></td>
+      </tr>
 
-      <!-- Alcantarilla -->
-      <tr><td>Alcantarilla</td><td><strong>E.I. Bambi</strong> (C/ San Fernando, 7)</td><td>Escuela Infantil Privada · Aula psicomotricidad</td><td>968 89 32 77 / 606 93 72 52</td><td>hola@escuelainfantilbambialcantarilla.com</td></tr>
-      <tr><td>Alcantarilla</td><td><strong>Centro Infantil Valeryna</strong> (C/ Menorca, 2, Bajo A)</td><td>Centro Infantil y Estimulación · Sala acolchada</td><td>603 01 86 39</td><td>info@valeryna.com</td></tr>
-      <tr><td>Alcantarilla</td><td><strong>E.I. Municipal Alcantarilla</strong> (C/ Cerámica Ángel Galindo, 1)</td><td>Instalaciones infantiles municipales · Sala amplia</td><td>968 89 47 95</td><td>30018311@murciaeduca.es</td></tr>
-
-      <!-- Lorca, Guadalentín & Noroeste -->
-      <tr><td>Lorca (Centro)</td><td><strong>Centro Infantil L'Ecole</strong> (C/ Musso Valiente, Torrelorca)</td><td>Centro Infantil Privado · Aula psicomotriz</td><td>968 11 38 45 / 695 49 06 64</td><td>info@guarderialecole.com</td></tr>
-      <tr><td>Lorca</td><td><strong>E.I. Municipal de Lorca</strong> (C/ Tenor Mario Gabarrón, 2)</td><td>Escuela Infantil · Sala de psicomotricidad 0-3</td><td>695 49 07 40</td><td>educacion@lorca.es</td></tr>
-      <tr><td>Caravaca de la Cruz</td><td><strong>Colegio Consolación (Infantil)</strong> (C/ Mª Rosa Molas, 1)</td><td>Etapa 0-3 y psicomotricidad · Suelo adaptado</td><td>968 70 88 54</td><td>info@consolacioncaravaca.com</td></tr>
-      <tr><td>Cieza</td><td><strong>E.I. Municipal de Cieza</strong> (C/ Velázquez, 4)</td><td>Escuela Infantil · Aulas diáfanas adaptadas</td><td>968 76 38 14</td><td>escuela.infantil@cieza.es</td></tr>
+      <!-- 4. ESPACIOS CREATIVOS Y MONTESSORI -->
+      <tr class="hl"><td colspan="5" style="background:#f8f9fa; font-weight:700; color:var(--dark);">🎨 4. Espacios Creativos, Arte y Juego Libre Alternativo</td></tr>
+      <tr>
+        <td>Murcia (Marqués de los Vélez)</td>
+        <td><strong>Pequespacio Taller</strong><br><small>Avda. Marqués de los Vélez, 30</small></td>
+        <td>Local de juego libre respetuoso inspirado en Montessori (sin parques de bolas estridentes). Mobiliario bajo de madera y rincones sensoriales para bebés.</td>
+        <td><strong>Talleres de tarde entre semana o domingos por la mañana:</strong> Música y juego sensorial para peques de 1 a 4 años.</td>
+        <td>601 19 62 16<br><small>@pequespacio_taller</small></td>
+      </tr>
+      <tr>
+        <td>Murcia (Centro / La Merced)</td>
+        <td><strong>Krealo Espacio Creativo</strong><br><small>C/ La Merced, 8, Bajo A</small></td>
+        <td>Espacio cultural independiente dedicado al arte, música y creatividad. Sala diáfana de suelo cálido.</td>
+        <td><strong>Talleres combinados de Música + Expresión plástica:</strong> Para peques de 2 a 5 años acompañados.</td>
+        <td><small>krealoespaciocreativo.com</small></td>
+      </tr>
+      <tr>
+        <td>Puente Tocinos</td>
+        <td><strong>Montessori British School</strong><br><small>C/ Ermita Vieja, 26</small></td>
+        <td>Colegio internacional Montessori con aulas luminosas de madera, áreas verdes exteriores y pedagogía activa.</td>
+        <td><strong>Talleres bilingües / pop-up</strong> o espacio para jornadas formativas a docentes en fin de semana.</td>
+        <td>604 54 77 42<br><small>hello@montessoribritish.com</small></td>
+      </tr>
     </tbody>
   </table>
 </div>
@@ -913,21 +972,21 @@ export const estrategiaHtml = `<!DOCTYPE html>
   <table>
     <thead><tr><th>Producto</th><th>PVP</th><th>Margen bruto</th><th>Estado</th><th>Prioridad</th></tr></thead>
     <tbody>
-      <tr><td>Paquete regalo Musicabalú</td><td><strong>28–35 €</strong></td><td>~50–60 %</td><td>Por lanzar</td><td><span class="pill po">🟡 Media</span></td></tr>
+      <tr><td>Paquete regalo Musicabalú</td><td><strong>28–35 €</strong></td><td>~65–70 %</td><td>Por lanzar</td><td><span class="pill po">🟡 Media</span></td></tr>
       <tr><td>Libro sonoro (12 canciones + ilustraciones)</td><td><strong>18–22 €</strong> (editorial)</td><td>Royalties 8–12 %</td><td>En desarrollo</td><td><span class="pill pg">🔵 L. Plazo</span></td></tr>
     </tbody>
   </table>
-  <h4>Paquete regalo — contenido y márgenes</h4>
+  <h4>Paquete regalo — contenido y estimación real</h4>
+  <p><strong>Campaña Navidad (50 cajas):</strong> Estimación cerrada de <strong>500 € de gasto total</strong> con facturas e IVA incluido (<strong>10,00 € / caja</strong>).</p>
   <table>
-    <thead><tr><th>Componente</th><th>Coste mayorista</th></tr></thead>
+    <thead><tr><th>Concepto</th><th>Coste unitario (con IVA)</th><th>Total lote (50 cajas)</th></tr></thead>
     <tbody>
-      <tr><td>2 pañuelos de música</td><td>2–4 €</td></tr>
-      <tr><td>2 huevos sonoros</td><td>2–5 €</td></tr>
-      <tr><td>2 saquitos de psicomotricidad</td><td>2–4 €</td></tr>
-      <tr><td>Caja + packaging + tarjeta QR (3 canciones)</td><td>3–6 €</td></tr>
-      <tr class="hl"><td>Total coste → PVP recomendado 28–35 €</td><td><strong>9–19 €</strong></td></tr>
+      <tr><td>Materiales (2 pañuelos, 2 huevos sonoros, 2 saquitos)</td><td>~6,50 €</td><td>~325 €</td></tr>
+      <tr><td>Packaging (caja kraft, viruta/papel seda, pegatinas, tarjeta QR)</td><td>~3,50 €</td><td>~175 €</td></tr>
+      <tr class="hl"><td>Total coste (50 cajas) → PVP recomendado 28–35 € (ideal 29,90 €)</td><td><strong>10,00 €</strong></td><td><strong>500,00 €</strong></td></tr>
     </tbody>
   </table>
+  <p><em>Con PVP a 29,90 €, la facturación de las 50 cajas es de 1.495 € con un beneficio bruto estimado de ~995 € (~66 % de margen).</em></p>
   <h4>Libro sonoro — estrategia editorial</h4>
   <p>Editoriales a contactar: <strong>Kalandraka, Nubeocho, Takatuka, A buen paso, Edelvives.</strong> Primero editorial (sin inversión, con distribución). Si rechazan: versión con QR codes (1.500–3.000 €) para testear el mercado.</p>
   <h3>Orden de lanzamiento</h3>

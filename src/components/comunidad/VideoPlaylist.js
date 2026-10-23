@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from './VideoPlaylist.module.css';
 import Link from 'next/link';
 
@@ -8,6 +8,7 @@ export default function VideoPlaylist({ pills, hasFullAccess }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const defaultPillId = (!hasFullAccess ? pills.find(p => p.isFree)?.id : pills[0]?.id) || pills[0]?.id || 1;
   const [activeId, setActiveId] = useState(defaultPillId);
+  const lastLoggedPillId = useRef(null);
 
   // Filter pills based on category
   const filteredPills = selectedCategory === 'all' 
@@ -16,6 +17,23 @@ export default function VideoPlaylist({ pills, hasFullAccess }) {
 
   // Make sure activePill is valid
   let activePill = pills.find(p => p.id === activeId) || pills[0];
+
+  // Registrar visualización de la píldora activa cuando está desbloqueada
+  useEffect(() => {
+    if (!activePill) return;
+    const isLocked = !hasFullAccess && !activePill.isFree;
+    if (!isLocked && lastLoggedPillId.current !== activePill.id) {
+      lastLoggedPillId.current = activePill.id;
+      fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'VER_PILDORA',
+          details: `Píldora #${activePill.numero}: ${activePill.title}`
+        })
+      }).catch(e => console.error(e));
+    }
+  }, [activePill, hasFullAccess]);
 
   const handleSelectPill = (pill) => {
     setActiveId(pill.id);
