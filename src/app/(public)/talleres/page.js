@@ -1,6 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { PrismaClient } from "@prisma/client";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const prisma = new PrismaClient();
 
@@ -31,18 +33,20 @@ export default async function TalleresPage() {
   }
 
   return (
-    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', padding: '40px 20px', fontFamily: 'var(--font-body)' }}>
-      <div style={{ maxWidth: '820px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
-        
-        {/* Cabecera visual con foto real de las sesiones */}
-        <div style={{ backgroundColor: 'var(--color-yellow)', padding: '48px 32px 44px', textAlign: 'center' }}>
-          <img src="/og-logo.png" alt="Musicabalú Logo" style={{ maxWidth: '76px', marginBottom: '14px', display: 'inline-block', borderRadius: '50%', boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }} />
-          <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: 'clamp(1.9rem, 4vw, 2.5rem)', fontFamily: 'var(--font-heading)', lineHeight: '1.2', fontWeight: '900' }}>
-            Taller de Música en Familia
-          </h1>
-          <p style={{ color: '#92400e', fontSize: '1.15rem', marginTop: '12px', marginBottom: '26px', fontWeight: '600', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
-            Una experiencia musical de unos 45 minutos para conectar, disfrutar y aprender jugando.
-          </p>
+    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', display: 'flex', flexDirection: 'column', fontFamily: 'var(--font-body)' }}>
+      <Header />
+
+      <main style={{ flex: 1, padding: '40px 20px 80px' }}>
+        <div style={{ maxWidth: '820px', margin: '0 auto', backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 25px rgba(0,0,0,0.05)' }}>
+          
+          {/* Cabecera visual con foto real de las sesiones */}
+          <div style={{ backgroundColor: 'var(--color-yellow)', padding: '48px 32px 44px', textAlign: 'center' }}>
+            <h1 style={{ color: 'var(--color-dark)', margin: 0, fontSize: 'clamp(1.9rem, 4vw, 2.5rem)', fontFamily: 'var(--font-heading)', lineHeight: '1.2', fontWeight: '900' }}>
+              Taller de Música en Familia
+            </h1>
+            <p style={{ color: '#92400e', fontSize: '1.15rem', marginTop: '12px', marginBottom: '26px', fontWeight: '600', maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto' }}>
+              Una experiencia musical de unos 45 minutos para conectar, disfrutar y aprender jugando.
+            </p>
 
           <div style={{
             maxWidth: '660px',
@@ -142,7 +146,7 @@ export default async function TalleresPage() {
             <div style={{ display: 'flex', gap: '16px' }}>
               <div style={{ backgroundColor: '#f1f5f9', width: '40px', height: '40px', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.2rem', flexShrink: 0 }}>🤍</div>
               <p style={{ margin: 0, color: '#475569', lineHeight: '1.5', paddingTop: '8px' }}>
-                Si un niño comienza a gritar, llorar, correr descontroladamente, lanzar materiales a otros o impide de alguna manera el buen funcionamiento de la clase: no está haciendo nada malo :) Está siendo puro (como son los peques) y tal vez explorando los límites de una actividad tan "lúdica" en la que no siempre es fácil encontrar el límite. En absoluto es motivo para enfadarse con ellos ni significa que no estén disfrutando de la actividad o no puedan hacerlo. Pero sí es importante que en ese momento lo alejéis del tatami o salgáis del aula y después volváis a entrar lo antes posible. 
+                Si un niño comienza a gritar, llorar, correr descontroladamente, lanzar materiales a otros o impide de alguna manera el buen funcionamiento de la clase: no está haciendo nada malo :) Está siendo puro (como son los peques) y tal vez explorando los límites de una actividad tan &ldquo;lúdica&rdquo; en la que no siempre es fácil encontrar el límite. En absoluto es motivo para enfadarse con ellos ni significa que no estén disfrutando de la actividad o no puedan hacerlo. Pero sí es importante que en ese momento lo alejéis del tatami o salgáis del aula y después volváis a entrar lo antes posible. 
               </p>
             </div>
 
@@ -297,6 +301,9 @@ export default async function TalleresPage() {
 
         </div>
       </div>
-    </div>
-  );
+    </main>
+
+    <Footer />
+  </div>
+);
 }
