@@ -210,6 +210,117 @@ const proyectos = [
   <li>[ ] Entrega de la versión beta a 5 familias de confianza de las clases presenciales de Murcia para recibir feedback real de uso en sus casas.</li>
   <li>[ ] Diseño de la portada gráfica del álbum y creación de la ficha de producto en la tienda web y en la zona privada de la Comunidad.</li>
 </ul>`
+  },
+  {
+    title: 'El Eco Mágico: Motor Interactivo de Patrones MLT (100% Pantalla Cero y Audio Activo)',
+    category: 'Innovación Pedagógica',
+    content: `<h3>1. Visión y Propuesta Disruptiva: Audiation Interactiva Sin Pantallas</h3>
+<p><strong>El Eco Mágico</strong> es un sistema interactivo de juego musical diseñado para llevar el diálogo de patrones tonales y rítmicos de la Music Learning Theory (MLT) al salón de las familias, <strong>manteniendo una política estricta de CERO PANTALLAS para los ojos del bebé</strong>.</p>
+<p>El teléfono o tablet actúa exclusivamente como un <strong>altavoz y micrófono inteligente en la habitación</strong>: la pantalla puede estar apagada o en reposo sobre un mueble. El niño y el adulto juegan en la alfombra mirándose a los ojos y respirando juntos, mientras la voz de Javier propone la canción, lanza el patrón, escucha la respuesta y proporciona un bucle de refuerzo pedagógico en tiempo real.</p>
+
+<h3>2. La Pedagogía Gordoniana (MLT) del Bucle de Refuerzo</h3>
+<ul>
+  <li><strong>Contexto musical ineludible:</strong> Los patrones nunca se lanzan aislados ni en el vacío. Van siempre precedidos de una canción en <em>Modo Mayor</em> o <em>Menor Armónico</em>, o de un recitado rítmico en <em>Metro Doble</em> o <em>Triple</em>.</li>
+  <li><strong>El principio del espejo empático (Sin evaluación punitiva):</strong>
+    <ul>
+      <li>Gordon recalca que jamás se le dice al niño que lo ha hecho mal ni se bloquea el juego de forma frustrante.</li>
+      <li>Si el niño o el adulto desafina o se desvía del pulso, el sistema NO emite un pitido de error. El motor reproduce suavemente el tono o tempo aproximado del usuario y la voz de Javier interviene con calidez: <em>"¡Ha sonado por aquí! Vamos a ajustarlo un poquito más arriba conmigo... ¡escucha y respira!... Pam, pam, pam"</em>.</li>
+      <li>Se da una segunda oportunidad y, tras ella, se celebra el esfuerzo y se avanza para mantener viva la alegría del juego.</li>
+    </ul>
+  </li>
+  <li><strong>El adulto como modelo:</strong> El juego involucra a la madre/padre. Como el bebé en etapa de aculturación (0-3 años) muchas veces absorbe en silencio o balbucea, el adulto es el guía que canta y se mueve con él.</li>
+</ul>
+
+<h3>3. Arquitectura Técnica (Web Audio API en el Navegador)</h3>
+<ul>
+  <li><strong>Cero coste de servidor y privacidad total:</strong> Todo el procesamiento acústico se realiza localmente en el navegador del usuario mediante la <strong>Web Audio API</strong> nativa (Safari iOS / Chrome Android). No se graban ni se envían audios del hogar a la nube, garantizando el cumplimiento estricto del RGPD para menores.</li>
+  <li><strong>Detección de Tono en Tiempo Real (Pitch Tracking):</strong> Uso de algoritmos de autocorrelación / YIN (o librería ultra-ligera como <em>Pitchy</em>) para calcular la frecuencia fundamental ($f_0$) cada 20 ms y cotejar los intervalos tonales con los grados del modo activo.</li>
+  <li><strong>Detección Rítmica (Onsets):</strong> Medición de umbrales de energía para identificar el espaciado rítmico de las sílabas neutras (<em>"pa-pa-pa"</em>).</li>
+  <li><strong>Motor de Síntesis Adaptativa / Audio Resynthesis:</strong> Generación acústica inmediata del tono de referencia desajustado y reproducción del corte afinado con la voz real de Javi.</li>
+</ul>
+
+<h3>4. Por qué el enfoque "Pantalla Cero" es superior a las Apps tradicionales</h3>
+<ul>
+  <li><strong>Protección del neurodesarrollo:</strong> Respeta las directrices de la OMS y las sociedades de pediatría (cero exposición a pantallas antes de los 3 años).</li>
+  <li><strong>Mirada compartida y apego seguro:</strong> El foco de atención del bebé no está en unos dibujitos animados iluminados, sino en el rostro, los ojos y la respiración de su madre o padre.</li>
+  <li><strong>Autoridad de marca incontestable:</strong> Frente a miles de canales de YouTube que "aparcan" a los niños frente a pantallas, Musicabalú se posiciona como el estándar de oro en estimulación consciente y respetuosa.</li>
+</ul>
+
+<h3>5. Estado y Plan de Fases</h3>
+<ul>
+  <li><strong>Fase 1 (Actual):</strong> Concepto pedagógico y arquitectura técnica blindados en el Laboratorio de Proyectos.</li>
+  <li><strong>Fase 2 (Pruebas de I+D interno):</strong> Prototipo privado en el panel de administrador (/admin/laboratorio-patrones) para validar la calibración de micros de iPhone con la voz de Javi.</li>
+  <li><strong>Fase 3 (Lanzamiento Comunidad):</strong> Integración como la herramienta estrella ("El Eco Mágico") dentro de la suscripción anual/mensual de la Comunidad Familiar.</li>
+</ul>`
+  },
+  {
+    title: 'Candidatura a Premios de Innovación Pedagógica y Emprendimiento (SIMO, INFO Murcia, enlightED)',
+    category: 'Reconocimiento y Autoridad',
+    content: `<h3>1. Justificación Estratégica y Propósito</h3>
+<p>La obtención de un premio, mención o sello de innovación educativa no solo aporta prestigio curricular, sino que constituye una <strong>palanca de autoridad de conversión brutal</strong> para dos objetivos clave:</p>
+<ul>
+  <li><strong>Venta B2B a Colegios y Escuelas Infantiles:</strong> Elimina las dudas de directores y jefes de estudio al presentar las formaciones de educadores (100–120 €) y talleres bajo un sello avalado.</li>
+  <li><strong>Confianza de Familias (B2C):</strong> Refuerza el valor de la suscripción digital y las clases frente a alternativas comerciales de mero entretenimiento.</li>
+</ul>
+
+<h3>2. Dossier de Candidatura (Estructura del Pitch Ganador)</h3>
+<ul>
+  <li><strong>1. El Problema Social:</strong> La epidemia de sobreestimulación digital y pasividad por pantallas en menores de 3 años, y la escasez de propuestas musicales con rigor pedagógico (abuso de canciones infantiles repetitivas en Do Mayor).</li>
+  <li><strong>2. La Solución Científica (Musicabalú):</strong> Implementación de la Music Learning Theory (Edwin Gordon) en la primera infancia (0-3 años), combinando riqueza modal/métrica, movimiento libre continuo y el principio innegociable de <strong>«Pantalla Cero»</strong>.</li>
+  <li><strong>3. La Innovación Metodológica y Tecnológica:</strong>
+    <ul>
+      <li>Píldoras pedagógicas de aplicación inmediata para empoderar a la familia como modelo musical.</li>
+      <li>Investigación del motor interactivo de audiation «El Eco Mágico» (tecnología Web Audio API para el oído, sin pantalla).</li>
+    </ul>
+  </li>
+  <li><strong>4. Impacto Real:</strong> Más de 80 familias activas en aulas presenciales en Murcia, expansión a talleres familiares en centros asociados y escalabilidad digital en habla hispana.</li>
+</ul>
+
+<h3>3. Calendario de Convocatorias Clave</h3>
+<table style="width:100%; border-collapse:collapse; font-size:0.9rem; margin-top:10px;">
+  <thead>
+    <tr style="background:#f1f5f9; text-align:left;">
+      <th style="padding:8px 12px;">Certamen / Premio</th>
+      <th style="padding:8px 12px;">Entidad Organizadora</th>
+      <th style="padding:8px 12px;">Categoría Idónea</th>
+      <th style="padding:8px 12px;">Ventana de Presentación</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr style="border-bottom:1px solid #e2e8f0;">
+      <td style="padding:8px 12px; font-weight:bold;">Premios SIMO EDUCACIÓN</td>
+      <td style="padding:8px 12px;">IFEMA Madrid</td>
+      <td style="padding:8px 12px;">Mejor Experiencia en Ed. Infantil / Metodología Innovadora</td>
+      <td style="padding:8px 12px;">Mayo – Junio (Fallo en Noviembre)</td>
+    </tr>
+    <tr style="border-bottom:1px solid #e2e8f0;">
+      <td style="padding:8px 12px; font-weight:bold;">Premios Emprendedor INFO</td>
+      <td style="padding:8px 12px;">Instituto de Fomento (Murcia)</td>
+      <td style="padding:8px 12px;">Emprendedor del Mes / Impacto Social</td>
+      <td style="padding:8px 12px;">Convocatoria continua trimestral</td>
+    </tr>
+    <tr style="border-bottom:1px solid #e2e8f0;">
+      <td style="padding:8px 12px; font-weight:bold;">enlightED Awards</td>
+      <td style="padding:8px 12px;">Fundación Telefónica / IE / South Summit</td>
+      <td style="padding:8px 12px;">Early Childhood Education & Disruptive Solutions</td>
+      <td style="padding:8px 12px;">Junio – Julio (Fallo en Octubre)</td>
+    </tr>
+    <tr>
+      <td style="padding:8px 12px; font-weight:bold;">Premios Magisterio</td>
+      <td style="padding:8px 12px;">Periódico Magisterio (Grupo Siena)</td>
+      <td style="padding:8px 12px;">Protagonistas de la Educación</td>
+      <td style="padding:8px 12px;">Septiembre – Octubre</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>4. Checklist de Preparación</h3>
+<ul>
+  <li>[x] Estructuración del marco conceptual del proyecto.</li>
+  <li>[ ] Redacción de la memoria descriptiva de 2 páginas con datos de impacto y metodología Gordon.</li>
+  <li>[ ] Selección de 3 vídeos cortos testimoniales de familias y educadores.</li>
+  <li>[ ] Solicitud de información y bases en el portal del INFO Región de Murcia.</li>
+</ul>`
   }
 ];
 

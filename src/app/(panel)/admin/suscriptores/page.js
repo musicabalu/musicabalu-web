@@ -31,8 +31,14 @@ export default async function SuscriptoresPage() {
           childName: true
         }
       }
-    },
-    orderBy: { createdAt: 'desc' }
+    }
+  });
+
+  // Ordenar en memoria por la fecha del pedido más reciente
+  subscribers.sort((a, b) => {
+    const timeA = a.orders[0]?.createdAt ? new Date(a.orders[0].createdAt).getTime() : 0;
+    const timeB = b.orders[0]?.createdAt ? new Date(b.orders[0].createdAt).getTime() : 0;
+    return timeB - timeA;
   });
 
   // Métricas
@@ -133,7 +139,7 @@ export default async function SuscriptoresPage() {
                   const isAnual = latestOrder?.productName?.toLowerCase().includes('anual') || (latestOrder?.amountTotal || 0) >= 3000;
                   const lastLog = sub.activityLogs[0];
                   
-                  const startDate = latestOrder?.createdAt || sub.createdAt;
+                  const startDate = latestOrder?.createdAt || sub.activityLogs[0]?.createdAt || new Date();
                   const formattedDate = new Date(startDate).toLocaleDateString('es-ES', {
                     day: '2-digit',
                     month: 'short',

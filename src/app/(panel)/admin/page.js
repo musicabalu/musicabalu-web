@@ -170,6 +170,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Chuletario para cobrar en Stripe</p>
           </div>
         </Link>
+        <Link href="/admin/fiscalidad" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #D97706' }}>
+            <h3 className={styles.statTitle}>🧾 Fiscalidad e IVA</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Guía de cobros 4T e informe para asesoría</p>
+          </div>
+        </Link>
         <Link href="/admin/talleres" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
             <h3 className={styles.statTitle}>🧸 Talleres</h3>
