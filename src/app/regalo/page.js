@@ -51,6 +51,23 @@ export default function Regalo() {
             <p style={{ fontSize: "0.9rem", color: "#718096", backgroundColor: "#f7fafc", padding: "12px", borderRadius: "10px", marginBottom: "24px" }}>
               💡 Si no lo ves en tu bandeja principal en 1-2 minutos, echa un vistazo en la carpeta de <strong>Promociones</strong> o <strong>Spam</strong>.
             </p>
+            <div style={{ marginBottom: "20px" }}>
+              <Link 
+                href={`/regalo/escuchar?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`}
+                className="btn btn-cyan"
+                style={{ 
+                  display: "inline-block", 
+                  padding: "14px 28px", 
+                  fontSize: "1.05rem", 
+                  fontWeight: "800",
+                  textDecoration: "none",
+                  borderRadius: "999px",
+                  boxShadow: "0 4px 14px rgba(0, 178, 227, 0.35)"
+                }}
+              >
+                ▶️ Empezar a escuchar ahora mismo
+              </Link>
+            </div>
             <Link href="/" className={styles.returnBtn} style={{ textDecoration: "none" }}>
               Volver a la web principal
             </Link>

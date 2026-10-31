@@ -8,21 +8,24 @@ const prisma = new PrismaClient();
 export async function POST(request) {
   try {
     const session = await getServerSession(authOptions);
-    if (!session || !session.user) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    const body = await request.json().catch(() => ({}));
+    const { action, details, email } = body;
+
+    const targetEmail = session?.user?.email || (email ? email.trim().toLowerCase() : null);
+
+    if (!targetEmail || !action) {
+      return NextResponse.json({ error: 'Unauthorized or missing action' }, { status: 401 });
     }
 
-    const { action, details } = await request.json();
-    
-    const user = await prisma.user.findUnique({ where: { email: session.user.email } });
-    
+    const user = await prisma.user.findUnique({ where: { email: targetEmail } });
+
     if (user) {
       await prisma.activityLog.create({
         data: {
           userId: user.id,
           action,
-          details
-        }
+          details: details || null,
+        },
       });
     }
 

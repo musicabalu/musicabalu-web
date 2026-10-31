@@ -70,16 +70,14 @@ export async function POST(request) {
           </p>
 
           <div style="text-align: center; margin: 28px 0;">
-            <a href="${siteUrl}/comunidad/canciones" style="background-color: #00B2E3; color: white; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 16px; display: inline-block; box-shadow: 0 4px 14px rgba(0, 178, 227, 0.35);">
+            <a href="${siteUrl}/regalo/escuchar?email=${encodeURIComponent(cleanEmail)}&name=${encodeURIComponent(cleanName)}" style="background-color: #00B2E3; color: white; padding: 14px 28px; border-radius: 999px; text-decoration: none; font-weight: 800; font-size: 16px; display: inline-block; box-shadow: 0 4px 14px rgba(0, 178, 227, 0.35);">
               🎵 Escuchar mis canciones y recitados ahora →
             </a>
           </div>
 
-          <div style="background-color: #f7fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 20px; margin: 24px 0; font-size: 15px;">
-            <strong>Tus datos para acceder en cualquier momento:</strong><br/>
-            • <strong>Enlace web:</strong> <a href="${siteUrl}/login" style="color: #00B2E3; font-weight: bold;">www.musicabalu.com/login</a><br/>
-            • <strong>Tu email:</strong> ${cleanEmail}<br/>
-            <small style="color: #718096; display: block; margin-top: 6px;">(Al entrar, pon este correo y recibirás un enlace de acceso mágico y seguro en 1 segundo, sin contraseñas difíciles).</small>
+          <div style="background-color: #f0f9ff; border: 1px solid #bae6fd; border-radius: 12px; padding: 16px 20px; margin: 24px 0; font-size: 15px;">
+            <strong>💡 Acceso directo en 1 clic:</strong><br/>
+            Pulsa en el botón azul para abrir directamente el reproductor en tu móvil, tablet u ordenador. No necesitas recordar contraseñas ni esperas complicadas.
           </div>
 
           <p>
