@@ -1,9 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import AudioPlayer from '@/components/AudioPlayer';
 import styles from './RegaloEscuchar.module.css';
 
 const FREE_TITLES = ['Cumbia Balú', 'Duérmete', 'Chiqui Pan', 'Cuando te diga'];
@@ -24,8 +23,14 @@ function RegaloEscucharContent({ allTracks }) {
 
   const [activeTab, setActiveTab] = useState('regalos'); // 'regalos' | 'canciones' | 'recitados' | 'pildoras'
   const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+
   const [showModal, setShowModal] = useState(false);
   const [modalTrackTitle, setModalTrackTitle] = useState('');
+
+  const audioRef = useRef(null);
 
   // Registrar visita silenciosa si viene con email
   useEffect(() => {
@@ -42,8 +47,51 @@ function RegaloEscucharContent({ allTracks }) {
     }
   }, [emailParam]);
 
-  // Lista de solo los 4 regalos para reproducción secuencial
+  // Lista de solo los 4 regalos
   const freeTracks = allTracks.filter(t => FREE_TITLES.includes(t.title));
+
+  const formatTime = (time) => {
+    if (isNaN(time) || !time) return '0:00';
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const playTrackByIndex = (idx) => {
+    if (idx < 0 || idx >= freeTracks.length) return;
+    const track = freeTracks[idx];
+    const rawUrl = track.url || '';
+    const safeSrc = rawUrl.startsWith('http') || rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`;
+
+    setCurrentTrackIndex(idx);
+
+    if (audioRef.current) {
+      audioRef.current.src = safeSrc;
+      audioRef.current.currentTime = 0;
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn('Error al reproducir audio:', err);
+            setIsPlaying(false);
+          });
+      }
+    }
+
+    // Registrar actividad de reproducción
+    if (emailParam) {
+      fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'REPRODUCIR_AUDIO (Lead Regalo)',
+          details: track.title,
+          email: emailParam
+        })
+      }).catch(() => {});
+    }
+  };
 
   const handleTrackClick = (track) => {
     const isFree = FREE_TITLES.includes(track.title);
@@ -54,32 +102,68 @@ function RegaloEscucharContent({ allTracks }) {
     }
 
     const freeIdx = freeTracks.findIndex(t => t.title === track.title);
-    if (freeIdx !== -1) {
-      setCurrentTrackIndex(freeIdx);
-      // Registrar reproducción
-      if (emailParam) {
-        fetch('/api/activity', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'REPRODUCIR_AUDIO (Lead Regalo)',
-            details: track.title,
-            email: emailParam
-          })
-        }).catch(() => {});
+    if (freeIdx === -1) return;
+
+    // Si ya es la pista actual, pausar o reanudar directamente en el gesto del usuario
+    if (currentTrackIndex === freeIdx && audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => setIsPlaying(true))
+            .catch(() => setIsPlaying(false));
+        }
+      }
+      return;
+    }
+
+    // Si es otra pista, reproducir de inmediato
+    playTrackByIndex(freeIdx);
+  };
+
+  const toggleBottomPlay = () => {
+    if (!audioRef.current || currentTrackIndex === null) {
+      if (freeTracks.length > 0) playTrackByIndex(0);
+      return;
+    }
+
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch(() => setIsPlaying(false));
       }
     }
   };
 
   const handleNext = () => {
-    if (currentTrackIndex !== null && freeTracks.length > 0) {
-      setCurrentTrackIndex((currentTrackIndex + 1) % freeTracks.length);
-    }
+    if (freeTracks.length === 0) return;
+    const nextIdx = currentTrackIndex !== null ? (currentTrackIndex + 1) % freeTracks.length : 0;
+    playTrackByIndex(nextIdx);
   };
 
   const handlePrev = () => {
-    if (currentTrackIndex !== null && freeTracks.length > 0) {
-      setCurrentTrackIndex((currentTrackIndex - 1 + freeTracks.length) % freeTracks.length);
+    if (freeTracks.length === 0) return;
+    if (audioRef.current && audioRef.current.currentTime > 3) {
+      audioRef.current.currentTime = 0;
+      return;
+    }
+    const prevIdx = currentTrackIndex !== null ? (currentTrackIndex - 1 + freeTracks.length) % freeTracks.length : 0;
+    playTrackByIndex(prevIdx);
+  };
+
+  const handleSeek = (e) => {
+    const targetTime = Number(e.target.value);
+    if (audioRef.current) {
+      audioRef.current.currentTime = targetTime;
+      setCurrentTime(targetTime);
     }
   };
 
@@ -93,8 +177,25 @@ function RegaloEscucharContent({ allTracks }) {
     displayedTracks = allTracks.filter(t => t.type === 'Recitado');
   }
 
+  const currentPlayingTrack = currentTrackIndex !== null ? freeTracks[currentTrackIndex] : null;
+
   return (
-    <div style={{ maxWidth: '980px', margin: '0 auto', padding: '20px 16px 120px' }}>
+    <div style={{ maxWidth: '980px', margin: '0 auto', padding: '24px 16px 140px' }}>
+      {/* Elemento de audio nativo siempre presente en el DOM para compatibilidad 100% móvil */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        onTimeUpdate={() => {
+          if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+        }}
+        onLoadedMetadata={() => {
+          if (audioRef.current) setDuration(audioRef.current.duration);
+        }}
+        onEnded={handleNext}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
       {/* Hero Bienvenida */}
       <div className={styles.heroBox}>
         <div className={styles.badgeRegalo}>🎁 Tu Regalo de Bienvenida</div>
@@ -102,7 +203,7 @@ function RegaloEscucharContent({ allTracks }) {
           {nameParam ? `¡Hola, ${nameParam}!` : '¡Hola, familia!'}
         </h1>
         <p className={styles.heroSub}>
-          Aquí tienes tus <strong>2 canciones y 2 recitados</strong> listos para escuchar hoy mismo en casa con tu peque. Sin pantallas, sin anuncios y a su ritmo.
+          Aquí tienes tus <strong>2 canciones y 2 recitados</strong> listos para escuchar hoy mismo en casa con tu peque. Pulsa el botón ▶️ y comenzarán a sonar al instante.
         </p>
 
         {/* Explicación Pedagógica MLT */}
@@ -194,10 +295,11 @@ function RegaloEscucharContent({ allTracks }) {
         <div className={styles.tracksGrid}>
           {displayedTracks.map((track) => {
             const isFree = FREE_TITLES.includes(track.title);
-            const isPlayingThis =
+            const isSelected =
               isFree &&
               currentTrackIndex !== null &&
               freeTracks[currentTrackIndex]?.title === track.title;
+            const isPlayingThis = isSelected && isPlaying;
 
             return (
               <div
@@ -211,14 +313,14 @@ function RegaloEscucharContent({ allTracks }) {
                   </span>
                   {isFree ? (
                     <span className={styles.freeBadge}>
-                      {isPlayingThis ? '▶️ Sonando' : '🔓 Disponible'}
+                      {isPlayingThis ? '▶️ Sonando' : isSelected ? '⏸️ Pausado' : '🔓 Disponible'}
                     </span>
                   ) : (
                     <span className={styles.lockedBadge}>🔒 Comunidad</span>
                   )}
                 </div>
 
-                <h4 style={{ margin: '0 0 12px 0', fontSize: '1.15rem', color: isFree ? '#0f172a' : '#64748b', fontWeight: '800' }}>
+                <h4 style={{ margin: '0 0 14px 0', fontSize: '1.15rem', color: isFree ? '#0f172a' : '#64748b', fontWeight: '800' }}>
                   {track.title}
                 </h4>
 
@@ -246,14 +348,41 @@ function RegaloEscucharContent({ allTracks }) {
       )}
 
       {/* Reproductor Flotante en la parte inferior */}
-      {currentTrackIndex !== null && freeTracks[currentTrackIndex] && (
-        <AudioPlayer
-          src={freeTracks[currentTrackIndex].url}
-          title={freeTracks[currentTrackIndex].title}
-          onClose={() => setCurrentTrackIndex(null)}
-          onNext={handleNext}
-          onPrev={handlePrev}
-        />
+      {currentPlayingTrack && (
+        <div className={styles.playerBar}>
+          <div className={styles.playerControls}>
+            <button onClick={handlePrev} className={styles.playerNavBtn} title="Anterior">
+              ⏮
+            </button>
+            <button onClick={toggleBottomPlay} className={styles.playerMainPlayBtn} title={isPlaying ? 'Pausar' : 'Reproducir'}>
+              {isPlaying ? '⏸' : '▶'}
+            </button>
+            <button onClick={handleNext} className={styles.playerNavBtn} title="Siguiente">
+              ⏭
+            </button>
+          </div>
+
+          <div className={styles.playerTrackInfo}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+              <strong style={{ fontSize: '0.98rem', color: '#0f172a' }}>{currentPlayingTrack.title}</strong>
+              <button onClick={() => { if (audioRef.current) audioRef.current.pause(); setIsPlaying(false); setCurrentTrackIndex(null); }} className={styles.playerCloseBtn}>
+                ✖ Cerrar
+              </button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '11px', color: '#64748b', minWidth: '32px' }}>{formatTime(currentTime)}</span>
+              <input
+                type="range"
+                min={0}
+                max={duration || 100}
+                value={currentTime}
+                onChange={handleSeek}
+                style={{ flex: 1, accentColor: '#00B2E3' }}
+              />
+              <span style={{ fontSize: '11px', color: '#64748b', minWidth: '32px' }}>{formatTime(duration)}</span>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Modal de Bloqueo al tocar una canción con candado */}

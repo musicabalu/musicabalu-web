@@ -25,9 +25,10 @@ export default function RegaloEscucharPage() {
     keysInOrder.forEach((url) => {
       if (data[url]) {
         const isCancion = url.includes('canciones/');
+        const fixedUrl = url.startsWith('/') ? url : `/${url}`;
         allTracks.push({
           title: data[url],
-          url,
+          url: fixedUrl,
           type: isCancion ? 'Canción' : 'Recitado',
         });
       }

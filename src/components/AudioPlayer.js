@@ -8,12 +8,21 @@ export default function AudioPlayer({ src, title, onClose, onNext, onPrev }) {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
 
+  const safeSrc = src && !src.startsWith('http') && !src.startsWith('/') ? `/${src}` : src;
+
   useEffect(() => {
     if (audioRef.current) {
-      audioRef.current.play();
-      setIsPlaying(true);
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn("Autoplay prevented or interrupted:", err);
+            setIsPlaying(false);
+          });
+      }
     }
-  }, [src]);
+  }, [safeSrc]);
 
   const togglePlay = () => {
     if (audioRef.current) {
@@ -169,7 +178,7 @@ export default function AudioPlayer({ src, title, onClose, onNext, onPrev }) {
 
       <audio 
         ref={audioRef} 
-        src={src} 
+        src={safeSrc} 
         onTimeUpdate={handleTimeUpdate}
         onLoadedMetadata={handleLoadedMetadata}
         onEnded={onNext || (() => setIsPlaying(false))}
