@@ -715,21 +715,81 @@ export const estrategiaHtml = `<!DOCTYPE html>
   <ul class="checklist">
     <li><strong>Formato, Aforo y Precio (Validado):</strong> Tras el éxito de la 1ª edición, el formato óptimo es de <strong>8 horas en un único día (sábado completo)</strong>. La clave será hacer el intensivo de 8h con grandes bloques de descanso y dinámicas variadas. <strong>El aforo estimado será de 12 a 20 plazas</strong> (nunca realizándose con menos de 10 inscritos). El precio de <strong>100€ (Early Bird) / 120€ (Regular)</strong> asegura una rentabilidad bruta conservadora de entre <strong>1.300€ y 2.200€ por cada edición presencial</strong>.</li>
     <li><strong>Negociación de Espacios:</strong> Evitar la cesión del 30% de facturación. El modelo escalable es negociar un precio de alquiler fijo (100€-150€/mañana) o un intercambio de "Espacio por Plazas" (ofrecer 2 plazas gratuitas al equipo docente del centro a cambio del uso de sus instalaciones). Espacios ideales: Escuelas Infantiles Privadas, Centros de Atención Temprana y Coworkings.</li>
-    <li><strong>Venta B2B con FUNDAE:</strong> Es el gran imán para profesorado de educación concertada/privada. Para evitar la enorme burocracia del SEPE, Musicabalú se apoyará en una <strong>Entidad Organizadora externa</strong> (gestoría) que tramitará las bonificaciones a cambio de una pequeña tasa por alumno, manteniendo a Javier como el formador exclusivo.</li>
+    <li><strong>Venta B2B con FUNDAE (Ámbito Estatal):</strong> Todas las empresas, colegios concertados y escuelas infantiles privadas de España disponen de un crédito anual bonificable para la formación de sus trabajadores a través de la <strong>Fundación Estatal para la Formación en el Empleo (FUNDAE)</strong>. Este saldo se renueva cada 1 de enero y no tiene coste directo para el centro si se consume dentro del año. Para evitar la carga burocrática del SEPE/FUNDAE, Musicabalú opera como entidad formadora asociada a una <strong>Entidad Organizadora externa</strong> (gestoría especializada) que tramita las altas y liquidaciones a cambio de una pequeña comisión por alumno, manteniendo a Javier como formador exclusivo.</li>
+    <li><strong>Redes Oficiales de Formación del Profesorado (Homólogas al CPR):</strong> Vía institucional para impartir cursos homologados a docentes en activo con certificación oficial de la Consejería de Educación:
+      <ul style="margin: 8px 0 8px 20px; font-size: 9.5pt; color: #4A5568;">
+        <li><strong>Región de Murcia:</strong> CPR Región de Murcia (Centro de Profesores y Recursos).</li>
+        <li><strong>Comunitat Valenciana:</strong> CEFIRE (Centres de Formació, Innovació i Recursos Educatius) — Sedes en Alicante, Elche, Elda, Valencia, Gandia, Castellón y el CEFIRE Específico de Infantil (Alzira).</li>
+        <li><strong>Andalucía:</strong> CEP (Centros del Profesorado) — CEP de Almería, Cuevas-Olula, Granada, Motril, Guadix, etc.</li>
+        <li><strong>Castilla-La Mancha:</strong> CRFP (Centro Regional de Formación del Profesorado de CLM) — Gestión autonómica con asesorías en Albacete.</li>
+        <li><strong>Comunidad de Madrid:</strong> CRIF Las Acacias y red de CTIF (Centros Territoriales de Innovación y Formación).</li>
+      </ul>
+    </li>
+    <li><strong>Asociaciones y Colectivos de Pedagogías Activas:</strong> Entidades que agrupan comunidades educativas afines a la MLT (familias implicadas, respeto a los ritmos infantiles, sin pantallas):
+      <ul style="margin: 8px 0 8px 20px; font-size: 9.5pt; color: #4A5568;">
+        <li><strong>AMEI-WAECE:</strong> Asociación Mundial de Educadores Infantiles (máximo referente formativo en 0-3 y 0-6 en España).</li>
+        <li><strong>Asociación Montessori Española (AME):</strong> Red nacional de centros, guías y escuelas Montessori.</li>
+        <li><strong>Asociación de Centros Educativos Waldorf-Steiner de España:</strong> Escuelas con altísima cultura musical diaria y acústica.</li>
+        <li><strong>Red Ludus / Educación Libre:</strong> Directorio estatal de escuelas vivas, activas y proyectos de crianza respetuosa.</li>
+        <li><strong>Patronales ACADE y CECE:</strong> Departamentos de formación de centros infantiles privados y concertados con bolsas de formación anual.</li>
+      </ul>
+    </li>
     <li><strong>El salto al formato Híbrido/Online:</strong> Aprovechar las presenciales para grabar material audiovisual. Esto permitirá crear un producto empaquetado (vídeos + 1 tutoría mensual en Zoom) vendible a toda España y Latinoamérica con un margen del 100%.</li>
   </ul>
   
-  <h4>Base de Datos Inicial de Prospectos (Expansión Nacional)</h4>
-  <p>Listado de Escuelas Infantiles Privadas (candidatas al intercambio "Plazas por Espacio"):</p>
+  <h4>Base de Datos Inicial de Prospectos de Proximidad (Pedagogías Activas)</h4>
+  <p>Centros y escuelas infantiles de referencia que apuestan por metodologías activas (Montessori, Waldorf, Reggio Emilia, escuelas vivas), con comunidades de familias altamente implicadas y salas diáfanas idóneas para acoger la formación:</p>
+
+  <table style="margin-top: 15px; margin-bottom: 25px;">
+    <thead>
+      <tr>
+        <th>Provincia</th>
+        <th>Centro / Proyecto</th>
+        <th>Enfoque Pedagógico</th>
+        <th>Ubicación</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ALICANTE -->
+      <tr><td rowspan="4"><strong>Alicante</strong></td><td><strong>Nuestra Escuela Garabatos</strong></td><td>Pedagogía respetuosa y activa 0-3 · Claustro formativo</td><td>Alicante (San Blas)</td></tr>
+      <tr><td><strong>Espai La Semilla</strong></td><td>Escuela libre y activa · Crianza compartida y respetuosa</td><td>San Vicente del Raspeig</td></tr>
+      <tr><td><strong>Colegio Waldorf Alicante</strong></td><td>Pedagogía Waldorf oficial · Alta cultura musical sin pantallas</td><td>Mutxamel</td></tr>
+      <tr><td><strong>Montessori School Alicante</strong></td><td>Pedagogía Montessori (0-6 años) · Comunidad familiar activa</td><td>San Juan de Alicante</td></tr>
+
+      <!-- VALENCIA -->
+      <tr><td rowspan="4"><strong>Valencia</strong></td><td><strong>Mi Cole Ruzafa</strong></td><td>Proyecto de innovación activa y respetuosa 0-3</td><td>Valencia (Ruzafa)</td></tr>
+      <tr><td><strong>Valencia Montessori School</strong></td><td>Centro Montessori acreditado (0-6 años) · Familias implicadas</td><td>La Cañada (Paterna)</td></tr>
+      <tr><td><strong>Escuela Infantil Waldorf El Farol</strong></td><td>Pedagogía Waldorf · Importancia central del ritmo y la voz</td><td>Valencia capital</td></tr>
+      <tr><td><strong>Escuela Libre La Tribu</strong></td><td>Pedagogía activa y libre · Acompañamiento respetuoso</td><td>Massamagrell</td></tr>
+
+      <!-- ALMERÍA -->
+      <tr><td rowspan="4"><strong>Almería</strong></td><td><strong>Escuela Infantil Duna</strong></td><td>Crianza respetuosa, apego seguro y metodología activa</td><td>Almería capital</td></tr>
+      <tr><td><strong>Espacio Activo Saltamontes</strong></td><td>Pedagogía activa en la naturaleza y crianza respetuosa</td><td>Aguadulce / Roquetas</td></tr>
+      <tr><td><strong>CEI Nubes</strong></td><td>Estimulación temprana sensorial y juego libre 0-3</td><td>Almería capital</td></tr>
+      <tr><td><strong>Colegio Almedina (Infantil)</strong></td><td>Innovación educativa, estimulación temprana y familias</td><td>Almería capital</td></tr>
+
+      <!-- GRANADA -->
+      <tr><td rowspan="4"><strong>Granada</strong></td><td><strong>Escuela Waldorf Granada (El Sendero)</strong></td><td>Pedagogía Waldorf homologada · Música y ritmo diario</td><td>Ogíjares (Granada)</td></tr>
+      <tr><td><strong>Granada International Montessori School</strong></td><td>Montessori auténtico 0-6 años · Guías formadas</td><td>Granada</td></tr>
+      <tr><td><strong>La Huerta de la Alegría</strong></td><td>Escuela viva y activa en la naturaleza · Familias implicadas</td><td>Monachil (Granada)</td></tr>
+      <tr><td><strong>Centro Infantil Patatín Patatán</strong></td><td>Metodologías activas, expresión artística y psicomotricidad</td><td>Granada capital</td></tr>
+
+      <!-- ALBACETE -->
+      <tr><td rowspan="4"><strong>Albacete</strong></td><td><strong>Escuela Infantil Nubes de Algodón</strong></td><td>Pedagogía activa, estimulación musical y apego seguro</td><td>Albacete capital</td></tr>
+      <tr><td><strong>CEI El Duendecillo</strong></td><td>Proyecto respetuoso centrado en psicomotricidad y juego libre</td><td>Albacete capital</td></tr>
+      <tr><td><strong>Espacio Educativo Ágora</strong></td><td>Pedagogía activa, estimulación temprana y crianza compartida</td><td>Albacete capital</td></tr>
+      <tr><td><strong>Colegio Montessori Albacete</strong></td><td>Inspiración Montessori y metodologías activas en infantil</td><td>Albacete capital</td></tr>
+    </tbody>
+  </table>
+
+  <h4>Expansión Nacional Secundaria (Otras CCAA)</h4>
+  <p>Escuelas de referencia nacional para fases posteriores:</p>
   <ul class="checklist">
-    <li><strong>Murcia:</strong> E.I. Jacky (web@escuelainfantiljacky.com), CEI Crecemos (info@ceicrecemos.es), Pequeñas Sonrisas, E.I. Santa Helena. <em>Atención Temprana:</em> Koru, APADI, Sicoedu.</li>
-    <li><strong>Alicante:</strong> N.E. Garabatos (direccion@nuestraescuelagarabatos.com), CEI Hormiguitas, Somos Colores.</li>
-    <li><strong>Valencia:</strong> Mi Cole Ruzafa (info@micolevalencia.org), Ruzafa Montessori, E.I. la Estrella, Little Stars.</li>
-    <li><strong>Madrid:</strong> E.I. Nemomarlin (info@escuelanemomarlin.com), Smart Nursery, Menagar.</li>
-    <li><strong>Barcelona:</strong> Escola Petit Far (escolapetitfar@gmail.com), Nemomarlin Gràcia, Llar D' Infants Goi Goi.</li>
-    <li><strong>Sevilla:</strong> E.I. Solyluna (solyluna.murube@gmail.com), E.I. Oliver, CEI Rainbow.</li>
-    <li><strong>Málaga:</strong> E.I. Maitena (maitena2@grupomaitena.com), C.E.I. Patito Amarillo, E.I. Santa Paula.</li>
-    <li><strong>Zaragoza:</strong> Érase una vez (escuelainfantil@eraseunavezcei.com), G.I. Peter Pan, E.I. Trompitas.</li>
+    <li><strong>Madrid:</strong> E.I. Nemomarlin, Smart Nursery, Menagar.</li>
+    <li><strong>Barcelona:</strong> Escola Petit Far, Nemomarlin Gràcia, Llar D' Infants Goi Goi.</li>
+    <li><strong>Sevilla:</strong> E.I. Solyluna, E.I. Oliver, CEI Rainbow.</li>
+    <li><strong>Málaga:</strong> E.I. Maitena, C.E.I. Patito Amarillo, E.I. Santa Paula.</li>
+    <li><strong>Zaragoza:</strong> Érase una vez, G.I. Peter Pan, E.I. Trompitas.</li>
   </ul>
 </div>
 
