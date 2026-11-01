@@ -206,6 +206,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Borrador HTML para escuelas (0-3 años)</p>
           </div>
         </Link>
+        <Link href="/admin/packaging" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #00B2E3' }}>
+            <h3 className={styles.statTitle}>🎁 Paquete Regalo & Packaging</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Guía de montaje, fotos, papel de seda y pegatinas</p>
+          </div>
+        </Link>
       </div>
 
       {/* Desglose de Grupos */}
