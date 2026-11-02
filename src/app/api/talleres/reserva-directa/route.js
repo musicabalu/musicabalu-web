@@ -4,6 +4,22 @@ import { createTransport } from "nodemailer";
 
 const prisma = new PrismaClient();
 
+function parseBirthDateHelper(input) {
+  if (!input) return null;
+  const trimmed = String(input).trim();
+  const dmy = trimmed.match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+  if (dmy) {
+    const day = parseInt(dmy[1], 10);
+    const month = parseInt(dmy[2], 10) - 1;
+    const year = parseInt(dmy[3], 10);
+    const d = new Date(year, month, day);
+    if (!isNaN(d.getTime())) return d;
+  }
+  const iso = new Date(trimmed);
+  if (!isNaN(iso.getTime())) return iso;
+  return null;
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
@@ -36,6 +52,42 @@ export async function POST(request) {
     const cleanChildName = childName.trim();
     const cleanBirthDate = childBirthDate.trim();
     const cleanPhone = phone.trim();
+
+    // Validar edad (0 - 36 meses)
+    const parsedBirth = parseBirthDateHelper(cleanBirthDate);
+    if (!parsedBirth) {
+      return NextResponse.json(
+        { error: "Por favor, introduce una fecha de nacimiento válida." },
+        { status: 400 }
+      );
+    }
+
+    const today = new Date();
+    if (parsedBirth > today) {
+      return NextResponse.json(
+        { error: "La fecha de nacimiento no puede ser posterior a hoy." },
+        { status: 400 }
+      );
+    }
+
+    let ageMonths = (today.getFullYear() - parsedBirth.getFullYear()) * 12;
+    ageMonths -= parsedBirth.getMonth();
+    ageMonths += today.getMonth();
+    if (today.getDate() < parsedBirth.getDate()) {
+      ageMonths -= 1;
+    }
+
+    if (ageMonths > 36) {
+      return NextResponse.json(
+        { error: "Este taller está destinado exclusivamente a peques de 0 a 36 meses." },
+        { status: 400 }
+      );
+    }
+
+    const birthDayStr = String(parsedBirth.getDate()).padStart(2, "0");
+    const birthMonthStr = String(parsedBirth.getMonth() + 1).padStart(2, "0");
+    const birthYearStr = parsedBirth.getFullYear();
+    const formattedBirthDate = `${birthDayStr}/${birthMonthStr}/${birthYearStr}`;
 
     // 1. Obtener y verificar el taller
     const workshop = await prisma.workshop.findUnique({
@@ -89,7 +141,7 @@ export async function POST(request) {
 
     // 3. Crear el registro de Order para que sume como plaza ocupada
     const directSessionId = `direct_sede_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
-    const childInfo = `${cleanChildName} (${cleanBirthDate})`;
+    const childInfo = `${cleanChildName} (${formattedBirthDate})`;
 
     const order = await prisma.order.create({
       data: {
@@ -106,7 +158,7 @@ export async function POST(request) {
           email: cleanEmail,
           phone: cleanPhone,
           childName: cleanChildName,
-          childBirthDate: cleanBirthDate,
+          childBirthDate: formattedBirthDate,
           childInfo: childInfo,
           notes: "Pago directo en centro colaborador (guardería)",
           attended: null,

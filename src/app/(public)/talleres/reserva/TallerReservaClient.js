@@ -19,10 +19,55 @@ export default function TallerReservaClient({ workshops }) {
   const [status, setStatus] = useState("idle"); // idle, loading, success, error
   const [errorMessage, setErrorMessage] = useState("");
 
+  const today = new Date();
+  const maxBirthDate = today.toISOString().split("T")[0];
+  const minBirthDateObj = new Date(today.getFullYear() - 3, today.getMonth(), today.getDate());
+  const minBirthDate = minBirthDateObj.toISOString().split("T")[0];
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!acceptedTerms) {
       setErrorMessage("Debes aceptar el funcionamiento del aula, las normas y la política de privacidad");
+      return;
+    }
+
+    // Validar edad (0 - 36 meses)
+    if (!childBirthDate) {
+      setErrorMessage("Por favor, introduce la fecha de nacimiento del peque");
+      return;
+    }
+
+    let birth = null;
+    const dmy = String(childBirthDate).trim().match(/^(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{4})$/);
+    if (dmy) {
+      const day = parseInt(dmy[1], 10);
+      const month = parseInt(dmy[2], 10) - 1;
+      const year = parseInt(dmy[3], 10);
+      birth = new Date(year, month, day);
+    } else {
+      birth = new Date(childBirthDate);
+    }
+
+    if (!birth || isNaN(birth.getTime())) {
+      setErrorMessage("Por favor, introduce una fecha de nacimiento válida");
+      return;
+    }
+
+    const now = new Date();
+    if (birth > now) {
+      setErrorMessage("La fecha de nacimiento no puede ser posterior a hoy");
+      return;
+    }
+
+    let ageMonths = (now.getFullYear() - birth.getFullYear()) * 12;
+    ageMonths -= birth.getMonth();
+    ageMonths += now.getMonth();
+    if (now.getDate() < birth.getDate()) {
+      ageMonths -= 1;
+    }
+
+    if (ageMonths > 36) {
+      setErrorMessage("Este taller está destinado exclusivamente a peques de 0 a 36 meses (3 años).");
       return;
     }
 
@@ -469,14 +514,18 @@ export default function TallerReservaClient({ workshops }) {
               </div>
               <div>
                 <label style={{ display: "block", fontWeight: "600", marginBottom: "6px", color: "#334155", fontSize: "0.88rem" }}>
-                  Fecha de nacimiento *
+                  Fecha de nacimiento del peque * (0 - 36 meses)
                 </label>
                 <input
-                  type="text"
+                  type="date"
                   value={childBirthDate}
-                  onChange={(e) => setChildBirthDate(e.target.value)}
+                  min={minBirthDate}
+                  max={maxBirthDate}
+                  onChange={(e) => {
+                    setChildBirthDate(e.target.value);
+                    setErrorMessage("");
+                  }}
                   required
-                  placeholder="DD/MM/AAAA"
                   style={{
                     width: "100%",
                     padding: "10px 12px",
@@ -487,6 +536,9 @@ export default function TallerReservaClient({ workshops }) {
                     boxSizing: "border-box"
                   }}
                 />
+                <span style={{ fontSize: "0.78rem", color: "#64748b", marginTop: "4px", display: "block" }}>
+                  Bebés y niños de 0 a 36 meses.
+                </span>
               </div>
             </div>
           </div>
