@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import Stripe from "stripe";
 
 const prisma = new PrismaClient();
-const MAX_WORKSHOP_CAPACITY = 12;
+const MAX_WORKSHOP_CAPACITY = 10;
 
 const stripe = new Stripe(
   process.env.STRIPE_SECRET_KEY || "sk_test_dummy_key_until_configured",

@@ -85,7 +85,7 @@ export async function DELETE(request, { params }) {
             status: "completed",
           },
         });
-        if (remaining < 12) {
+        if (remaining < 10) {
           await prisma.workshop.updateMany({
             where: { id: order.productId },
             data: { isSoldOut: false },

@@ -126,7 +126,7 @@ export default async function AdminTalleresPage() {
         <div>
           <h1 style={{ fontSize: '2rem', margin: 0, color: '#0f172a' }}>🧸 Talleres</h1>
           <p style={{ margin: '4px 0 0', color: '#64748b' }}>
-            Página pública de reservas: <Link href="/talleres" target="_blank" style={{ color: '#00B2E3', fontWeight: 'bold' }}>musicabalu.com/talleres ↗</Link> · Aforo máximo automático: <strong>12 plazas por sesión</strong>
+            Página pública de reservas: <Link href="/talleres" target="_blank" style={{ color: '#00B2E3', fontWeight: 'bold' }}>musicabalu.com/talleres ↗</Link> · Aforo máximo automático: <strong>10 plazas por sesión</strong>
           </p>
         </div>
         <Link href="/admin" style={{ padding: '8px 16px', backgroundColor: '#e2e8f0', borderRadius: '8px', textDecoration: 'none', color: '#334155', fontWeight: '600' }}>
@@ -154,7 +154,7 @@ export default async function AdminTalleresPage() {
             {workshops.map(w => {
               const sessionOrders = ordersByWorkshop[w.id] || []
               const enrolled = sessionOrders.length
-              const capacity = 12
+              const capacity = 10
               const percentage = Math.round((enrolled / capacity) * 100)
               const isFull = w.isSoldOut || enrolled >= capacity
               const parts = (w.dateText || '').split('|').map(s => s.trim())
@@ -258,7 +258,7 @@ export default async function AdminTalleresPage() {
                 {workshops.map(w => {
                   const sessionOrders = ordersByWorkshop[w.id] || []
                   const soldCount = sessionOrders.length
-                  const isFull = w.isSoldOut || soldCount >= 12
+                  const isFull = w.isSoldOut || soldCount >= 10
 
                   return (
                     <div key={w.id} style={{ backgroundColor: 'white', padding: '18px', borderRadius: '12px', border: '1px solid #e2e8f0' }}>
@@ -274,7 +274,7 @@ export default async function AdminTalleresPage() {
                               borderRadius: '999px',
                               fontWeight: '800'
                             }}>
-                              👥 {soldCount} / 12 plazas
+                              👥 {soldCount} / 10 plazas
                             </span>
                             {!w.isActive && <span style={{ fontSize: '0.78rem', backgroundColor: '#f1f5f9', padding: '2px 8px', borderRadius: '12px' }}>Oculto</span>}
                             {isFull && <span style={{ fontSize: '0.78rem', backgroundColor: '#fee2e2', color: '#ef4444', padding: '2px 8px', borderRadius: '12px', fontWeight: 'bold' }}>Completo</span>}

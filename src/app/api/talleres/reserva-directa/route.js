@@ -58,9 +58,9 @@ export async function POST(request) {
       },
     });
 
-    if (currentOrdersCount >= 12 || workshop.isSoldOut) {
+    if (currentOrdersCount >= 10 || workshop.isSoldOut) {
       return NextResponse.json(
-        { error: "Lo sentimos, este taller acaba de completar su aforo (12/12 plazas)." },
+        { error: "Lo sentimos, este taller acaba de completar su aforo (10/10 plazas)." },
         { status: 400 }
       );
     }
@@ -114,14 +114,14 @@ export async function POST(request) {
       },
     });
 
-    // 4. Actualizar conteo de plazas y marcar sold out si llega a 12
+    // 4. Actualizar conteo de plazas y marcar sold out si llega a 10
     const newTotalCount = currentOrdersCount + 1;
-    if (newTotalCount >= 12) {
+    if (newTotalCount >= 10) {
       await prisma.workshop.update({
         where: { id: workshop.id },
         data: { isSoldOut: true },
       });
-      console.log(`🔒 Taller ${workshop.title} completado (12/12 plazas) tras inscripción directa`);
+      console.log(`🔒 Taller ${workshop.title} completado (10/10 plazas) tras inscripción directa`);
     }
 
     // 5. Enviar emails de confirmación
@@ -188,8 +188,8 @@ export async function POST(request) {
       await transport.sendMail({
         from: process.env.EMAIL_FROM || "Musicabalú <hola@musicabalu.com>",
         to: "hola@musicabalu.com",
-        subject: `🧸 Nueva Inscripción Directa a Taller (${newTotalCount}/12): ${cleanAdultName}`,
-        text: `¡Nueva plaza reservada directamente (pago en centro colaborador)!\n\nOcupación actual: ${newTotalCount} / 12 plazas${newTotalCount >= 12 ? " (¡TALLER COMPLETO!)" : ""}\nTaller: ${workshop.title}\nAdulto: ${cleanAdultName}\nPeque: ${childInfo}\nTeléfono: ${cleanPhone}\nEmail: ${cleanEmail}\nModalidad: Pago directo en guardería`,
+        subject: `🧸 Nueva Inscripción Directa a Taller (${newTotalCount}/10): ${cleanAdultName}`,
+        text: `¡Nueva plaza reservada directamente (pago en centro colaborador)!\n\nOcupación actual: ${newTotalCount} / 10 plazas${newTotalCount >= 10 ? " (¡TALLER COMPLETO!)" : ""}\nTaller: ${workshop.title}\nAdulto: ${cleanAdultName}\nPeque: ${childInfo}\nTeléfono: ${cleanPhone}\nEmail: ${cleanEmail}\nModalidad: Pago directo en guardería`,
       });
 
       console.log(`✉️ Emails de confirmación de taller enviados para ${cleanEmail}`);

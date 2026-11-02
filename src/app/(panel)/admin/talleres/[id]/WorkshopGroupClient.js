@@ -248,7 +248,7 @@ export default function WorkshopGroupClient({ workshop, initialOrders }) {
       <div className={styles.header}>
         <h1 className={styles.title}>{workshop.title}</h1>
         <p className={styles.subtitle}>
-          🕒 {schedulePart} {addressPart ? ` • ${addressPart}` : ''} &bull; <strong>{orders.length} / 12 plazas ocupadas</strong>
+          🕒 {schedulePart} {addressPart ? ` • ${addressPart}` : ''} &bull; <strong>{orders.length} / 10 plazas ocupadas</strong>
         </p>
       </div>
 

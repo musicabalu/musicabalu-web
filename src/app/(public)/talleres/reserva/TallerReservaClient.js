@@ -219,7 +219,8 @@ export default function TallerReservaClient({ workshops }) {
               }}
             >
               {workshops.map((w) => (
-                <option key={w.id} value={w.id}>
+                <option key={w.id} value={w.id} disabled={w.isFull}>
+                  {w.isFull ? "🔒 [COMPLETO] " : ""}
                   {w.title} — {w.dateText}
                 </option>
               ))}

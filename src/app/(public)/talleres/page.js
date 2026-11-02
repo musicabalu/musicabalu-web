@@ -215,7 +215,7 @@ export default async function TalleresPage() {
                   const schedulePart = parts[0] || w.dateText;
                   const addressPart = parts[1] || null;
                   const soldCount = countByWorkshopId[w.id] || 0;
-                  const isFull = w.isSoldOut || soldCount >= 12;
+                  const isFull = w.isSoldOut || soldCount >= 10;
 
                   if (isFull) {
                     return (
