@@ -252,6 +252,8 @@ export default async function TalleresPage() {
                       ? w.stripeLink
                       : `/api/workshop-checkout?workshopId=${w.id}`;
 
+                  const remainingSpots = Math.max(0, 10 - soldCount);
+
                   return (
                     <a 
                       key={w.id}
@@ -272,8 +274,43 @@ export default async function TalleresPage() {
                       <span style={{ fontWeight: '800', fontSize: '1.15rem', marginBottom: '6px' }}>{w.title}</span>
                       <span style={{ fontSize: '0.96rem', fontWeight: '600', marginBottom: addressPart ? '4px' : '10px' }}>🗓️ {schedulePart}</span>
                       {addressPart && (
-                        <span style={{ fontSize: '0.88rem', opacity: '0.95', marginBottom: '12px' }}>{addressPart}</span>
+                        <span style={{ fontSize: '0.88rem', opacity: '0.95', marginBottom: '10px' }}>{addressPart}</span>
                       )}
+
+                      {remainingSpots <= 3 ? (
+                        <span style={{
+                          backgroundColor: '#fee2e2',
+                          color: '#991b1b',
+                          border: '1.5px solid #f87171',
+                          padding: '3px 12px',
+                          borderRadius: '999px',
+                          fontSize: '0.82rem',
+                          fontWeight: '800',
+                          marginBottom: '8px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}>
+                          🔴 ¡ÚLTIMAS {remainingSpots} PLAZAS!
+                        </span>
+                      ) : remainingSpots <= 5 ? (
+                        <span style={{
+                          backgroundColor: '#fef3c7',
+                          color: '#92400e',
+                          border: '1.5px solid #fbbf24',
+                          padding: '3px 12px',
+                          borderRadius: '999px',
+                          fontSize: '0.82rem',
+                          fontWeight: '800',
+                          marginBottom: '8px',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px'
+                        }}>
+                          🟡 Quedan {remainingSpots} plazas
+                        </span>
+                      ) : null}
+
                       <span style={{
                         backgroundColor: 'white',
                         color: 'var(--color-dark)',
