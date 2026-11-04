@@ -104,6 +104,12 @@ export default async function AdminDashboard() {
       {/* Herramientas de Gestión */}
       <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
       <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
+        <Link href="/admin/embudo" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #F4436C' }}>
+            <h3 className={styles.statTitle}>⚡ Embudo de Ventas (5 Emails)</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Automatización y seguimiento de leads</p>
+          </div>
+        </Link>
         <Link href="/admin/suscriptores" style={{ textDecoration: 'none', color: 'inherit' }}>
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #805AD5' }}>
             <h3 className={styles.statTitle}>⭐ Suscriptores Comunidad</h3>
