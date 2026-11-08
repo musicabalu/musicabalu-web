@@ -120,6 +120,12 @@ async function buildRecipientLists() {
     todos: Array.from(todosMap.values()),
     presencial: Array.from(presencialMap.values()),
     unsubscribed: Array.from(unsubSet),
+    unsubscribedDetails: unsubNotes.map((n) => ({
+      id: n.id,
+      email: (n.title || "").trim().toLowerCase(),
+      date: n.createdAt,
+      content: n.content,
+    })),
   };
 }
 

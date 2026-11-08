@@ -85,6 +85,28 @@ export async function POST(request) {
         },
       ] : undefined,
       
+      // Campos personalizados en Stripe para Tarjeta Regalo
+      custom_fields: product.type === 'gift' ? [
+        {
+          key: "para_quien",
+          label: {
+            type: "custom",
+            custom: "¿Para quién es el regalo? (ej. Lucas, Familia Pérez)",
+          },
+          type: "text",
+          optional: true,
+        },
+        {
+          key: "de_parte_de",
+          label: {
+            type: "custom",
+            custom: "¿De parte de quién? (ej. Los abuelos Carmen y Juan)",
+          },
+          type: "text",
+          optional: true,
+        },
+      ] : undefined,
+
       // Pasar datos (metadatos) para el Webhook
       metadata: {
         userId: session.user.id,

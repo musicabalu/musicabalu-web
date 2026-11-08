@@ -3,19 +3,22 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-const DEFAULT_FRIDAY_TEMPLATE = `¡Hola!
+const DEFAULT_FRIDAY_TEMPLATE = `¡Hola familia!
 
-Ya tenéis disponible en la Comunidad Musicabalú el nuevo contenido de esta semana para disfrutar en casa:
+Ya tenéis disponible en la plataforma el nuevo contenido de este viernes para compartir y disfrutar con vuestros peques durante el fin de semana:
 
-🎵 Nueva canción: [Título de la canción]
-🎬 Nueva píldora: [Título de la píldora]
+🎵 Nueva Canción: "Danza lidia"
+Una preciosa melodía en modo lidio (con ese carácter mágico y flotante que tanto despierta la curiosidad de los niños) para cantar, balancearos y jugar en el salón.
+👉 Escúchala aquí: https://musicabalu.com/comunidad/canciones
 
-Podéis escucharlos directamente desde aquí:
-https://musicabalu.com/comunidad/canciones
+🎬 2 Nuevas Píldoras en "Consejos prácticos en casa":
+1️⃣ "El poder del silencio": Descubre por qué el silencio no es "vacío", sino el momento exacto donde ocurre la audiation (el pensamiento musical interno).
+2️⃣ "El poder de los ojos": Por qué tu mirada es más potente que cualquier instrumento musical y cómo el contacto visual activa la atención y la imitación de tu peque.
+👉 Míralas aquí: https://musicabalu.com/comunidad/pildoras
 
-¡Que paséis un feliz fin de semana lleno de música! 🤗❤️
+¡Que paséis un fin de semana lleno de miradas, silencios activos y mucha música viva! 🤗❤️
 
-Un abrazo,
+Un abrazo enorme,
 
 Javi.`;
 
@@ -24,7 +27,7 @@ export default function AdminComunicacionesPage() {
   const [loadingLists, setLoadingLists] = useState(true);
 
   const [audience, setAudience] = useState("comunidad"); // comunidad | presencial
-  const [subject, setSubject] = useState("🎵 Novedades de este viernes en Musicabalú 💛");
+  const [subject, setSubject] = useState("🎵 Novedades de este viernes en Musicabalú: Danza lidia y 2 nuevas píldoras 💛");
   const [bodyText, setBodyText] = useState(DEFAULT_FRIDAY_TEMPLATE);
   const [testEmail, setTestEmail] = useState("hola@musicabalu.com");
 
@@ -309,6 +312,90 @@ export default function AdminComunicacionesPage() {
               : `🚀 Enviar ahora (${activeAudienceList.length} destinatarios)`}
           </button>
         </div>
+      </div>
+
+      {/* Sección Dedicada: Registro de Bajas de Boletines (RGPD) */}
+      <div style={{
+        marginTop: "40px",
+        backgroundColor: "#ffffff",
+        borderRadius: "20px",
+        padding: "24px 28px",
+        border: "1.5px solid #e2e8f0",
+        boxShadow: "0 4px 14px rgba(0,0,0,0.03)"
+      }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+          <div>
+            <h3 style={{ fontSize: "1.15rem", fontWeight: "800", color: "#0f172a", margin: "0 0 4px" }}>
+              🚫 Bajas Voluntarias de Boletines Semanales
+            </h3>
+            <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0 }}>
+              Familias que han solicitado la baja mediante el enlace automático al pie del correo. El sistema las excluye de forma automática y permanente de todos los envíos.
+            </p>
+          </div>
+          <span style={{
+            backgroundColor: "#fef2f2",
+            color: "#b91c1c",
+            border: "1px solid #fecaca",
+            padding: "4px 12px",
+            borderRadius: "20px",
+            fontSize: "0.85rem",
+            fontWeight: "800"
+          }}>
+            {(lists.unsubscribedDetails || []).length} bajas
+          </span>
+        </div>
+
+        {(lists.unsubscribedDetails || []).length === 0 ? (
+          <p style={{ color: "#94a3b8", fontSize: "0.9rem", fontStyle: "italic", margin: "10px 0 0" }}>
+            No hay ninguna baja registrada. Todas las familias están suscritas a los comunicados.
+          </p>
+        ) : (
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "0.9rem" }}>
+              <thead>
+                <tr style={{ borderBottom: "2px solid #f1f5f9", textAlign: "left", color: "#475569" }}>
+                  <th style={{ padding: "10px 12px" }}>Email</th>
+                  <th style={{ padding: "10px 12px" }}>Fecha de Baja</th>
+                  <th style={{ padding: "10px 12px" }}>Detalle</th>
+                  <th style={{ padding: "10px 12px", textAlign: "right" }}>Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                {(lists.unsubscribedDetails || []).map((unsub) => (
+                  <tr key={unsub.id || unsub.email} style={{ borderBottom: "1px solid #f1f5f9" }}>
+                    <td style={{ padding: "12px", fontWeight: "700", color: "#0f172a" }}>
+                      {unsub.email}
+                    </td>
+                    <td style={{ padding: "12px", color: "#64748b" }}>
+                      {new Date(unsub.date).toLocaleDateString("es-ES", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                      })}
+                    </td>
+                    <td style={{ padding: "12px", color: "#64748b", fontSize: "0.85rem" }}>
+                      {unsub.content || "Baja automática solicitada"}
+                    </td>
+                    <td style={{ padding: "12px", textAlign: "right" }}>
+                      <span style={{
+                        padding: "3px 10px",
+                        borderRadius: "12px",
+                        backgroundColor: "#fef2f2",
+                        color: "#b91c1c",
+                        fontSize: "0.78rem",
+                        fontWeight: "700"
+                      }}>
+                        Excluido
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
   );

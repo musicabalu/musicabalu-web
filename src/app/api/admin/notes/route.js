@@ -13,6 +13,9 @@ export async function GET(req) {
     }
 
     const notes = await prisma.adminNote.findMany({
+      where: {
+        category: { not: "EmailBaja" }
+      },
       orderBy: { createdAt: 'desc' }
     });
 

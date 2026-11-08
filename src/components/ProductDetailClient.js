@@ -12,8 +12,9 @@ export default function ProductDetailClient({ product }) {
 
   const isMensual = product.id === 'sub_mensual';
   const isAnual = product.id === 'sub_anual';
+  const isGift = product.id === 'regala_musicabalu' || product.type === 'gift';
   const isSub = product.type === "subscription";
-  const alreadySubscribed = product.hasFullAccess && isSub;
+  const alreadySubscribed = product.hasFullAccess && isSub && !isGift;
 
   return (
     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "50px", alignItems: "start" }}>
@@ -22,7 +23,7 @@ export default function ProductDetailClient({ product }) {
         <div style={{ 
           width: "100%", 
           height: "360px", 
-          backgroundColor: isMensual ? "rgba(0, 178, 227, 0.08)" : "#fef3c7", 
+          backgroundColor: isGift ? "#fdf2f8" : isMensual ? "rgba(0, 178, 227, 0.08)" : "#fef3c7", 
           borderRadius: "24px",
           position: "relative",
           overflow: "hidden",
@@ -31,18 +32,18 @@ export default function ProductDetailClient({ product }) {
           justifyContent: "center",
           fontSize: "8rem",
           boxShadow: "0 8px 30px rgba(0,0,0,0.05)",
-          border: isMensual ? "2px solid rgba(0, 178, 227, 0.2)" : "2px solid rgba(245, 158, 11, 0.2)"
+          border: isGift ? "2px solid rgba(236, 72, 153, 0.25)" : isMensual ? "2px solid rgba(0, 178, 227, 0.2)" : "2px solid rgba(245, 158, 11, 0.2)"
         }}>
           {hasImages ? (
             <Image 
               src={images[0]} 
               alt={product.name} 
               fill 
-              style={{ objectFit: "cover" }} 
+              style={{ objectFit: "contain", padding: "40px" }} 
               sizes="(max-width: 768px) 100vw, 500px"
             />
           ) : (
-            product.imageUrl || "✨"
+            product.imageUrl || (isGift ? "🎁" : "✨")
           )}
         </div>
       </div>
@@ -61,6 +62,17 @@ export default function ProductDetailClient({ product }) {
               fontWeight: "bold",
             }}>
               ✅ Ya tienes acceso activo
+            </span>
+          ) : isGift ? (
+            <span style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              backgroundColor: "#fdf2f8",
+              color: "#be185d",
+              fontSize: "0.85rem",
+              fontWeight: "bold",
+            }}>
+              🎁 Regalo Especial · 1 Año Completo
             </span>
           ) : isMensual ? (
             <span style={{
@@ -121,7 +133,17 @@ export default function ProductDetailClient({ product }) {
 
         {/* Sección de Precio */}
         <div style={{ marginBottom: "25px" }}>
-          {isMensual ? (
+          {isGift ? (
+            <div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "10px" }}>
+                <span style={{ fontSize: "2.8rem", fontWeight: "bold", color: "var(--color-dark)" }}>39,00 €</span>
+                <span style={{ fontSize: "1.2rem", color: "var(--color-text-light)" }}>/ pago único (1 año)</span>
+              </div>
+              <p style={{ margin: "6px 0 0", color: "#db2777", fontWeight: "bold", fontSize: "0.95rem" }}>
+                🎁 Pago único sin renovaciones. Recibes un vale imprimible con código para regalar.
+              </p>
+            </div>
+          ) : isMensual ? (
             <div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "12px" }}>
                 <span style={{ fontSize: "1.4rem", color: "#94a3b8", textDecoration: "line-through" }}>5,90 €</span>
@@ -177,13 +199,26 @@ export default function ProductDetailClient({ product }) {
           <div style={{ marginBottom: "25px" }}>
             <button 
               onClick={() => addToCart(product, 1, {})}
-              className="btn btn-cyan"
-              style={{ width: "100%", padding: "16px", fontSize: "1.25rem", fontWeight: "800", borderRadius: "30px", boxShadow: "0 4px 18px rgba(0, 178, 227, 0.3)" }}
+              className={isGift ? "btn btn-primary" : "btn btn-cyan"}
+              style={{
+                width: "100%",
+                padding: "16px",
+                fontSize: "1.25rem",
+                fontWeight: "800",
+                borderRadius: "30px",
+                background: isGift ? "linear-gradient(135deg, #ec4899 0%, #db2777 100%)" : undefined,
+                color: isGift ? "#fff" : undefined,
+                border: "none",
+                cursor: "pointer",
+                boxShadow: isGift ? "0 4px 18px rgba(219, 39, 119, 0.35)" : "0 4px 18px rgba(0, 178, 227, 0.3)"
+              }}
             >
-              Suscribirme ahora ✨
+              {isGift ? "Regalar Suscripción Anual 🎁" : "Suscribirme ahora ✨"}
             </button>
             <p style={{ textAlign: "center", color: "var(--color-text-light)", fontSize: "0.85rem", marginTop: "10px" }}>
-              Pago 100% seguro con Stripe · Cancela cuando quieras en 1 clic
+              {isGift 
+                ? "Pago 100% seguro con Stripe · Recibirás al instante el vale imprimible con el código de regalo" 
+                : "Pago 100% seguro con Stripe · Cancela cuando quieras en 1 clic"}
             </p>
           </div>
         )}
@@ -197,15 +232,26 @@ export default function ProductDetailClient({ product }) {
           marginBottom: "25px" 
         }}>
           <h3 style={{ fontSize: "1.15rem", color: "var(--color-dark)", marginBottom: "12px", fontFamily: "var(--font-heading)", fontWeight: "700" }}>
-            ¿Qué incluye la suscripción?
+            {isGift ? "🎁 ¿Cómo funciona el regalo?" : "¿Qué incluye la suscripción?"}
           </h3>
-          <ul style={{ margin: "0 0 16px", paddingLeft: "20px", color: "var(--color-text)", fontSize: "0.98rem", lineHeight: "1.7" }}>
-            <li><strong>Licencia individual:</strong> Para uso estrictamente familiar y doméstico en casa.</li>
-            <li><strong>Repertorio completo:</strong> Más de 30 canciones y recitados en diversos modos y métricas.</li>
-            <li><strong>Píldoras en vídeo:</strong> Explicaciones pedagógicas y consejos prácticos para jugar en casa.</li>
-            <li><strong>Goteo semanal continuo:</strong> Cada semana incorporamos nuevos contenidos.</li>
-            <li><strong>Acceso multidispositivo:</strong> Desde el móvil, tablet o cualquier ordenador en cualquier momento.</li>
-          </ul>
+          {isGift ? (
+            <ul style={{ margin: "0 0 16px", paddingLeft: "20px", color: "var(--color-text)", fontSize: "0.98rem", lineHeight: "1.7" }}>
+              <li><strong>Efecto sorpresa 100% garantizado:</strong> La persona a la que le regales NO recibirá ningún correo electrónico ni notificación de nuestra parte hasta que tú decidas entregarle el vale.</li>
+              <li><strong>Vale regalo listo para entregar:</strong> Tras completar el pago, recibirás de inmediato por email tu tarjeta/vale regalo en alta resolución (para imprimir en papel o reenviar por WhatsApp).</li>
+              <li><strong>Licencia individual para uso familiar:</strong> Válida para que una familia disfrute de todo el contenido desde cualquier dispositivo durante 1 año completo desde la activación.</li>
+              <li><strong>Activación fácil y sin prisas:</strong> El vale incluye un código único y las instrucciones para que la familia afortunada active su año cuando lo desee.</li>
+              <li><strong>Acceso ilimitado durante 1 año:</strong> Todas nuestras canciones, recitados, píldoras pedagógicas en vídeo y nuevo contenido semanal.</li>
+              <li><strong>Sin renovaciones automáticas:</strong> Es un pago único. No se le cobrará nada a ellos ni a ti al terminar el año.</li>
+            </ul>
+          ) : (
+            <ul style={{ margin: "0 0 16px", paddingLeft: "20px", color: "var(--color-text)", fontSize: "0.98rem", lineHeight: "1.7" }}>
+              <li><strong>Licencia individual:</strong> Para uso estrictamente familiar y doméstico en casa.</li>
+              <li><strong>Repertorio completo:</strong> Más de 30 canciones y recitados en diversos modos y métricas.</li>
+              <li><strong>Píldoras en vídeo:</strong> Explicaciones pedagógicas y consejos prácticos para jugar en casa.</li>
+              <li><strong>Goteo semanal continuo:</strong> Cada semana incorporamos nuevos contenidos.</li>
+              <li><strong>Acceso multidispositivo:</strong> Desde el móvil, tablet o cualquier ordenador en cualquier momento.</li>
+            </ul>
+          )}
           <p style={{ color: "var(--color-text-light)", fontSize: "0.95rem", lineHeight: "1.6", margin: 0, whiteSpace: "pre-wrap" }}>
             {product.description}
           </p>

@@ -3,6 +3,10 @@ import Stripe from "stripe";
 import { PrismaClient } from "@prisma/client";
 import { createTransport } from "nodemailer";
 import { google } from "googleapis";
+import crypto from "crypto";
+import path from "path";
+import fs from "fs";
+import { execSync } from "child_process";
 
 // Este código no se usa en pruebas locales por ahora, 
 // pero está listo para cuando subamos la web a Vercel.
@@ -324,8 +328,161 @@ export async function POST(request) {
             console.error("⚠️ Error enviando emails de suscripción:", emailError);
           }
 
-        } else if (metadata.productType === 'gift' || metadata.productType === 'printful_merch') {
-          // 3. Producto de pago único (Regalo o Merchandising)
+        } else if (metadata.productType === 'gift' || metadata.productId === 'regala_musicabalu') {
+          // 3A. Tarjeta Regalo Suscripción Anual (Regala Musicabalú)
+          const order = await prisma.order.create({
+            data: {
+              userId: metadata.userId,
+              stripeSessionId: session.id,
+              productId: metadata.productId || 'regala_musicabalu',
+              productName: metadata.productName || 'Regala Musicabalú · Tarjeta Regalo Anual',
+              productType: 'gift',
+              amountTotal: session.amount_total,
+              currency: session.currency,
+              status: 'completed'
+            }
+          });
+          console.log(`✅ Orden creada para regalo ${order.id}`);
+
+          // Generar código único de activación (ej. BALU-8A3F1C)
+          const randomCode = `BALU-${crypto.randomBytes(3).toString("hex").toUpperCase()}`;
+          const buyerEmail = session.customer_details?.email || session.customer_email;
+
+          await prisma.giftCode.create({
+            data: {
+              code: randomCode,
+              orderId: order.id,
+              buyerEmail: buyerEmail,
+              status: 'pending',
+              durationMonths: 12
+            }
+          });
+          console.log(`🎁 Código de regalo creado: ${randomCode} para ${buyerEmail}`);
+
+          // Enviar correo al comprador con el vale y su código
+          try {
+            if (process.env.EMAIL_SERVER && process.env.EMAIL_FROM && buyerEmail) {
+              const transport = createTransport(process.env.EMAIL_SERVER);
+              const activateUrl = `https://musicabalu.com/activar?code=${randomCode}`;
+
+              // Extraer nombres personalizados si el comprador los rellenó en Stripe
+              const paraField = (session.custom_fields || []).find(f => f.key === "para_quien");
+              const deField = (session.custom_fields || []).find(f => f.key === "de_parte_de");
+              const para = paraField?.text?.value || "Familia";
+              const de = deField?.text?.value || "Con todo el cariño ❤️";
+
+              // Intentar generar el vale personalizado con su código y nombres reales
+              let pdfPath = path.join(process.cwd(), "public/vale_regalo_musicabalu.pdf");
+              let imagePath = path.join(process.cwd(), "public/vale_regalo_musicabalu.png");
+
+              try {
+                const scriptPath = path.join(process.cwd(), "../scripts/create_gift_voucher_image.py");
+                const customPrefix = `/tmp/vale_${randomCode}`;
+                if (fs.existsSync(scriptPath)) {
+                  execSync(`python3 "${scriptPath}" "${para.replace(/"/g, '\\"')}" "${de.replace(/"/g, '\\"')}" "${randomCode}" "${customPrefix}"`, { timeout: 10000 });
+                  if (fs.existsSync(`${customPrefix}.pdf`) && fs.existsSync(`${customPrefix}.png`)) {
+                    pdfPath = `${customPrefix}.pdf`;
+                    imagePath = `${customPrefix}.png`;
+                  }
+                }
+              } catch (genErr) {
+                console.log("Aviso: usando plantilla base de vale regalo:", genErr?.message);
+              }
+
+              const attachments = [];
+              if (fs.existsSync(pdfPath)) {
+                attachments.push({
+                  filename: `Vale_Regalo_Musicabalu_${randomCode}.pdf`,
+                  path: pdfPath
+                });
+              }
+              if (fs.existsSync(imagePath)) {
+                attachments.push({
+                  filename: `Vale_Regalo_Musicabalu_${randomCode}.png`,
+                  path: imagePath
+                });
+              }
+
+              await transport.sendMail({
+                from: process.env.EMAIL_FROM,
+                to: buyerEmail,
+                subject: "🎁 ¡Aquí tienes tu Vale Regalo de Musicabalú!",
+                attachments: attachments,
+                html: `
+                  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #1e293b; line-height: 1.6;">
+                    <div style="text-align: center; margin-bottom: 24px;">
+                      <span style="font-size: 2.5rem;">🎁</span>
+                      <h1 style="color: #db2777; margin: 8px 0; font-size: 1.8rem;">¡Muchísimas gracias por regalar música!</h1>
+                      <p style="color: #64748b; font-size: 1rem; margin: 0;">Tu compra de <strong>1 Año Completo de Comunidad Musicabalú</strong> se ha completado con éxito.</p>
+                    </div>
+
+                    <div style="background: #fdf2f8; border: 2px dashed #f472b6; border-radius: 16px; padding: 24px; text-align: center; margin: 24px 0;">
+                      <span style="font-size: 0.85rem; font-weight: bold; color: #9d174d; text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 6px;">
+                        Código Único de Activación
+                      </span>
+                      <div style="font-family: monospace; font-size: 1.8rem; font-weight: bold; color: #db2777; letter-spacing: 2px; margin-bottom: 12px;">
+                        ${randomCode}
+                      </div>
+                      <p style="font-size: 0.9rem; color: #475569; margin: 0;">
+                        Válido para 1 año de acceso familiar a partir del día en que se active en la web.
+                      </p>
+                    </div>
+
+                    <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 24px;">
+                      <h3 style="color: #0f172a; margin-top: 0; font-size: 1.05rem;">🔒 Efecto sorpresa 100% garantizado:</h3>
+                      <p style="margin: 0; font-size: 0.95rem; color: #475569;">
+                        La persona a la que le regales <strong>NO recibirá ningún correo ni notificación</strong> de nuestra parte. Todo queda en tus manos para darle la sorpresa cuando tú decidas.
+                      </p>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                      <h3 style="color: #0f172a; font-size: 1.05rem;">¿Cómo puedes entregarle el regalo?</h3>
+                      <p style="color: #334155; font-size: 0.95rem; margin-bottom: 12px;">
+                        Te hemos adjuntado a este correo tu vale regalo en dos formatos listos para usar:
+                      </p>
+                      <ul style="color: #334155; font-size: 0.95rem; padding-left: 20px; line-height: 1.7; margin-bottom: 16px;">
+                        <li><strong>📄 Archivo PDF adjunto:</strong> Ideal para imprimir en papel o cartulina para entregarlo en mano.</li>
+                        <li><strong>🖼️ Archivo Imagen PNG adjunto:</strong> Listo para guardar en las fotos de tu móvil y reenviarlo directamente por WhatsApp.</li>
+                      </ul>
+
+                      <p style="color: #334155; font-size: 0.95rem; margin-bottom: 8px;">
+                        Si prefieres avisarle por WhatsApp, puedes copiar este mensaje:
+                      </p>
+                      <blockquote style="background: #f8fafc; border-left: 3px solid #00B2E3; margin: 10px 0; padding: 12px 16px; font-style: italic; font-size: 0.9rem; color: #334155; border-radius: 4px;">
+                        "¡Sorpresa! 🎉 Os hemos regalado 1 año completo de música viva en familia con Musicabalú 🎵. Podéis activar vuestra suscripción cuando queráis entrando en <a href="${activateUrl}" style="color: #00B2E3; font-weight: bold;">musicabalu.com/activar</a> con el código: <strong>${randomCode}</strong>"
+                      </blockquote>
+                    </div>
+
+                    <div style="text-align: center; margin: 30px 0;">
+                      <a href="${activateUrl}" 
+                         style="background: linear-gradient(135deg, #ec4899 0%, #db2777 100%); color: white; padding: 14px 28px; text-decoration: none; font-weight: bold; border-radius: 30px; display: inline-block; box-shadow: 0 4px 15px rgba(219, 39, 119, 0.3);">
+                        Ver Página de Activación 🎁
+                      </a>
+                    </div>
+
+                    <p style="font-size: 0.85rem; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 15px; text-align: center;">
+                      Musicabalú · Licencia individual para uso familiar · Sin renovaciones automáticas<br>
+                      ¿Tienes alguna consulta? Escríbenos a <a href="mailto:hola@musicabalu.com" style="color: #00B2E3;">hola@musicabalu.com</a>
+                    </p>
+                  </div>
+                `
+              });
+
+              // Notificación interna al administrador
+              await transport.sendMail({
+                from: process.env.EMAIL_FROM,
+                to: "hola@musicabalu.com",
+                subject: `🎁 Venta Vale Regalo: ${randomCode} (${buyerEmail})`,
+                text: `¡Nueva compra de tarjeta regalo!\n\nProducto: ${metadata.productName || "Regala Musicabalú"}\nImporte: ${(session.amount_total / 100).toFixed(2)}€\nCódigo generado: ${randomCode}\nComprador: ${buyerEmail}\nStripe ID: ${session.id}\n`
+              });
+              console.log("✅ Emails de vale regalo enviados con éxito");
+            }
+          } catch (emailErr) {
+            console.error("❌ Error enviando email de vale regalo:", emailErr);
+          }
+
+        } else if (metadata.productType === 'printful_merch') {
+          // 3B. Merchandising Print-on-demand
           await prisma.order.create({
             data: {
                userId: metadata.userId,
@@ -338,7 +495,7 @@ export async function POST(request) {
                status: 'completed'
             }
           });
-          console.log(`✅ Orden creada para producto ${metadata.productName}`);
+          console.log(`✅ Orden creada para merch ${metadata.productName}`);
 
           try {
             const transport = createTransport(process.env.EMAIL_SERVER);
@@ -356,7 +513,7 @@ export async function POST(request) {
               subject: "💰 Nueva Venta en la Tienda",
               text: `Se ha vendido: ${metadata.productName || "Producto"} por ${(session.amount_total / 100).toFixed(2)}€\n\nComprador: ${session.customer_details?.email}\nStripe ID: ${session.id}`
             });
-            console.log("✅ Emails de confirmación enviados");
+            console.log("✅ Emails de confirmación de merch enviados");
           } catch (emailError) {
             console.error("❌ Error enviando emails de confirmación:", emailError);
           }

@@ -76,5 +76,31 @@ export const VIDEO_PILLS = [
     isFree: false,
     ideaClave: "Intentar pasar directamente del juego activo al sueño suele generar resistencia o sobreestimulación en los peques. Para que el cuerpo y la mente de tu bebé alcancen una relajación real, el secreto está en el contraste: primero canalizamos y liberamos la energía acumulada con un juego musical más dinámico o rítmico, para luego contrastar con una canción de calma, suave y en flujo continuo. Es ese contraste el que activa la relajación natural del sistema nervioso.",
     aplicacionPractica: "Antes de meterle en la cama, no intentes forzar la calma de golpe. Empieza jugando con una canción dinámica o un recitado con palmadas suaves y movimiento corporal durante 2 o 3 minutos. Después, haz una pausa en silencio y pasa a una canción lenta, balanceándole suavemente en brazos o acurrucados. Notarás cómo su respiración y su tono muscular bajan de golpe hacia el descanso."
+  },
+  {
+    id: 7,
+    numero: 7,
+    title: "El poder del silencio",
+    categoria: "practica",
+    categoriaLabel: "Consejos Prácticos en Casa",
+    categoriaIcon: "🎯",
+    youtubeId: "CuW0rs1rNvs",
+    youtubeUrl: "https://youtube.com/shorts/CuW0rs1rNvs",
+    isFree: false,
+    ideaClave: "En la música para bebés, el silencio no es 'vacío', es donde ocurre la audiation (la asimilación y comprensión musical interna). Si nunca paramos de cantar, el cerebro del peque solo recibe estímulo continuo; es en la pausa donde procesa y 'escucha' en su mente lo que acaba de oír.",
+    aplicacionPractica: "Cuando cantes o hagas juegos rítmicos, detente de repente y mantén un silencio expectante de 3 a 4 segundos, mirándole a los ojos con el cuerpo abierto. Verás cómo permanece atento, esperando y completando internamente la frase musical."
+  },
+  {
+    id: 8,
+    numero: 8,
+    title: "El poder de los ojos",
+    categoria: "practica",
+    categoriaLabel: "Consejos Prácticos en Casa",
+    categoriaIcon: "🎯",
+    youtubeId: "FzQAVHA-wTc",
+    youtubeUrl: "https://youtube.com/shorts/FzQAVHA-wTc",
+    isFree: false,
+    ideaClave: "El contacto visual en la educación temprana comunica al niño que él es el destinatario de la música. Tu mirada es más potente que cualquier instrumento musical: activa de inmediato su atención, su seguridad afectiva y su capacidad natural de imitación.",
+    aplicacionPractica: "Mírale a los ojos cuando cantes. Cada vez que hagas un juego de manos o una canción en casa, agáchate a su altura y mírale directo a los ojos. Conecta con la mirada y aprenderá e imitará la música muchísimo mejor."
   }
 ];

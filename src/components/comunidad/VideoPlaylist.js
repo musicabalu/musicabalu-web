@@ -6,7 +6,8 @@ import Link from 'next/link';
 
 export default function VideoPlaylist({ pills, hasFullAccess }) {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const defaultPillId = (!hasFullAccess ? pills.find(p => p.isFree)?.id : pills[0]?.id) || pills[0]?.id || 1;
+  const latestPill = pills && pills.length > 0 ? pills[pills.length - 1] : null;
+  const defaultPillId = (!hasFullAccess ? (pills.find(p => p.isFree)?.id || latestPill?.id) : latestPill?.id) || pills[0]?.id || 1;
   const [activeId, setActiveId] = useState(defaultPillId);
   const lastLoggedPillId = useRef(null);
 
@@ -15,8 +16,8 @@ export default function VideoPlaylist({ pills, hasFullAccess }) {
     ? pills 
     : pills.filter(p => p.categoria === selectedCategory);
 
-  // Make sure activePill is valid
-  let activePill = pills.find(p => p.id === activeId) || pills[0];
+  // Make sure activePill is valid (por defecto la última / más reciente)
+  let activePill = pills.find(p => p.id === activeId) || latestPill || pills[0];
 
   // Registrar visualización de la píldora activa cuando está desbloqueada
   useEffect(() => {
@@ -42,9 +43,10 @@ export default function VideoPlaylist({ pills, hasFullAccess }) {
   const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
     const categoryPills = cat === 'all' ? pills : pills.filter(p => p.categoria === cat);
-    const firstOfCategory = (!hasFullAccess ? categoryPills.find(p => p.isFree) : categoryPills[0]) || categoryPills[0];
-    if (firstOfCategory) {
-      setActiveId(firstOfCategory.id);
+    const latestOfCat = categoryPills.length > 0 ? categoryPills[categoryPills.length - 1] : null;
+    const defaultOfCategory = (!hasFullAccess ? (categoryPills.find(p => p.isFree) || latestOfCat) : latestOfCat) || latestOfCat;
+    if (defaultOfCategory) {
+      setActiveId(defaultOfCategory.id);
     }
   };
 

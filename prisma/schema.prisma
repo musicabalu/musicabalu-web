@@ -42,11 +42,13 @@ model User {
   role          String       @default("familia")
   stripeId      String?      @unique
   hasActiveSub  Boolean      @default(false)
+  subExpiresAt  DateTime?
   accounts      Account[]
   activityLogs  ActivityLog[]
   enrollments   Enrollment[]
   orders        Order[]
   sessions      Session[]
+  giftCodesRedeemed GiftCode[]
 }
 
 model Order {
@@ -193,4 +195,18 @@ model AdminNote {
   content   String   @db.Text
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model GiftCode {
+  id               String    @id @default(cuid())
+  code             String    @unique
+  orderId          String?
+  buyerEmail       String?
+  recipientEmail   String?
+  status           String    @default("pending") // pending, redeemed
+  durationMonths   Int       @default(12)
+  createdAt        DateTime  @default(now())
+  redeemedAt       DateTime?
+  redeemedByUserId String?
+  redeemedByUser   User?     @relation(fields: [redeemedByUserId], references: [id])
 }

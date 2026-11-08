@@ -15,8 +15,9 @@ export default function ProductCard({ producto }) {
 
   const isMensual = producto.id === 'sub_mensual';
   const isAnual = producto.id === 'sub_anual';
+  const isGift = producto.id === 'regala_musicabalu';
   const isSub = producto.isSubscription;
-  const alreadySubscribed = producto.hasFullAccess && isSub;
+  const alreadySubscribed = producto.hasFullAccess && isSub && !isGift;
 
   const targetUrl = alreadySubscribed ? "/comunidad/canciones" : `/tienda/${producto.id}`;
 
@@ -34,9 +35,11 @@ export default function ProductCard({ producto }) {
           transform: hovered ? "translateY(-6px)" : "translateY(0)",
           border: alreadySubscribed 
             ? "2px solid #86efac" 
-            : isMensual 
-              ? "2px solid var(--color-cyan, #00B2E3)" 
-              : "1.5px solid var(--color-border, #e2e8f0)",
+            : isGift
+              ? "2px solid var(--color-pink, #F4436C)"
+              : isMensual 
+                ? "2px solid var(--color-cyan, #00B2E3)" 
+                : "1.5px solid var(--color-border, #e2e8f0)",
           boxShadow: hovered
             ? "0 16px 40px rgba(0,0,0,0.1)"
             : "0 8px 24px rgba(0,0,0,0.04)",
@@ -69,6 +72,17 @@ export default function ProductCard({ producto }) {
             }}>
               🎉 Oferta Fundadores
             </span>
+          ) : isGift ? (
+            <span style={{
+              padding: "6px 14px",
+              borderRadius: "20px",
+              backgroundColor: "#fdf2f8",
+              color: "#be185d",
+              fontSize: "0.85rem",
+              fontWeight: "bold",
+            }}>
+              🎁 Regalo · 1 Año Completo
+            </span>
           ) : isAnual ? (
             <span style={{
               padding: "6px 14px",
@@ -93,16 +107,22 @@ export default function ProductCard({ producto }) {
             </span>
           )}
 
-          <span style={{ fontSize: "1.8rem" }}>
-            {producto.emoji}
-          </span>
+          {hasImages ? (
+            <div style={{ position: "relative", width: "42px", height: "42px", flexShrink: 0 }}>
+              <Image src={mainImage} alt={producto.name} fill style={{ objectFit: "contain" }} sizes="42px" />
+            </div>
+          ) : (
+            <span style={{ fontSize: "1.8rem" }}>
+              {producto.emoji}
+            </span>
+          )}
         </div>
 
         <h2 style={{ fontSize: "1.5rem", color: "var(--color-dark)", marginBottom: "8px", fontFamily: "var(--font-heading)", fontWeight: "800" }}>
           {producto.name}
         </h2>
 
-        {isSub && (
+        {(isSub || isGift) && (
           <div style={{
             display: "inline-flex",
             alignItems: "center",
@@ -154,6 +174,16 @@ export default function ProductCard({ producto }) {
                 Precio congelado de por vida
               </span>
             </div>
+          ) : isGift ? (
+            <div>
+              <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
+                <span style={{ fontSize: "2.3rem", fontWeight: "bold", color: "#db2777" }}>39,00 €</span>
+                <span style={{ fontSize: "1rem", color: "var(--color-text-light)" }}>/ pago único</span>
+              </div>
+              <span style={{ display: "block", fontSize: "0.85rem", color: "#db2777", fontWeight: "bold", marginTop: "4px" }}>
+                1 año completo · Sin renovaciones
+              </span>
+            </div>
           ) : isAnual ? (
             <div>
               <div style={{ display: "flex", alignItems: "baseline", gap: "8px" }}>
@@ -175,6 +205,7 @@ export default function ProductCard({ producto }) {
             <span
               className={`btn ${
                 alreadySubscribed ? "btn-outline" :
+                isGift ? "btn-primary" :
                 isMensual ? "btn-cyan" : "btn-dark"
               }`}
               style={{
@@ -184,10 +215,13 @@ export default function ProductCard({ producto }) {
                 textAlign: "center",
                 fontWeight: "bold",
                 borderRadius: "30px",
-                fontSize: "1rem"
+                fontSize: "1rem",
+                background: isGift ? "linear-gradient(135deg, #ec4899 0%, #db2777 100%)" : undefined,
+                color: isGift ? "#fff" : undefined,
+                border: isGift ? "none" : undefined,
               }}
             >
-              {alreadySubscribed ? "Ir a la Biblioteca 🎵" : "Ver detalles y suscribirme →"}
+              {alreadySubscribed ? "Ir a la Biblioteca 🎵" : isGift ? "Regalar Suscripción 🎁 →" : "Ver detalles y suscribirme →"}
             </span>
           </div>
         </div>

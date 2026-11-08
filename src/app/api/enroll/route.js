@@ -18,13 +18,15 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Faltan campos obligatorios o no has aceptado las condiciones.' }, { status: 400 });
     }
 
+    const normalizedEmail = email.toLowerCase().trim();
+
     // 1. Crear o buscar usuario en Prisma
-    let user = await prisma.user.findUnique({ where: { email } });
+    let user = await prisma.user.findUnique({ where: { email: normalizedEmail } });
     
     if (!user) {
       user = await prisma.user.create({
         data: {
-          email,
+          email: normalizedEmail,
           name: parentName,
           role: 'familia'
         }
@@ -55,7 +57,7 @@ export async function POST(request) {
         childBirthDate,
         parentName,
         phone,
-        email,
+        email: normalizedEmail,
         paymentMethod,
         paymentFrequency,
         groupId,

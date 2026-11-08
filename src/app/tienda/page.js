@@ -127,9 +127,9 @@ export default async function Tienda() {
 
         <div style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
-          gap: "30px",
-          maxWidth: "850px",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "24px",
+          maxWidth: "1100px",
           margin: "0 auto"
         }}>
           {productos.map((producto) => (
@@ -145,7 +145,7 @@ export default async function Tienda() {
           borderRadius: "20px",
           padding: "26px 30px",
           textAlign: "center",
-          maxWidth: "850px",
+          maxWidth: "1100px",
           margin: "50px auto 0"
         }}>
           <h3 style={{ fontSize: "1.15rem", color: "var(--color-dark)", fontWeight: "700", marginBottom: "8px", fontFamily: "var(--font-heading)" }}>

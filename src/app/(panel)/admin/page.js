@@ -164,10 +164,10 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Generador de estado de WhatsApp</p>
           </div>
         </Link>
-        <Link href="/admin/cartel-empi" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📄 Cartel A4 EMPI</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Imprimir cartel con código QR</p>
+        <Link href="/admin/aterrizaje-empi" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #FED65E' }}>
+            <h3 className={styles.statTitle}>🚀 Aterrizaje en EMPI</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Estrategia, Guía de Aula y Cartel A4</p>
           </div>
         </Link>
         <Link href="/admin/precios" style={{ textDecoration: 'none', color: 'inherit' }}>
@@ -204,12 +204,6 @@ export default async function AdminDashboard() {
           <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #805ad5' }}>
             <h3 className={styles.statTitle}>🎓 Programas Formativos</h3>
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Catálogo (Educadores, CSM Murcia) y hoja de ruta</p>
-          </div>
-        </Link>
-        <Link href="/admin/guia-aula" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid var(--color-pink)' }}>
-            <h3 className={styles.statTitle}>🏫 Guía Rutinas de Aula</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Borrador HTML para escuelas (0-3 años)</p>
           </div>
         </Link>
         <Link href="/admin/packaging" style={{ textDecoration: 'none', color: 'inherit' }}>
