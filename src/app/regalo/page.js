@@ -84,7 +84,7 @@ export default function Regalo() {
               borderRadius: "20px",
               marginBottom: "16px"
             }}>
-              🎁 Regalo para tu peque (0 a 3 años)
+              🎁 Regalo para tu peque (0 a 6 años)
             </span>
 
             <h1 className={styles.title} style={{ fontSize: "1.85rem", color: "var(--color-dark)" }}>

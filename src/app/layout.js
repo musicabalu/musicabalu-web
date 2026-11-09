@@ -15,12 +15,12 @@ const quicksand = Quicksand({
 });
 
 export const metadata = {
-  title: "Musicabalú | Educación Musical para la Primera Infancia",
-  description: "Clases de música para bebés de 0 a 3 años en Murcia basadas en la Teoría del Aprendizaje Musical (MLT) de E. Gordon. Más de 9 años desarrollando el potencial musical y cognitivo de los más pequeños.",
+  title: "Musicabalú | Educación Musical para la Primera Infancia (0 a 6 años)",
+  description: "Educación y estimulación musical para la primera infancia (0 a 6 años) basada en la Teoría del Aprendizaje Musical (MLT) de E. Gordon. Clases presenciales en Murcia y recursos para familias y educadores.",
   metadataBase: new URL("https://musicabalu.com"),
   openGraph: {
-    title: "Musicabalú | Música para Bebés en Murcia",
-    description: "Clases de música para bebés de 0 a 3 años en Murcia. Método Gordon (MLT). Desde 2017 conectando familias a través de la música.",
+    title: "Musicabalú | Música para la Primera Infancia (0 a 6 años)",
+    description: "Educación musical temprana de 0 a 6 años. Método Gordon (MLT). Clases presenciales en Murcia y recursos online para toda la familia.",
     url: "https://musicabalu.com",
     siteName: "Musicabalú",
     images: [
@@ -28,7 +28,7 @@ export const metadata = {
         url: "https://musicabalu.com/og-logo.png",
         width: 418,
         height: 418,
-        alt: "Musicabalú — Clases de música para bebés en Murcia",
+        alt: "Musicabalú — Música para la Primera Infancia (0 a 6 años)",
       },
     ],
     locale: "es_ES",
@@ -36,8 +36,8 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Musicabalú | Música para Bebés en Murcia",
-    description: "Clases de música para bebés de 0 a 3 años en Murcia. Método Gordon (MLT).",
+    title: "Musicabalú | Música para la Primera Infancia (0 a 6 años)",
+    description: "Educación musical temprana de 0 a 6 años basada en la Teoría del Aprendizaje Musical (MLT) de E. Gordon.",
     images: ["/og-logo.png"],
   },
   robots: {

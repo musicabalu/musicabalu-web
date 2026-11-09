@@ -21,7 +21,7 @@ export default function Home() {
                 <h2 className={styles.sectionTitle}>No sólo son canciones. <br/>Es conexión.</h2>
                 <p>
                   <strong>Desde 2017 llevamos música a familias con peques en Murcia aplicando la MLT.</strong><br/><br/>
-                  Durante los primeros 3 años de vida, el cerebro de tu bebé absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
+                  Durante los primeros años de vida (de 0 a 6 años), el cerebro de tu peque absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
                 </p>
                 <ul className={styles.methodList}>
                   <li>
@@ -121,7 +121,7 @@ export default function Home() {
               <h2 className={styles.sectionTitle} style={{ textAlign: "center" }}>No sólo son canciones. <br/>Es conexión.</h2>
               <p style={{ fontSize: "1.1rem", lineHeight: "1.6", color: "var(--color-text-light)", marginBottom: "30px", textAlign: "center" }}>
                 <strong>Desde 2017 llevamos música a familias con peques en Murcia aplicando la MLT.</strong><br/><br/>
-                Durante los primeros 3 años de vida, el cerebro de tu bebé absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
+                Durante los primeros años de vida (de 0 a 6 años), el cerebro de tu peque absorbe la música igual que el lenguaje materno. En Musicabalú no usamos "música para entretener" (aunque nuestras sesiones sean tan divertidas)
               </p>
               <ul className={styles.methodList}>
                 <li>

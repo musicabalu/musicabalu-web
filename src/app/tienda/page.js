@@ -107,7 +107,7 @@ export default async function Tienda() {
             Únete a la Comunidad Familiar
           </h1>
           <p style={{ color: "var(--color-text-light)", maxWidth: "620px", margin: "0 auto 25px", fontSize: "1.1rem", lineHeight: "1.6" }}>
-            Todas nuestras canciones originales, recitados pedagógicos y píldoras en vídeo para acompañar el desarrollo musical de tu bebé desde casa.
+            Todas nuestras canciones originales, recitados pedagógicos y píldoras en vídeo para acompañar el desarrollo musical de tu peque (0 a 6 años) desde casa.
           </p>
 
           <div style={{ 
