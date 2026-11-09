@@ -212,6 +212,12 @@ export default async function AdminDashboard() {
             <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Guía de montaje, fotos, papel de seda y pegatinas</p>
           </div>
         </Link>
+        <Link href="/admin/la-ranita-quiere-cantar" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #10B981' }}>
+            <h3 className={styles.statTitle}>🐸 La ranita quiere cantar</h3>
+            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Libro sonoro: 8 modos, 4 métricas y simulador de páginas</p>
+          </div>
+        </Link>
       </div>
 
       {/* Desglose de Grupos */}
