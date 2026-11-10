@@ -1,18 +1,5 @@
-import { Montserrat, Quicksand } from "next/font/google";
 import "./globals.css";
 import Providers from "@/components/Providers";
-
-const montserrat = Montserrat({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-body",
-});
-
-const quicksand = Quicksand({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-heading",
-});
 
 export const metadata = {
   title: "Musicabalú | Educación Musical para la Primera Infancia (0 a 6 años)",
@@ -51,7 +38,15 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={`${montserrat.variable} ${quicksand.variable}`} suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Quicksand:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body suppressHydrationWarning>
         <Providers>
           {children}
