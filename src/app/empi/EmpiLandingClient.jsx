@@ -184,7 +184,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
               fontFamily: "var(--font-heading)",
             }}
           >
-            Acceso Ilimitado a la Plataforma Familiar
+            Acceso ilimitado a la comunidad MúsicaBalu durante un año
           </h2>
           <p style={{ color: "#475569", fontSize: "1rem", lineHeight: "1.55", margin: "0 0 18px" }}>
             Todas las canciones, recitados rítmicos, juegos y píldoras pedagógicas en vídeo para cantar y disfrutar juntos desde cualquier dispositivo.
@@ -294,7 +294,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
             fontFamily: "var(--font-heading)",
           }}
         >
-          ¿Por qué llevar Musicabalú al hogar?
+          ¿Por qué llevar MúsicaBalu al hogar?
         </h2>
 
         <div
@@ -387,63 +387,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
         </div>
       </div>
 
-      {/* 5. Los 5 Momentos del Día Escolar */}
-      <div
-        style={{
-          backgroundColor: "#f8fafc",
-          border: "1.5px solid #e2e8f0",
-          borderRadius: "24px",
-          padding: "36px",
-          marginBottom: "56px",
-        }}
-      >
-        <div style={{ textAlign: "center", marginBottom: "26px" }}>
-          <span style={{ fontSize: "2.2rem" }}>🏫</span>
-          <h2
-            style={{
-              fontSize: "1.45rem",
-              fontWeight: "800",
-              color: "#0f172a",
-              margin: "6px 0",
-              fontFamily: "var(--font-heading)",
-            }}
-          >
-            Música viva que acompaña su jornada en EMPI
-          </h2>
-          <p style={{ color: "#64748b", fontSize: "0.95rem", margin: 0 }}>
-            Canciones y juegos que también puedes cantar con tu peque en casa:
-          </p>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px" }}>
-          <div style={{ backgroundColor: "#ffffff", padding: "16px 20px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-            <strong style={{ color: "#0284c7", display: "block", marginBottom: "4px" }}>☀️ 1. Llegada y Asamblea</strong>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569" }}>Canciones de saludo y bienvenida para empezar la mañana con seguridad y afecto.</p>
-          </div>
-
-          <div style={{ backgroundColor: "#ffffff", padding: "16px 20px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-            <strong style={{ color: "#e11d48", display: "block", marginBottom: "4px" }}>🧣 2. Psicomotricidad y Juego</strong>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569" }}>Juegos de regazo, balanceos y bailes con pañuelos para activar el cuerpo.</p>
-          </div>
-
-          <div style={{ backgroundColor: "#ffffff", padding: "16px 20px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-            <strong style={{ color: "#d97706", display: "block", marginBottom: "4px" }}>🧺 3. Recogida y Rutinas</strong>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569" }}>Recitados que transforman la hora de ordenar y lavarse las manos en un juego.</p>
-          </div>
-
-          <div style={{ backgroundColor: "#ffffff", padding: "16px 20px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-            <strong style={{ color: "#65a30d", display: "block", marginBottom: "4px" }}>🌿 4. Vuelta a la Calma</strong>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569" }}>Masajes y melodías lentas para bajar pulsaciones tras momentos de intensidad.</p>
-          </div>
-
-          <div style={{ backgroundColor: "#ffffff", padding: "16px 20px", borderRadius: "16px", border: "1px solid #e2e8f0" }}>
-            <strong style={{ color: "#4338ca", display: "block", marginBottom: "4px" }}>🌙 5. Transición al Sueño</strong>
-            <p style={{ margin: 0, fontSize: "0.85rem", color: "#475569" }}>Nanas modales y susurros que inducen un descanso reparador y profundo.</p>
-          </div>
-        </div>
-      </div>
-
-      {/* 6. Preguntas Frecuentes */}
+      {/* 5. Preguntas Frecuentes */}
       <div style={{ maxWidth: "800px", margin: "0 auto 50px" }}>
         <h2
           style={{
