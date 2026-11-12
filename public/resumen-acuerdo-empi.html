@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Resumen del Acuerdo: Entorno Musicabalú en el Aula · EMPI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Quicksand:wght@600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #f1f5f9;
+      color: #2c3333;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .no-print-bar {
+      width: 210mm;
+      max-width: 100%;
+      background: #1e293b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .btn-print {
+      background: #f4436c;
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+
+    /* Contenedor A4 */
+    .document-page {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      padding: 16mm 18mm 14mm;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-radius: 6px;
+      margin-bottom: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Cabecera */
+    .header-doc {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e2e8f0;
+      margin-bottom: 16px;
+    }
+
+    .logos-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo-musicabalu {
+      height: 40px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-sep {
+      color: #cbd5e1;
+      font-size: 16pt;
+      font-weight: 300;
+    }
+
+    .logo-empi {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .meta-badge {
+      text-align: right;
+    }
+
+    .badge-internal {
+      background: #fee2e2;
+      color: #991b1b;
+      font-size: 8pt;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 20px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+
+    .doc-date {
+      font-size: 8.5pt;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    /* Título principal */
+    .title-block {
+      margin-bottom: 16px;
+    }
+
+    .doc-pretitle {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 9.5pt;
+      font-weight: 800;
+      color: #0284c7;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .doc-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 17pt;
+      font-weight: 800;
+      color: #1e293b;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+
+    .doc-subtitle {
+      font-size: 9.5pt;
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    /* Cajas y Secciones */
+    .section-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 11.5pt;
+      font-weight: 800;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 14px 0 8px;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid #f1f5f9;
+    }
+
+    .section-title .num {
+      background: #f4436c;
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5pt;
+      font-weight: 800;
+    }
+
+    .intro-box {
+      background: #f8fafc;
+      border-left: 4px solid #00b2e3;
+      padding: 10px 14px;
+      border-radius: 0 8px 8px 0;
+      font-size: 9pt;
+      line-height: 1.45;
+      color: #334155;
+      margin-bottom: 12px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card {
+      border: 1.5px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 12px;
+      background: white;
+    }
+
+    .card.highlight-blue {
+      border-color: #bae6fd;
+      background: #f0f9ff;
+    }
+
+    .card.highlight-pink {
+      border-color: #fbcfe8;
+      background: #fdf2f4;
+    }
+
+    .card.highlight-yellow {
+      border-color: #fde68a;
+      background: #fffdf5;
+    }
+
+    .card.highlight-green {
+      border-color: #d9f99d;
+      background: #f7fee7;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    .card-icon {
+      font-size: 13pt;
+    }
+
+    .card-title {
+      font-family: 'Quicksand', sans-serif;
+      font-size: 9.8pt;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .card-text {
+      font-size: 8.3pt;
+      line-height: 1.4;
+      color: #475569;
+    }
+
+    .card-text ul {
+      margin-left: 14px;
+      margin-top: 4px;
+    }
+
+    .card-text li {
+      margin-bottom: 2px;
+    }
+
+    /* Tabla de Hitos */
+    .timeline-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0 14px;
+      font-size: 8.5pt;
+    }
+
+    .timeline-table th {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 700;
+      text-align: left;
+      padding: 6px 10px;
+      border: 1px solid #e2e8f0;
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .timeline-table td {
+      padding: 7px 10px;
+      border: 1px solid #e2e8f0;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .timeline-table tr:nth-child(even) td {
+      background: #fafafa;
+    }
+
+    .tag-date {
+      display: inline-block;
+      font-weight: 700;
+      color: #0284c7;
+      background: #e0f2fe;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 7.8pt;
+      white-space: nowrap;
+    }
+
+    /* Bloque Divulgación */
+    .comms-row {
+      display: flex;
+      gap: 10px;
+      margin: 8px 0;
+    }
+
+    .comm-item {
+      flex: 1;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 8pt;
+      line-height: 1.35;
+    }
+
+    .comm-item strong {
+      display: block;
+      color: #0f172a;
+      font-size: 8.5pt;
+      margin-bottom: 2px;
+    }
+
+    /* Footer firma */
+    .doc-footer {
+      border-top: 1.5px solid #e2e8f0;
+      padding-top: 10px;
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 8pt;
+      color: #64748b;
+    }
+
+    .footer-left strong {
+      color: #1e293b;
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .no-print-bar {
+        display: none;
+      }
+      .document-page {
+        box-shadow: none;
+        border-radius: 0;
+        width: 210mm !important;
+        height: 297mm !important;
+        padding: 14mm 16mm 12mm !important;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="no-print-bar">
+    <div>
+      <strong>Documento de Acuerdo Interno · EMPI × Musicabalú</strong>
+      <span style="font-size: 12px; color: #94a3b8; margin-left: 10px;">Resumen para la Dirección y Equipo Educativo</span>
+    </div>
+    <button class="btn-print" onclick="window.print()">🖨️ Descargar en PDF</button>
+  </div>
+
+  <div class="document-page">
+    <div>
+      <!-- Cabecera Institucional con ambos logos -->
+      <div class="header-doc">
+        <div class="logos-container">
+          <img src="/logo_slogan.png" alt="Musicabalú" class="logo-musicabalu">
+          <span class="logo-sep">✕</span>
+          <img src="/empi-logo-cuadrado-naranja.png" alt="Escuela Infantil EMPI" class="logo-empi">
+        </div>
+        <div class="meta-badge">
+          <span class="badge-internal">Documento Interno de Trabajo</span>
+          <div class="doc-date">Noviembre 2026 · Murcia</div>
+        </div>
+      </div>
+
+      <!-- Título y Encuadre -->
+      <div class="title-block">
+        <div class="doc-pretitle">Alianza de Innovación Pedagógica en la Primera Infancia</div>
+        <h1 class="doc-title">Acuerdo Marco: "Entorno Musicabalú en el Aula"</h1>
+        <p class="doc-subtitle">
+          Acuerdo de colaboración estratégica entre la <strong>Escuela Infantil EMPI</strong> y <strong>Musicabalú</strong> para la implantación pionera de un entorno de estimulación musical viva (0 a 3 años) basado en la Teoría del Aprendizaje Musical (MLT) de Edwin Gordon.
+        </p>
+      </div>
+
+      <!-- Introducción marco -->
+      <div class="intro-box">
+        <strong>Pioneras en innovación musical:</strong> EMPI se convierte en el <em>primer centro educativo</em> en integrar el modelo "Entorno Musicabalú en el aula". Una experiencia pedagógica 100% libre de pantallas que dota al equipo docente de un repertorio modal y rítmico diverso, y tiende un puente de continuidad afectiva entre la escuela y los hogares.
+      </div>
+
+      <!-- 4 Pilares del Acuerdo -->
+      <div class="section-title">
+        <span class="num">1</span> Los 4 Pilares del Acuerdo
+      </div>
+
+      <div class="grid-2">
+        <!-- Pilar 1 -->
+        <div class="card highlight-blue">
+          <div class="card-header">
+            <span class="card-icon">🏫</span>
+            <span class="card-title">Licencia de Centro para el Aula</span>
+          </div>
+          <div class="card-text">
+            <strong>Apertura: Lunes 16 de noviembre.</strong>
+            <ul>
+              <li>Acceso libre e ilimitado para <strong>todas las educadoras de EMPI</strong> a la plataforma digital Musicabalú.</li>
+              <li>Repertorio sonoro para asambleas, rutinas, momentos de juego y calma sin dependencia de pantallas.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pilar 2 -->
+        <div class="card highlight-pink">
+          <div class="card-header">
+            <span class="card-icon">🎁</span>
+            <span class="card-title">Promoción Exclusiva Familias EMPI</span>
+          </div>
+          <div class="card-text">
+            <strong>Apertura: Lunes 16 de noviembre (hasta 31 dic).</strong>
+            <ul>
+              <li>Suscripción anual para familias a <strong>29 €/año</strong> (tarifa habitual: 39 €/año). Menos de 2,45 €/mes.</li>
+              <li>Continuidad casa-escuela: las familias escuchan y juegan con las canciones que su hijo ya reconoce de clase.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pilar 3 -->
+        <div class="card highlight-yellow">
+          <div class="card-header">
+            <span class="card-icon">📋</span>
+            <span class="card-title">Co-creación de la Guía de Aula</span>
+          </div>
+          <div class="card-text">
+            <strong>Desarrollo durante el próximo mes.</strong>
+            <ul>
+              <li>Musicabalú aporta una propuesta base metodológica de aplicación en el aula de 0 a 3 años.</li>
+              <li>Refinado colaborativo con el feedback directo de las educadoras (dinámicas más usadas, necesidades reales).</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Pilar 4 -->
+        <div class="card highlight-green">
+          <div class="card-header">
+            <span class="card-icon">🎓</span>
+            <span class="card-title">Formación Presencial de 8 Horas</span>
+          </div>
+          <div class="card-text">
+            <strong>Jornada teórico-práctica intensiva (MLT Gordon).</strong>
+            <ul>
+              <li>Abierta al público docente general.</li>
+              <li><strong>Plazas 100% gratuitas</strong> para todas las educadoras de EMPI a cambio de la cesión de instalaciones.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Plan de Comunicación y Divulgación -->
+      <div class="section-title">
+        <span class="num">2</span> Plan de Comunicación y Divulgación Compartido
+      </div>
+
+      <div class="comms-row">
+        <div class="comm-item">
+          <strong>📸 Redes Sociales (Instagram)</strong>
+          Publicación y story conjunta con foto de las direcciones anunciando el acuerdo y celebrando que EMPI es el centro pionero.
+        </div>
+        <div class="comm-item">
+          <strong>✉️ Circular a las Familias</strong>
+          Texto institucional facilitado por Musicabalú para que EMPI lo remita por email o app interna con el enlace a la oferta de 29 €.
+        </div>
+        <div class="comm-item">
+          <strong>🖼️ Cartelería A4 con QR</strong>
+          Carteles oficiales con marco corporativo para colocar en peana o tablones de recepción y zona de carritos de EMPI.
+        </div>
+      </div>
+
+      <!-- Calendario -->
+      <div class="section-title">
+        <span class="num">3</span> Calendario y Fechas Clave
+      </div>
+
+      <table class="timeline-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Hito / Fecha</th>
+            <th style="width: 45%;">Acción acordada</th>
+            <th style="width: 30%;">Responsables</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="tag-date">Lunes 16 Nov</span></td>
+            <td>Apertura de la plataforma a las educadoras y activación de la promoción para familias (29 €). Envío de circular y colocación de cartel A4.</td>
+            <td>Musicabalú & EMPI</td>
+          </tr>
+          <tr>
+            <td><span class="tag-date">Nov - Dic 2026</span></td>
+            <td>Uso en aula, recogida de impresiones del equipo docente y redacción definitiva de la Guía de Aula.</td>
+            <td>Educadoras EMPI & Javi Muñoz</td>
+          </tr>
+          <tr>
+            <td><span class="tag-date">31 Dic 2026</span></td>
+            <td>Fin del periodo promocional de suscripción bonificada para familias (29 €).</td>
+            <td>Musicabalú</td>
+          </tr>
+          <tr>
+            <td><span class="tag-date">A coordinar</span></td>
+            <td>Celebración de la Formación Presencial de 8 horas en las instalaciones de EMPI (plazas gratuitas para su equipo).</td>
+            <td>Dirección EMPI & Musicabalú</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pie de Firma e Identificación -->
+    <div class="doc-footer">
+      <div class="footer-left">
+        <strong>Musicabalú</strong> · Javier Muñoz · Dirección Pedagógica · hola@musicabalu.com · 633 715 302
+      </div>
+      <div class="footer-right">
+        Escuela Infantil EMPI · Noviembre 2026
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

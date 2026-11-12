@@ -32,12 +32,20 @@ export default function CartelEmpiPage() {
       {/* Contenedor del Cartel A4 */}
       <div className="cartel-wrapper">
         <div id="cartel-a4-printable" className="cartel-sheet">
-          {/* Cabecera / Co-branding */}
+          {/* Cabecera / Co-branding con ambos logotipos */}
           <div className="cartel-header">
-            <div className="cobranding-badge">
-              <span className="badge-school">ESCUELA INFANTIL EMPI</span>
-              <span className="badge-sep">✕</span>
-              <span className="badge-brand">MUSICABALÚ</span>
+            <div className="logos-row">
+              <img 
+                src="/logo_slogan.png" 
+                alt="Musicabalú" 
+                className="header-logo-musicabalu"
+              />
+              <span className="logos-sep">✕</span>
+              <img 
+                src="/empi-logo-cuadrado-naranja.png" 
+                alt="Escuela Infantil EMPI" 
+                className="header-logo-empi"
+              />
             </div>
             <p className="partnership-text">Alianza pedagógica por el desarrollo musical en la primera infancia</p>
           </div>
@@ -45,10 +53,10 @@ export default function CartelEmpiPage() {
           {/* Gran Titular Gancho */}
           <div className="hero-section">
             <h2 className="hero-title">
-              ¿Qué canciones canta tu peque en la asamblea de <span className="highlight-empi">EMPI</span>?
+              ¿Qué canciones canta tu peque en <span className="highlight-empi">EMPI</span>?
             </h2>
             <p className="hero-subtitle">
-              Lleva la música viva de su aula al salón de casa. Estimulación temprana de 0 a 3 años <strong>100% libre de pantallas</strong>.
+              Lleva la música viva de su aula al salón de casa y <strong>100% libre de pantallas</strong>.
             </p>
           </div>
 
@@ -58,15 +66,15 @@ export default function CartelEmpiPage() {
               <div className="pillar-icon">🎵</div>
               <h3 className="pillar-title">Las canciones de su aula</h3>
               <p className="pillar-text">
-                Melodías ricas en modos y ritmos (MLT de E. Gordon) que tu hijo ya reconoce y disfruta cada mañana con su seño.
+                Melodías ricas en modos y ritmos (MLT de E. Gordon) que tu hijo ya reconoce y disfruta cada mañana en clase.
               </p>
             </div>
 
             <div className="pillar-card pillar-cyan">
-              <div className="pillar-icon">🧸</div>
-              <h3 className="pillar-title">Vínculo, juego y calma</h3>
+              <div className="pillar-icon">💡</div>
+              <h3 className="pillar-title">Píldoras y juegos en familia</h3>
               <p className="pillar-text">
-                Sesiones en audio con juegos de regazo, balanceos y nanas para transformar el despertar, el baño y el sueño.
+                Consejos, juegos e ideas prácticas para introducir la música viva en su día a día: rutinas, calma y juego.
               </p>
             </div>
 
@@ -90,7 +98,7 @@ export default function CartelEmpiPage() {
               <div className="qr-caption">
                 <span className="camera-icon">📷</span>
                 <strong>Apunta con la cámara de tu móvil</strong>
-                <span className="qr-sub">Escucha muestras gratis al instante</span>
+                <span className="qr-sub">Accede a tu ventaja exclusiva</span>
               </div>
             </div>
 
@@ -118,17 +126,7 @@ export default function CartelEmpiPage() {
 
           {/* Pie del Cartel */}
           <div className="cartel-footer">
-            <div className="footer-brand">
-              <img 
-                src="/logo_texto_corazon.png" 
-                alt="Musicabalú" 
-                className="footer-logo"
-              />
-            </div>
-            <div className="footer-info">
-              <p className="footer-web">www.musicabalu.com/tienda</p>
-              <p className="footer-author">Proyecto pedagógico dirigido por Javi Muñoz · Murcia</p>
-            </div>
+            <p className="footer-web-center">musicabalu.com</p>
           </div>
         </div>
       </div>
@@ -212,9 +210,10 @@ export default function CartelEmpiPage() {
           min-height: 297mm;
           height: 297mm;
           background: #ffffff;
+          border: 14px solid #F4436C;
           box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-          border-radius: 6px;
-          padding: 14mm 16mm 12mm;
+          border-radius: 8px;
+          padding: 10mm 14mm 8mm;
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
@@ -230,33 +229,30 @@ export default function CartelEmpiPage() {
           padding-bottom: 3mm;
         }
 
-        .cobranding-badge {
+        .logos-row {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          background: #f8fafc;
-          border: 1.5px solid #cbd5e1;
-          padding: 4px 16px;
-          border-radius: 20px;
+          justify-content: center;
+          gap: 16px;
+          margin-bottom: 2mm;
         }
 
-        .badge-school {
-          font-weight: 800;
-          font-size: 11pt;
-          letter-spacing: 0.5px;
-          color: #0284c7;
+        .header-logo-musicabalu {
+          height: 42px;
+          width: auto;
+          object-fit: contain;
         }
 
-        .badge-sep {
-          color: #94a3b8;
-          font-size: 9pt;
+        .logos-sep {
+          color: #cbd5e1;
+          font-size: 14pt;
+          font-weight: 300;
         }
 
-        .badge-brand {
-          font-weight: 800;
-          font-size: 11pt;
-          letter-spacing: 0.5px;
-          color: #f4436c;
+        .header-logo-empi {
+          height: 46px;
+          width: auto;
+          object-fit: contain;
         }
 
         .partnership-text {
@@ -493,35 +489,20 @@ export default function CartelEmpiPage() {
         /* Pie de página */
         .cartel-footer {
           display: flex;
-          justify-content: space-between;
+          justify-content: center;
           align-items: center;
           border-top: 2px solid #f1f5f9;
           padding-top: 3mm;
-          margin-top: 2mm;
+          margin-top: 1mm;
         }
 
-        .footer-logo {
-          height: 11mm;
-          width: auto;
-          object-fit: contain;
-        }
-
-        .footer-info {
-          text-align: right;
-        }
-
-        .footer-web {
+        .footer-web-center {
           font-family: var(--font-heading), 'Quicksand', sans-serif;
-          font-size: 10pt;
+          font-size: 13pt;
           font-weight: 800;
           color: #f4436c;
           margin: 0;
-        }
-
-        .footer-author {
-          font-size: 7.5pt;
-          color: #64748b;
-          margin: 1px 0 0;
+          letter-spacing: 0.5px;
         }
 
         /* Reglas de impresión A4 exactas */
@@ -559,9 +540,11 @@ export default function CartelEmpiPage() {
             height: 297mm !important;
             min-height: 297mm !important;
             max-height: 297mm !important;
+            border: 14px solid #f4436c !important;
+            box-sizing: border-box !important;
             box-shadow: none !important;
             border-radius: 0 !important;
-            padding: 12mm 15mm 10mm !important;
+            padding: 10mm 14mm 8mm !important;
             page-break-after: avoid !important;
             page-break-inside: avoid !important;
           }
