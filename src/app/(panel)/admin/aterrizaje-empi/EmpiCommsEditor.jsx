@@ -21,7 +21,7 @@ Por ser familia matriculada en EMPI, disponéis de una promoción exclusiva:
 • Periodo de la promoción: Disponible desde el 16 de noviembre hasta el 31 de diciembre.
 
 ¿Cómo acceder?
-Podéis acceder escaneando el código QR del cartel disponible en la entrada de la escuela o directamente en https://musicabalu.com/tienda aplicando el cupón exclusivo: EMPI2026.
+Podéis acceder escaneando el código QR del cartel disponible en la entrada de la escuela o directamente en https://musicabalu.com/empi aplicando el cupón exclusivo: EMPI2026.
 
 Deseamos que disfrutéis muchísimo de estas melodías compartidas en familia tanto como lo hacemos nosotras en clase.
 

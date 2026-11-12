@@ -87,6 +87,7 @@ export async function POST(request) {
     const sessionConfig = {
       payment_method_types: ['card'],
       mode: isSubscription ? 'subscription' : 'payment',
+      allow_promotion_codes: true,
       customer_email: session.user.email,
       line_items: stripeLineItems,
       shipping_address_collection: hasPhysical ? { allowed_countries: ['ES'] } : undefined,

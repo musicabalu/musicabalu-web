@@ -122,6 +122,26 @@ export default function AterrizajeEmpiPage() {
             </h3>
             <div style={{ display: "flex", gap: "10px", alignItems: "center", flexWrap: "wrap" }}>
               <a
+                href="/empi"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                  fontSize: "0.82rem",
+                  fontWeight: "700",
+                  color: "#059669",
+                  backgroundColor: "#d1fae5",
+                  padding: "6px 12px",
+                  borderRadius: "10px",
+                  textDecoration: "none",
+                  border: "1px solid #a7f3d0",
+                }}
+              >
+                🌐 Ver Landing Pública (/empi)
+              </a>
+              <a
                 href="/resumen-acuerdo-empi.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
