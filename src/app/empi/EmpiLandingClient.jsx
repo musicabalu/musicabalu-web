@@ -37,7 +37,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
           gap: "16px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <Image
             src="/logo_texto_corazon.png"
             alt="Musicabalú"
@@ -46,7 +46,6 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
             style={{ objectFit: "contain" }}
             priority
           />
-          <span style={{ fontSize: "1.4rem", color: "#cbd5e1", fontWeight: "300" }}>✕</span>
           <Image
             src="/empi-logo-cuadrado-naranja.png"
             alt="Escuela Infantil EMPI"
@@ -184,7 +183,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
               fontFamily: "var(--font-heading)",
             }}
           >
-            Acceso ilimitado a la comunidad MúsicaBalu durante un año
+            Acceso ilimitado a la comunidad Musicabalú durante un año
           </h2>
           <p style={{ color: "#475569", fontSize: "1rem", lineHeight: "1.55", margin: "0 0 18px" }}>
             Todas las canciones, recitados rítmicos, juegos y píldoras pedagógicas en vídeo para cantar y disfrutar juntos desde cualquier dispositivo.
@@ -294,7 +293,7 @@ export default function EmpiLandingClient({ product, hasFullAccess }) {
             fontFamily: "var(--font-heading)",
           }}
         >
-          ¿Por qué llevar MúsicaBalu al hogar?
+          ¿Por qué llevar Musicabalú al hogar?
         </h2>
 
         <div
