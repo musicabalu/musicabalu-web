@@ -135,15 +135,15 @@ export default function AterrizajeEmpiPage() {
             marginBottom: "16px"
           }}>
             <div style={{ backgroundColor: "#f0f9ff", padding: "14px", borderRadius: "12px", border: "1px solid #bae6fd" }}>
-              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#0284c7", textTransform: "uppercase" }}>Pilar 1 · Desde Lun 16 Nov</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#0284c7", textTransform: "uppercase" }}>Pilar 1 · Desde 17 Nov</span>
               <h4 style={{ margin: "4px 0", color: "#0f172a", fontSize: "0.95rem" }}>Licencia de Centro para el Aula</h4>
               <p style={{ margin: 0, fontSize: "0.83rem", color: "#475569", lineHeight: "1.4" }}>
-                Acceso universal e ilimitado para todas las educadoras de EMPI a la plataforma para usar en sus aulas libremente y sin pantallas.
+                Acceso libre e ilimitado para todas las educadoras de EMPI a la plataforma digital Musicabalú.
               </p>
             </div>
 
             <div style={{ backgroundColor: "#fdf2f4", padding: "14px", borderRadius: "12px", border: "1px solid #fbcfe8" }}>
-              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#e11d48", textTransform: "uppercase" }}>Pilar 2 · 16 Nov al 31 Dic</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#e11d48", textTransform: "uppercase" }}>Pilar 2 · 17 Nov al 31 Dic</span>
               <h4 style={{ margin: "4px 0", color: "#0f172a", fontSize: "0.95rem" }}>Promoción Familias (29 €)</h4>
               <p style={{ margin: 0, fontSize: "0.83rem", color: "#475569", lineHeight: "1.4" }}>
                 Suscripción anual a <strong>29 €</strong> (en vez de 39 €) para familias matriculadas con el cupón <code>EMPI2026</code>.
@@ -151,18 +151,18 @@ export default function AterrizajeEmpiPage() {
             </div>
 
             <div style={{ backgroundColor: "#fffdf5", padding: "14px", borderRadius: "12px", border: "1px solid #fde68a" }}>
-              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#d97706", textTransform: "uppercase" }}>Pilar 3 · Próximas 4 semanas</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#d97706", textTransform: "uppercase" }}>Pilar 3 · Próximas semanas</span>
               <h4 style={{ margin: "4px 0", color: "#0f172a", fontSize: "0.95rem" }}>Co-creación de la Guía de Aula</h4>
               <p style={{ margin: 0, fontSize: "0.83rem", color: "#475569", lineHeight: "1.4" }}>
-                Partimos de la propuesta metodológica de Musicabalú y la refinamos con el feedback y necesidades reales de las maestras de EMPI.
+                Desarrollo colaborativo con el feedback directo de las educadoras: dinámicas más usadas, necesidades reales, etc.
               </p>
             </div>
 
             <div style={{ backgroundColor: "#f7fee7", padding: "14px", borderRadius: "12px", border: "1px solid #d9f99d" }}>
-              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#65a30d", textTransform: "uppercase" }}>Pilar 4 · Presencial</span>
+              <span style={{ fontSize: "0.78rem", fontWeight: "800", color: "#65a30d", textTransform: "uppercase" }}>Pilar 4 · Enero / Febrero</span>
               <h4 style={{ margin: "4px 0", color: "#0f172a", fontSize: "0.95rem" }}>Formación de 8 Horas</h4>
               <p style={{ margin: 0, fontSize: "0.83rem", color: "#475569", lineHeight: "1.4" }}>
-                Jornada teórico-práctica abierta a externos con <strong>plazas 100% gratuitas</strong> para las educadoras de EMPI por ceder sus instalaciones.
+                Formación presencial de 8 horas con plazas gratuitas para las educadoras de EMPI a cambio de la cesión del espacio.
               </p>
             </div>
           </div>
@@ -208,7 +208,7 @@ Sabemos que los niños aprenden por imitación y familiaridad. Para tender un pu
 Por ser familia matriculada en EMPI, disponéis de una promoción exclusiva:
 • Suscripción anual completa a la plataforma Musicabalú: 29 € / año (precio estándar: 39 €/año; menos de 2,45 € al mes).
 • Acceso ilimitado: Todas las canciones, recitados, juegos y píldoras prácticas con ideas para el día a día.
-• Periodo de la promoción: Disponible desde este lunes 16 de noviembre hasta el 31 de diciembre.
+• Periodo de la promoción: Disponible desde el 17 de noviembre hasta el 31 de diciembre.
 
 ¿Cómo acceder?
 Podéis acceder escaneando el código QR del cartel disponible en la entrada de la escuela o directamente en https://musicabalu.com/tienda aplicando el cupón exclusivo: EMPI2026.
@@ -250,7 +250,7 @@ El equipo educativo y de dirección de Escuela Infantil EMPI`}
 Nos hace una ilusión inmensa anunciar que EMPI se convierte en el primer centro educativo en integrar un «Entorno Musicabalú en el aula».
 
 ¿Qué significa esto?
-🏫 A partir de este lunes 16 de noviembre, todas las educadoras de EMPI contarán con acceso libre a nuestra plataforma para llenar sus aulas de música viva: melodías modales, recitados rítmicos, juegos de regazo y momentos de calma basados en la Teoría del Aprendizaje Musical de Edwin Gordon, 100% libres de pantallas.
+🏫 A partir de este 17 de noviembre, todas las educadoras de EMPI contarán con acceso libre a nuestra plataforma para llenar sus aulas de música viva: melodías modales, recitados rítmicos, juegos de regazo y momentos de calma basados en la Teoría del Aprendizaje Musical de Edwin Gordon, 100% libres de pantallas.
 
 📋 Además, durante las próximas semanas trabajaremos mano a mano con su equipo docente para co-crear la Guía de Aula de Musicabalú, adaptando cada recurso al día a día real de los más peques.
 
@@ -289,7 +289,7 @@ Gracias a todo el equipo de @escuelainfantilempi por su confianza, su sensibilid
             whiteSpace: "pre-wrap",
             border: "1px solid #e0f2fe"
           }}>
-{`¡Hola! Tras nuestra reunión de ayer, ya tenemos todo perfectamente preparado para arrancar este lunes 16 de noviembre:
+{`¡Hola! Tras nuestra reunión de ayer, ya tenemos todo perfectamente preparado para arrancar este 17 de noviembre:
 
 1. Os he preparado el documento formal del acuerdo en PDF con los 4 puntos que hablamos (licencia de aula, promoción de familias a 29 €, co-creación de la guía y la formación presencial de 8h).
 2. Tenéis lista la circular para enviársela a vuestras familias con el cupón EMPI2026 y el cartel impreso con código QR para vuestro tablón.
