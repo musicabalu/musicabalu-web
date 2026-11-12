@@ -48,7 +48,7 @@
       font-family: inherit;
     }
 
-    /* Hoja A4 con marco rosa */
+    /* Hoja A4 con marco rosa corporativo */
     .sheet {
       width: 210mm;
       height: 297mm;
@@ -61,55 +61,77 @@
       flex-direction: column;
       justify-content: space-between;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-      border-radius: 8px;
+      border-radius: 4px;
       position: relative;
+      overflow: hidden;
     }
 
-    /* Cabecera Co-branding con logotipos */
+    /* Fondo Paracaídas (foto clases 17 ampliada con transparencia en zona media superior) */
+    .bg-parachute {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56%;
+      background-image: url('/imagenes/clases/foto%20clases%2017.jpg');
+      background-size: 230%;
+      background-position: center 46%;
+      background-repeat: no-repeat;
+      opacity: 0.20;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+      -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+    }
+
+    /* Contenido elevado sobre el fondo */
+    .header, .hero, .pillars, .offer-container, .footer {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Cabecera con logotipos alineados a los extremos */
     .header {
-      text-align: center;
-      border-bottom: 2px dashed #e2e8f0;
-      padding-bottom: 3mm;
+      width: 100%;
+      padding-bottom: 2mm;
     }
 
     .logos-row {
-      display: inline-flex;
+      display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      gap: 16px;
-      margin-bottom: 2mm;
+      width: 100%;
+      margin-bottom: 3mm;
     }
 
     .header-logo-musicabalu {
-      height: 42px;
+      height: 50px;
       width: auto;
       object-fit: contain;
-    }
-
-    .logos-sep {
-      color: #cbd5e1;
-      font-size: 14pt;
-      font-weight: 300;
+      display: block;
     }
 
     .header-logo-empi {
-      height: 46px;
+      height: 54px;
       width: auto;
       object-fit: contain;
+      display: block;
     }
 
     .subtitle-badge {
       font-size: 8.5pt;
-      color: #64748b;
-      margin-top: 2px;
+      color: #475569;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
+      text-align: center;
+      font-weight: 700;
+      margin-top: 1px;
     }
 
     /* Hero */
     .hero {
       text-align: center;
-      margin: 4mm 0 3mm;
+      margin: 3mm 0 2mm;
     }
 
     .hero h1 {
@@ -123,16 +145,16 @@
 
     .hero h1 span {
       color: #f4436c;
-      text-decoration: underline wavy #fed65e;
-      text-underline-offset: 4px;
+      text-decoration: none; /* Sin subrayado */
     }
 
     .hero p {
       font-size: 11pt;
       line-height: 1.4;
-      color: #475569;
+      color: #334155;
       max-width: 90%;
       margin: 0 auto;
+      font-weight: 500;
     }
 
     /* 3 Pilares */
@@ -141,17 +163,30 @@
       grid-template-columns: 1fr 1fr 1fr;
       gap: 3.5mm;
       margin: 3mm 0;
+      width: 100%;
     }
 
     .pillar {
       padding: 3.5mm 3mm;
       border-radius: 10px;
       text-align: center;
+      backdrop-filter: blur(2px);
     }
 
-    .p-pink { background: #fdf2f4; border: 1px solid #fbcfe8; }
-    .p-cyan { background: #f0f9ff; border: 1px solid #bae6fd; }
-    .p-green { background: #f7fee7; border: 1px solid #d9f99d; }
+    .p-pink {
+      background: rgba(253, 242, 244, 0.94);
+      border: 1.5px solid #fbcfe8;
+    }
+    
+    .p-cyan {
+      background: rgba(240, 249, 255, 0.94);
+      border: 1.5px solid #bae6fd;
+    }
+    
+    .p-green {
+      background: rgba(247, 254, 231, 0.94);
+      border: 1.5px solid #d9f99d;
+    }
 
     .p-icon { font-size: 18pt; margin-bottom: 2px; }
 
@@ -180,6 +215,7 @@
       padding: 5mm 6mm;
       box-shadow: 0 4px 15px rgba(0, 178, 227, 0.08);
       margin: 3mm 0;
+      width: 100%;
     }
 
     .qr-side {
@@ -316,6 +352,7 @@
       border-top: 2px solid #f1f5f9;
       padding-top: 3mm;
       margin-top: 1mm;
+      width: 100%;
     }
 
     .footer-web-center {
@@ -363,11 +400,13 @@
   </div>
 
   <div class="sheet">
-    <!-- Cabecera Co-branding con logotipos -->
+    <!-- Fondo Paracaídas (foto clases 17) -->
+    <div class="bg-parachute"></div>
+
+    <!-- Cabecera Co-branding con logotipos alineados a los bordes de los pilares -->
     <div class="header">
       <div class="logos-row">
         <img src="/logo_slogan.png" alt="Musicabalú" class="header-logo-musicabalu">
-        <span class="logos-sep">✕</span>
         <img src="/empi-logo-cuadrado-naranja.png" alt="Escuela Infantil EMPI" class="header-logo-empi">
       </div>
       <p class="subtitle-badge">Alianza pedagógica por el desarrollo musical en la primera infancia</p>

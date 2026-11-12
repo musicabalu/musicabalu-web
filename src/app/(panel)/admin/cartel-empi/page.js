@@ -32,7 +32,10 @@ export default function CartelEmpiPage() {
       {/* Contenedor del Cartel A4 */}
       <div className="cartel-wrapper">
         <div id="cartel-a4-printable" className="cartel-sheet">
-          {/* Cabecera / Co-branding con ambos logotipos */}
+          {/* Fondo Paracaídas (foto clases 17) */}
+          <div className="bg-parachute"></div>
+
+          {/* Cabecera / Co-branding con ambos logotipos alineados a los extremos */}
           <div className="cartel-header">
             <div className="logos-row">
               <img 
@@ -40,7 +43,6 @@ export default function CartelEmpiPage() {
                 alt="Musicabalú" 
                 className="header-logo-musicabalu"
               />
-              <span className="logos-sep">✕</span>
               <img 
                 src="/empi-logo-cuadrado-naranja.png" 
                 alt="Escuela Infantil EMPI" 
@@ -212,7 +214,7 @@ export default function CartelEmpiPage() {
           background: #ffffff;
           border: 14px solid #F4436C;
           box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-          border-radius: 8px;
+          border-radius: 4px;
           padding: 10mm 14mm 8mm;
           box-sizing: border-box;
           display: flex;
@@ -220,53 +222,73 @@ export default function CartelEmpiPage() {
           justify-content: space-between;
           position: relative;
           color: #2c3333;
+          overflow: hidden;
         }
 
-        /* Cabecera */
+        .bg-parachute {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 56%;
+          background-image: url('/imagenes/clases/foto%20clases%2017.jpg');
+          background-size: 230%;
+          background-position: center 46%;
+          background-repeat: no-repeat;
+          opacity: 0.20;
+          pointer-events: none;
+          z-index: 0;
+          mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+          -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 55%, rgba(0,0,0,0) 100%);
+        }
+
+        .cartel-header, .hero-section, .pillars-grid, .cta-container, .cartel-footer {
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Cabecera con logotipos en extremos */
         .cartel-header {
+          width: 100%;
           text-align: center;
-          border-bottom: 2px dashed #e2e8f0;
-          padding-bottom: 3mm;
+          padding-bottom: 2mm;
         }
 
         .logos-row {
-          display: inline-flex;
+          display: flex;
+          justify-content: space-between;
           align-items: center;
-          justify-content: center;
-          gap: 16px;
-          margin-bottom: 2mm;
+          width: 100%;
+          margin-bottom: 3mm;
         }
 
         .header-logo-musicabalu {
-          height: 42px;
+          height: 50px;
           width: auto;
           object-fit: contain;
-        }
-
-        .logos-sep {
-          color: #cbd5e1;
-          font-size: 14pt;
-          font-weight: 300;
+          display: block;
         }
 
         .header-logo-empi {
-          height: 46px;
+          height: 54px;
           width: auto;
           object-fit: contain;
+          display: block;
         }
 
         .partnership-text {
           font-size: 8.5pt;
-          color: #64748b;
-          margin: 4px 0 0;
+          color: #475569;
+          margin: 1px 0 0;
           text-transform: uppercase;
-          letter-spacing: 0.5px;
+          letter-spacing: 0.6px;
+          font-weight: 700;
         }
 
         /* Hero */
         .hero-section {
           text-align: center;
-          margin: 4mm 0 3mm;
+          margin: 3mm 0 2mm;
         }
 
         .hero-title {
@@ -275,13 +297,12 @@ export default function CartelEmpiPage() {
           font-weight: 800;
           line-height: 1.2;
           color: #1e293b;
-          margin: 0 0 6px 0;
+          margin: 0 0 5px 0;
         }
 
         .highlight-empi {
           color: #f4436c;
-          text-decoration: underline wavy #fed65e;
-          text-underline-offset: 4px;
+          text-decoration: none;
         }
 
         .hero-subtitle {
