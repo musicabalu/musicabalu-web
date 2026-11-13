@@ -101,123 +101,186 @@ export default async function AdminDashboard() {
         
       </div>
       
-      {/* Herramientas de Gestión */}
-      <h2 className={styles.sectionTitle} style={{ marginTop: '2rem' }}>Herramientas de Gestión</h2>
-      <div className={styles.statsGrid} style={{ marginBottom: '2rem' }}>
-        <Link href="/admin/embudo" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #F4436C' }}>
-            <h3 className={styles.statTitle}>⚡ Embudo de Ventas (5 Emails)</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Automatización y seguimiento de leads</p>
-          </div>
-        </Link>
-        <Link href="/admin/suscriptores" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #805AD5' }}>
-            <h3 className={styles.statTitle}>⭐ Suscriptores Comunidad</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Planes anuales y mensuales activos</p>
-          </div>
-        </Link>
-        <Link href="/admin/comunicaciones" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid var(--color-cyan)' }}>
-            <h3 className={styles.statTitle}>📧 Correo de los Viernes</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Enviar novedades a la Comunidad</p>
-          </div>
-        </Link>
-        <Link href="/admin/lista-espera" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>⏳ Lista de Espera</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Familias pendientes de plaza</p>
-          </div>
-        </Link>
-        <Link href="/admin/actividad" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📋 Registro Actividad</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Lista diaria de acciones</p>
-          </div>
-        </Link>
-        <Link href="/admin/analiticas" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📊 Analíticas (Gráficas)</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Estadísticas de uso mensual</p>
-          </div>
-        </Link>
-        <Link href="/admin/cronograma" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📅 Cronograma</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Planificación de tareas</p>
-          </div>
-        </Link>
-        <Link href="/admin/estrategia" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📈 Estrategia</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Plan de negocio a largo plazo</p>
-          </div>
-        </Link>
-        <Link href="/admin/auditoria" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🧹 Auditoría, mantenimiento y backups</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Mantenimiento del sistema</p>
-          </div>
-        </Link>
-        <Link href="/admin/cartel" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🖼️ Cartel Plazas</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Generador de estado de WhatsApp</p>
-          </div>
-        </Link>
-        <Link href="/admin/aterrizaje-empi" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #FED65E' }}>
-            <h3 className={styles.statTitle}>🚀 Aterrizaje en EMPI</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Estrategia, Guía de Aula y Cartel A4</p>
-          </div>
-        </Link>
-        <Link href="/admin/precios" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>💶 Precios y Cuotas</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Chuletario para cobrar en Stripe</p>
-          </div>
-        </Link>
-        <Link href="/admin/fiscalidad" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #D97706' }}>
-            <h3 className={styles.statTitle}>🧾 Fiscalidad e IVA</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Guía de cobros 4T e informe para asesoría</p>
-          </div>
-        </Link>
-        <Link href="/admin/talleres" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🧸 Talleres</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Grupos en marcha y gestión de talleres</p>
-          </div>
-        </Link>
-        <Link href="/admin/guiones" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>🎬 Píldoras y Guiones</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Gestor de grabaciones de vídeo</p>
-          </div>
-        </Link>
-        <Link href="/admin/proyectos" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
-            <h3 className={styles.statTitle}>📓 Lab de Proyectos</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Cuaderno de bitácora centralizado</p>
-          </div>
-        </Link>
-        <Link href="/admin/formaciones" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #805ad5' }}>
-            <h3 className={styles.statTitle}>🎓 Programas Formativos</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Catálogo (Educadores, CSM Murcia) y hoja de ruta</p>
-          </div>
-        </Link>
-        <Link href="/admin/packaging" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #00B2E3' }}>
-            <h3 className={styles.statTitle}>🎁 Paquete Regalo & Packaging</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Guía de montaje, fotos, papel de seda y pegatinas</p>
-          </div>
-        </Link>
-        <Link href="/admin/la-ranita-quiere-cantar" style={{ textDecoration: 'none', color: 'inherit' }}>
-          <div className={styles.statCard} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: '2px solid #10B981' }}>
-            <h3 className={styles.statTitle}>🐸 La ranita quiere cantar</h3>
-            <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>Libro sonoro: 8 modos, 4 métricas y simulador de páginas</p>
-          </div>
-        </Link>
+      {/* Herramientas de Gestión en Orden Alfabético */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2.5rem', marginBottom: '1rem', flexWrap: 'wrap', gap: '10px' }}>
+        <h2 className={styles.sectionTitle} style={{ margin: 0 }}>Herramientas de Gestión</h2>
+        <span style={{ fontSize: '0.85rem', color: '#64748b', fontWeight: '600' }}>
+          Ordenadas alfabéticamente (A → Z)
+        </span>
+      </div>
+      <div className={styles.statsGrid} style={{ marginBottom: '2.5rem' }}>
+        {[
+          {
+            title: "Analíticas (Gráficas)",
+            href: "/admin/analiticas",
+            icon: "📊",
+            desc: "Estadísticas de uso mensual y gráficas",
+            border: null,
+          },
+          {
+            title: "Aterrizaje en EMPI",
+            href: "/admin/aterrizaje-empi",
+            icon: "🚀",
+            desc: "Estrategia, Guía de Aula y Cartel A4",
+            border: "2px solid #FED65E",
+          },
+          {
+            title: "Auditoría, mantenimiento y backups",
+            href: "/admin/auditoria",
+            icon: "🧹",
+            desc: "Mantenimiento y estado del sistema",
+            border: null,
+          },
+          {
+            title: "Cartel Plazas WhatsApp",
+            href: "/admin/cartel",
+            icon: "🖼️",
+            desc: "Generador de carteles de WhatsApp",
+            border: null,
+          },
+          {
+            title: "Correo de los Viernes",
+            href: "/admin/comunicaciones",
+            icon: "📧",
+            desc: "Enviar novedades semanales a la Comunidad",
+            border: "2px solid var(--color-cyan, #00B2E3)",
+          },
+          {
+            title: "Cronograma",
+            href: "/admin/cronograma",
+            icon: "📅",
+            desc: "Planificación y seguimiento de tareas",
+            border: null,
+          },
+          {
+            title: "Embudo de Ventas (5 Emails)",
+            href: "/admin/embudo",
+            icon: "⚡",
+            desc: "Automatización y seguimiento de leads",
+            border: "2px solid #F4436C",
+          },
+          {
+            title: "Estrategia",
+            href: "/admin/estrategia",
+            icon: "📈",
+            desc: "Plan de negocio y visión a largo plazo",
+            border: null,
+          },
+          {
+            title: "Fiscalidad e IVA",
+            href: "/admin/fiscalidad",
+            icon: "🧾",
+            desc: "Guía de cobros 4T e informe para asesoría",
+            border: "2px solid #D97706",
+          },
+          {
+            title: "Formaciones (Programas)",
+            href: "/admin/formaciones",
+            icon: "🎓",
+            desc: "Catálogo (Educadores, CSM Murcia) y ruta",
+            border: "2px solid #805ad5",
+          },
+          {
+            title: "Guía de Rutinas de Aula",
+            href: "/admin/guia-aula",
+            icon: "🏫",
+            desc: "Repertorio de aula por momentos del día",
+            border: "2px solid #0284c7",
+          },
+          {
+            title: "Guiones y Píldoras",
+            href: "/admin/guiones",
+            icon: "🎬",
+            desc: "Gestor de grabaciones de vídeo y guiones",
+            border: null,
+          },
+          {
+            title: "Inscripciones y Alumnos",
+            href: "/admin/inscripciones",
+            icon: "👥",
+            desc: "Listado general de alumnos y grupos",
+            border: null,
+          },
+          {
+            title: "La ranita quiere cantar",
+            href: "/admin/la-ranita-quiere-cantar",
+            icon: "🐸",
+            desc: "Libro sonoro: 8 modos y 4 métricas",
+            border: "2px solid #10B981",
+          },
+          {
+            title: "Lab de Proyectos",
+            href: "/admin/proyectos",
+            icon: "📓",
+            desc: "Cuaderno de bitácora centralizado",
+            border: null,
+          },
+          {
+            title: "Lista de Espera",
+            href: "/admin/lista-espera",
+            icon: "⏳",
+            desc: "Familias pendientes de plaza",
+            border: null,
+          },
+          {
+            title: "Paquete Regalo & Packaging",
+            href: "/admin/packaging",
+            icon: "🎁",
+            desc: "Guía de montaje, fotos, seda y pegatinas",
+            border: "2px solid #00B2E3",
+          },
+          {
+            title: "Precios y Cuotas",
+            href: "/admin/precios",
+            icon: "💶",
+            desc: "Chuletario para cobrar en Stripe",
+            border: null,
+          },
+          {
+            title: "Registro de Actividad",
+            href: "/admin/actividad",
+            icon: "📋",
+            desc: "Lista diaria de acciones en la web",
+            border: null,
+          },
+          {
+            title: "Suscriptores Comunidad",
+            href: "/admin/suscriptores",
+            icon: "⭐",
+            desc: "Planes anuales y mensuales activos",
+            border: "2px solid #805AD5",
+          },
+          {
+            title: "Talleres",
+            href: "/admin/talleres",
+            icon: "🧸",
+            desc: "Grupos en marcha y gestión de talleres",
+            border: null,
+          },
+          {
+            title: "Ventas de la Tienda",
+            href: "/admin/ventas",
+            icon: "🛍️",
+            desc: "Pedidos completados e historial de ventas",
+            border: null,
+          },
+        ]
+          .sort((a, b) => a.title.localeCompare(b.title, 'es', { sensitivity: 'base' }))
+          .map((tool) => (
+            <Link key={tool.href} href={tool.href} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <div
+                className={styles.statCard}
+                style={{
+                  cursor: 'pointer',
+                  transition: 'transform 0.2s',
+                  border: tool.border || undefined,
+                }}
+              >
+                <h3 className={styles.statTitle}>{tool.icon} {tool.title}</h3>
+                <p className={styles.statDetail} style={{ marginTop: '0.5rem' }}>{tool.desc}</p>
+              </div>
+            </Link>
+          ))}
       </div>
 
       {/* Desglose de Grupos */}
