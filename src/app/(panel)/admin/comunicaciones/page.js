@@ -5,18 +5,24 @@ import Link from "next/link";
 
 const DEFAULT_FRIDAY_TEMPLATE = `¡Hola familia!
 
-Ya tenéis disponible en la plataforma el nuevo contenido de este viernes para compartir y disfrutar con vuestros peques durante el fin de semana:
+Ya tenéis disponible en la plataforma el nuevo contenido de este viernes para compartir, jugar y disfrutar con vuestros peques durante el fin de semana:
 
-🎵 Nueva Canción: "Danza lidia"
-Una preciosa melodía en modo lidio (con ese carácter mágico y flotante que tanto despierta la curiosidad de los niños) para cantar, balancearos y jugar en el salón.
+🎵 NUEVA CANCIÓN: "Soy un elefante" (Modo eólico)
+Una melodía con carácter solemne y misterioso, perfecta para explorar el peso corporal y la variedad modal en casa.
+💡 Idea para jugar en casa: Convertíos en una manada de elefantes por el salón; dad pisadas pesadas y firmes sintiendo el pulso en el suelo, y balancead los brazos como trompas lentas.
 👉 Escúchala aquí: https://musicabalu.com/comunidad/canciones
 
-🎬 2 Nuevas Píldoras en "Consejos prácticos en casa":
-1️⃣ "El poder del silencio": Descubre por qué el silencio no es "vacío", sino el momento exacto donde ocurre la audiation (el pensamiento musical interno).
-2️⃣ "El poder de los ojos": Por qué tu mirada es más potente que cualquier instrumento musical y cómo el contacto visual activa la atención y la imitación de tu peque.
-👉 Míralas aquí: https://musicabalu.com/comunidad/pildoras
+🗣️ DOS NUEVOS RECITADOS RÍTMICOS:
+1️⃣ "La esponja" (Métrica triple)
+Un ritmo continuo, fluido y ondulante que invita a la relajación y al movimiento circular.
+💡 Idea para jugar en casa: Perfecto para la hora del baño o el masaje. Acompaña el recitado deslizando la esponja o tus manos suavemente por sus brazos y espalda al compás.
 
-¡Que paséis un fin de semana lleno de miradas, silencios activos y mucha música viva! 🤗❤️
+2️⃣ "Marcha" (Métrica doble)
+Un pulso binario claro, lleno de energía y paso firme para activar el cuerpo.
+💡 Idea para jugar en casa: Marchad juntos por el pasillo marcando el paso con los pies, o haced percusión suave sobre vuestras piernas.
+👉 Escúchalos aquí: https://musicabalu.com/comunidad/recitados
+
+¡Que paséis un fin de semana lleno de música viva y juego en familia! 🤗❤️
 
 Un abrazo enorme,
 
@@ -27,7 +33,7 @@ export default function AdminComunicacionesPage() {
   const [loadingLists, setLoadingLists] = useState(true);
 
   const [audience, setAudience] = useState("comunidad"); // comunidad | presencial
-  const [subject, setSubject] = useState("🎵 Novedades de este viernes en Musicabalú: Danza lidia y 2 nuevas píldoras 💛");
+  const [subject, setSubject] = useState("🎵 Novedades de este viernes: Soy un elefante y dos recitados rítmicos 💛");
   const [bodyText, setBodyText] = useState(DEFAULT_FRIDAY_TEMPLATE);
   const [testEmail, setTestEmail] = useState("hola@musicabalu.com");
 
@@ -233,11 +239,32 @@ export default function AdminComunicacionesPage() {
         </div>
 
         <div style={{ marginBottom: "20px" }}>
-          <label style={{ display: "block", fontWeight: "800", marginBottom: "8px", color: "var(--color-dark)" }}>
-            Mensaje (los enlaces https://... se vuelven clicables automáticamente):
-          </label>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px", flexWrap: "wrap", gap: "8px" }}>
+            <label style={{ fontWeight: "800", color: "var(--color-dark)", margin: 0 }}>
+              Mensaje (los enlaces https://... se vuelven clicables automáticamente):
+            </label>
+            <button
+              type="button"
+              onClick={() => {
+                setSubject("🎵 Novedades de este viernes: Soy un elefante y dos recitados rítmicos 💛");
+                setBodyText(DEFAULT_FRIDAY_TEMPLATE);
+              }}
+              style={{
+                background: "transparent",
+                border: "1px solid #cbd5e1",
+                padding: "4px 12px",
+                borderRadius: "8px",
+                fontSize: "0.8rem",
+                color: "#475569",
+                cursor: "pointer",
+                fontWeight: "600",
+              }}
+            >
+              ↺ Cargar plantilla por defecto (con ideas para jugar)
+            </button>
+          </div>
           <textarea
-            rows={13}
+            rows={15}
             value={bodyText}
             onChange={(e) => setBodyText(e.target.value)}
             style={{
