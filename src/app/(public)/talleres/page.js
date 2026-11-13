@@ -291,7 +291,7 @@ export default async function TalleresPage() {
                           alignItems: 'center',
                           gap: '4px'
                         }}>
-                          🔴 ¡ÚLTIMAS {remainingSpots} PLAZAS!
+                          🔴 {remainingSpots === 1 ? 'Queda 1 plaza' : `Quedan ${remainingSpots} plazas`}
                         </span>
                       ) : remainingSpots <= 5 ? (
                         <span style={{
