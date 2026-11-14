@@ -118,24 +118,10 @@ export default async function AdminDashboard() {
             border: null,
           },
           {
-            title: "Aterrizaje en EMPI",
-            href: "/admin/aterrizaje-empi",
-            icon: "🚀",
-            desc: "Estrategia, Guía de Aula y Cartel A4",
-            border: "2px solid #FED65E",
-          },
-          {
             title: "Auditoría, mantenimiento y backups",
             href: "/admin/auditoria",
             icon: "🧹",
             desc: "Mantenimiento y estado del sistema",
-            border: null,
-          },
-          {
-            title: "Cartel Plazas WhatsApp",
-            href: "/admin/cartel",
-            icon: "🖼️",
-            desc: "Generador de carteles de WhatsApp",
             border: null,
           },
           {
@@ -223,10 +209,10 @@ export default async function AdminDashboard() {
             border: null,
           },
           {
-            title: "Paquete Regalo & Packaging",
+            title: "Paquete Regalo",
             href: "/admin/packaging",
             icon: "🎁",
-            desc: "Guía de montaje, fotos, seda y pegatinas",
+            desc: "Caja Navidad, tarjeta QR, 2 canciones y 1 recitado",
             border: "2px solid #00B2E3",
           },
           {
@@ -235,20 +221,6 @@ export default async function AdminDashboard() {
             icon: "💶",
             desc: "Chuletario para cobrar en Stripe",
             border: null,
-          },
-          {
-            title: "Programas para Conservatorios",
-            href: "/admin/formaciones/conservatorios",
-            icon: "🏛️",
-            desc: "Propuesta académica CSM Murcia y temario MLT",
-            border: null,
-          },
-          {
-            title: "Propuestas de Formaciones",
-            href: "/admin/formaciones/propuestas",
-            icon: "📑",
-            desc: "Modelos B2B/B2C, centros privados, CPR y FUNDAE",
-            border: "2px solid #00B2E3",
           },
           {
             title: "Registro de Actividad",

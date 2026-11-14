@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export const metadata = {
-  title: "Paquete Regalo y Guía de Packaging | Admin Musicabalú",
+  title: "Paquete Regalo | Admin Musicabalú",
 };
 
 export default function PackagingAdminPage() {
@@ -26,14 +26,197 @@ export default function PackagingAdminPage() {
       {/* Cabecera */}
       <div style={{ marginBottom: "32px" }}>
         <div style={{ display: "inline-block", backgroundColor: "#e0f2fe", color: "#0369a1", fontWeight: "800", fontSize: "0.85rem", padding: "4px 12px", borderRadius: "999px", marginBottom: "8px" }}>
-          📦 Producción Física · Campaña Navidad
+          📦 Producción Física & Estrategia Digital · Campaña Navidad
         </div>
         <h1 style={{ fontSize: "2.2rem", fontWeight: "900", color: "#0f172a", margin: "0 0 10px 0" }}>
-          🎁 Paquete Regalo & Guía de Packaging
+          🎁 Paquete Regalo
         </h1>
         <p style={{ color: "#64748b", fontSize: "1.05rem", lineHeight: "1.6", margin: 0 }}>
-          Manual visual para el montaje de las 50 cajas regalo de Musicabalú. Experiencia de unboxing artesanal, técnica del papel de seda, costes y proveedores de pegatinas.
+          Estrategia completa de la caja de regalo física de Musicabalú: tarjeta con QR, contenido musical exclusivo (2 canciones + 1 recitado), landing de desbloqueo, manual de packaging y escandallo de costes.
         </p>
+      </div>
+
+      {/* Acceso Rápido a la Página de los Audios */}
+      <div style={{
+        backgroundColor: "#f0f9ff",
+        border: "2px solid #bae6fd",
+        borderRadius: "20px",
+        padding: "22px 26px",
+        marginBottom: "36px",
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "space-between",
+        gap: "16px"
+      }}>
+        <div>
+          <span style={{ backgroundColor: "#0284c7", color: "white", fontSize: "0.75rem", fontWeight: "800", padding: "3px 10px", borderRadius: "999px", textTransform: "uppercase" }}>
+            Página Pública Creada
+          </span>
+          <h3 style={{ margin: "6px 0 4px 0", color: "#0369a1", fontSize: "1.25rem", fontWeight: "900" }}>
+            Landing de Desbloqueo: <code style={{ fontSize: "1.05rem", backgroundColor: "white", padding: "2px 8px", borderRadius: "6px", border: "1px solid #7dd3fc" }}>/paquete-regalo</code>
+          </h3>
+          <p style={{ margin: 0, color: "#0c4a6e", fontSize: "0.9rem", lineHeight: "1.5" }}>
+            La página a la que llega la familia al escanear el QR. Incluye formulario de captación de email, reproductor interactivo, descargas MP3 offline y guía de juego para cada instrumento.
+          </p>
+        </div>
+        <Link
+          href="/paquete-regalo"
+          target="_blank"
+          style={{
+            backgroundColor: "#0284c7",
+            color: "white",
+            padding: "12px 20px",
+            borderRadius: "12px",
+            fontWeight: "800",
+            fontSize: "0.95rem",
+            textDecoration: "none",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "8px",
+            boxShadow: "0 4px 12px rgba(2, 132, 199, 0.25)"
+          }}
+        >
+          <span>Abrir Landing de la Caja</span>
+          <span>↗</span>
+        </Link>
+      </div>
+
+      {/* Estrategia Tarjeta Regalo + Audios + QR */}
+      <div style={{
+        backgroundColor: "white",
+        borderRadius: "20px",
+        padding: "28px",
+        border: "1.5px solid #e2e8f0",
+        boxShadow: "0 4px 20px rgba(0,0,0,0.04)",
+        marginBottom: "36px"
+      }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+          <span style={{ fontSize: "1.8rem" }}>🎫</span>
+          <div>
+            <h2 style={{ fontSize: "1.4rem", fontWeight: "900", color: "#0f172a", margin: 0 }}>
+              Estrategia de la Tarjeta Regalo: ¿Registro o Descarga Directa?
+            </h2>
+            <p style={{ margin: 0, color: "#64748b", fontSize: "0.9rem" }}>
+              Cómo convertimos a los receptores del regalo en suscriptores de la Comunidad Musicabalú
+            </p>
+          </div>
+        </div>
+
+        <p style={{ fontSize: "0.98rem", color: "#334155", lineHeight: "1.65", marginBottom: "20px" }}>
+          El regalo físico (la caja con los pañuelos, huevos y saquitos) suele comprarlo un abuelo, tío o amigo de la familia. <strong>Quien abre la caja no es quien la compró</strong>. Por tanto, la tarjeta regalo actúa como un <strong>&ldquo;Caballo de Troya&rdquo; de captación de leads de altísima calidad</strong>.
+        </p>
+
+        {/* Los 3 pasos del flujo */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "18px", marginBottom: "24px" }}>
+          <div style={{ backgroundColor: "#f8fafc", padding: "18px", borderRadius: "14px", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+              <span style={{ backgroundColor: "#00B2E3", color: "white", width: "24px", height: "24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", fontWeight: "800" }}>1</span>
+              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Escaneo del QR en la tarjeta</strong>
+            </div>
+            <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
+              El código QR de la tarjeta lleva directamente a <code style={{ color: "#0369a1" }}>musicabalu.com/paquete-regalo</code>. No les pedimos contraseña ni pago: solo su <strong>Nombre y Email</strong> para desbloquear las canciones y guardarlas en su cuenta.
+            </p>
+          </div>
+
+          <div style={{ backgroundColor: "#f8fafc", padding: "18px", borderRadius: "14px", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+              <span style={{ backgroundColor: "#00B2E3", color: "white", width: "24px", height: "24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", fontWeight: "800" }}>2</span>
+              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Reproductor Web + Descarga MP3</strong>
+            </div>
+            <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
+              <strong>¡Tienen las dos opciones!</strong> Pueden escuchar directamente desde el reproductor web interactivo del móvil o tableta, y también tienen los botones <strong>&ldquo;Descargar MP3&rdquo;</strong> para guardar los audios en el móvil o coche sin gastar datos.
+            </p>
+          </div>
+
+          <div style={{ backgroundColor: "#f8fafc", padding: "18px", borderRadius: "14px", border: "1px solid #e2e8f0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
+              <span style={{ backgroundColor: "#00B2E3", color: "white", width: "24px", height: "24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", fontWeight: "800" }}>3</span>
+              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Conversión a Comunidad Musicabalú</strong>
+            </div>
+            <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
+              Al registrarse, su email entra automáticamente en nuestra lista de correo. En la misma pantalla ven un banner exclusivo: <em>&ldquo;Si os han gustado estas 3 canciones, en la Comunidad Musicabalú tenéis más de 50 canciones y juegos semanales&rdquo;</em> con un código de bienvenida.
+            </p>
+          </div>
+        </div>
+
+        {/* Las 3 Piezas Musicales */}
+        <h3 style={{ fontSize: "1.15rem", fontWeight: "900", color: "#0f172a", marginBottom: "14px" }}>
+          🎵 Contenido Musical del Paquete (2 Canciones + 1 Recitado)
+        </h3>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px", marginBottom: "26px" }}>
+          <div style={{ borderLeft: "4px solid #f472b6", backgroundColor: "#fff1f2", padding: "16px", borderRadius: "0 12px 12px 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+              <span style={{ fontSize: "1.1rem" }}>🧣</span>
+              <strong style={{ color: "#9f1239", fontSize: "0.95rem" }}>Canción 1: Juego con Pañuelos</strong>
+            </div>
+            <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "#881337", lineHeight: "1.5" }}>
+              Diseñada para <strong>movimiento continuo y fluidez</strong>. Estimula el seguimiento visual en bebés y la coordinación motriz gruesa al lanzar y atrapar el pañuelo.
+            </p>
+          </div>
+
+          <div style={{ borderLeft: "4px solid #60a5fa", backgroundColor: "#eff6ff", padding: "16px", borderRadius: "0 12px 12px 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+              <span style={{ fontSize: "1.1rem" }}>🥚</span>
+              <strong style={{ color: "#1e40af", fontSize: "0.95rem" }}>Canción 2: Juego con Huevos Sonoros</strong>
+            </div>
+            <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "#1e3a8a", lineHeight: "1.5" }}>
+              Enfocada en <strong>pulsación rítmica, dinámicas (forte/piano) y paradas</strong>. Desarrolla el autocontrol inhibitorio y la precisión motriz fina.
+            </p>
+          </div>
+
+          <div style={{ borderLeft: "4px solid #fbbf24", backgroundColor: "#fffbeb", padding: "16px", borderRadius: "0 12px 12px 0" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "4px" }}>
+              <span style={{ fontSize: "1.1rem" }}>🧸</span>
+              <strong style={{ color: "#92400e", fontSize: "0.95rem" }}>Recitado: Juego con Saquitos de Peso</strong>
+            </div>
+            <p style={{ margin: "4px 0 0 0", fontSize: "0.85rem", color: "#78350f", lineHeight: "1.5" }}>
+              Ritmo puro en métrica binaria o ternaria para trabajar <strong>propiocepción y peso corporal</strong>. Ayuda al peque a percibir los límites de su cuerpo y a relajarse.
+            </p>
+          </div>
+        </div>
+
+        {/* Guía de Diseño de la Tarjeta Física */}
+        <h3 style={{ fontSize: "1.15rem", fontWeight: "900", color: "#0f172a", marginBottom: "14px" }}>
+          📐 Especificaciones para Diseñar e Imprimir la Tarjeta Física
+        </h3>
+        <div style={{ backgroundColor: "#f8fafc", border: "1px solid #e2e8f0", borderRadius: "14px", padding: "20px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "18px" }}>
+            <div>
+              <strong style={{ color: "#0f172a", display: "block", marginBottom: "6px", fontSize: "0.92rem" }}>
+                📄 Formato y Papel Recomendado
+              </strong>
+              <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.87rem", color: "#475569", lineHeight: "1.6" }}>
+                <li>Tamaño: <strong>A6 (10,5 × 14,8 cm)</strong> o 10 × 15 cm. Cabe perfecta sobre el papel de seda en la caja.</li>
+                <li>Gramaje: <strong>Cartulina estucada mate de 350 g</strong> (tacto de postal prémium, no se dobla).</li>
+                <li>Acabado: Mate antihuellas para que se pueda escribir a boli sin que resbale la tinta.</li>
+              </ul>
+            </div>
+
+            <div>
+              <strong style={{ color: "#0f172a", display: "block", marginBottom: "6px", fontSize: "0.92rem" }}>
+                🎨 Cara A (Anverso: Emoción y Dedicatoria)
+              </strong>
+              <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.87rem", color: "#475569", lineHeight: "1.6" }}>
+                <li>Logo de Musicabalú con frase: <em>&ldquo;Música para compartir y crecer juntos&rdquo;</em>.</li>
+                <li>Líneas para rellenar a mano: <strong>Para:</strong> _______ / <strong>De:</strong> _______</li>
+                <li>Espacio libre para una dedicatoria cariñosa de quien regala la caja.</li>
+              </ul>
+            </div>
+
+            <div>
+              <strong style={{ color: "#0f172a", display: "block", marginBottom: "6px", fontSize: "0.92rem" }}>
+                📲 Cara B (Reverso: Desbloqueo y Seguridad)
+              </strong>
+              <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.87rem", color: "#475569", lineHeight: "1.6" }}>
+                <li><strong>Código QR grande y contrastado</strong> en el centro.</li>
+                <li>URL visible debajo: <code style={{ color: "#00B2E3", fontWeight: "700" }}>musicabalu.com/paquete-regalo</code></li>
+                <li>Texto: <em>&ldquo;Escanea este código con la cámara de tu móvil para escuchar o descargar las 2 canciones y el recitado creados para los instrumentos de esta caja.&rdquo;</em></li>
+                <li>Aviso legal en letra pequeña: Marcado CE, instrumentos para uso bajo supervisión de un adulto.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Comparativa Visual: Caja Real vs Resultado Unboxing */}
