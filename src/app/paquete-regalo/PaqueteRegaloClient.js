@@ -1,20 +1,21 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, Suspense } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import styles from './PaqueteRegalo.module.css';
 
-const TRACKS = [
+const BOX_TRACKS = [
   {
     id: 'cancion-panuelos',
     title: 'Canción 1: Juego con los Pañuelos de Gasa',
     subtitle: 'Movimiento continuo, fluidez y juego visual',
     instrument: '2 Pañuelos de gasa',
     instrumentIcon: '🧣',
-    instrumentBadgeBg: '#fdf2f4',
-    instrumentBadgeColor: '#be185d',
+    badgeBg: '#fdf2f8',
+    badgeColor: '#be185d',
     borderColor: '#f472b6',
-    src: '/audios/canciones/Cumbia Balu.mp3', // Placeholder hasta audio definitivo
-    downloadName: 'Musicabalu_Cancion_Panuelos.mp3',
+    src: '/audios/canciones/panuelos.mp3',
     guide: 'Sostened un pañuelo en cada mano (o dadle uno a vuestro peque y otro a vosotras). Moveos por el espacio trazando ondas suaves en el aire. En las partes lentas, dejadlo flotar y caer suavemente. Podéis jugar a esconderos detrás de él y aparecer cantando el final de la frase.',
   },
   {
@@ -23,11 +24,10 @@ const TRACKS = [
     subtitle: 'Pulsación rítmica, contrastes dinámicos y parada',
     instrument: '2 Huevos maraca',
     instrumentIcon: '🥚',
-    instrumentBadgeBg: '#eff6ff',
-    instrumentBadgeColor: '#1d4ed8',
+    badgeBg: '#eff6ff',
+    badgeColor: '#1d4ed8',
     borderColor: '#60a5fa',
-    src: '/audios/canciones/Duermete.mp3', // Placeholder hasta audio definitivo
-    downloadName: 'Musicabalu_Cancion_Huevos_Sonoros.mp3',
+    src: '/audios/canciones/cumbiabalu.mp3',
     guide: 'Haced sonar los dos huevitos juntos siguiendo el pulso de la música. Jugad a esconder uno detrás de la espalda y sacarlo con energía, o hacedlos rodar suavemente por el suelo. Cuando la música respire o haga una pausa, ¡quietos como estatuas sin mover los huevos!',
   },
   {
@@ -36,504 +36,631 @@ const TRACKS = [
     subtitle: 'Métrica rítmica pura, propiocepción y peso corporal',
     instrument: '2 Saquitos de psicomotricidad',
     instrumentIcon: '🧸',
-    instrumentBadgeBg: '#fef3c7',
-    instrumentBadgeColor: '#b45309',
+    badgeBg: '#fef3c7',
+    badgeColor: '#b45309',
     borderColor: '#fbbf24',
-    src: '/audios/recitados/Chiqui Pan.mp3', // Placeholder hasta audio definitivo
-    downloadName: 'Musicabalu_Recitado_Saquitos.mp3',
+    src: '/audios/recitados/chiquipan.mp3',
     guide: 'Colocad un saquito sobre cada rodilla de vuestro peque (o sobre vuestros hombros o cabeza si jugáis sentados). El peso del saquito ayuda al cerebro infantil a ubicar su propio cuerpo en el espacio (propiocepción). Acompañad el ritmo del recitado meciendo o pasando el saquito de una mano a otra con suavidad.',
   },
 ];
 
-export default function PaqueteRegaloClient() {
+const VIDEO_PILLS_PREVIEW = [
+  { numero: 1, title: 'Edwin Gordon y la MLT', desc: 'Cómo aprenden música los bebés de forma natural igual que el lenguaje hablado.' },
+  { numero: 2, title: '¿Por qué canciones y recitados?', desc: 'El valor de separar melodía de ritmo sin la distracción de la palabra.' },
+  { numero: 3, title: 'Música y lenguaje', desc: 'Conexión cerebral entre balbuceo vocal y vocabulario musical.' },
+  { numero: 4, title: 'El balbuceo musical', desc: 'Respuestas tempranas y cómo identificarlas en casa.' },
+  { numero: 5, title: 'Ritmo en brazos', desc: 'Juegos corporales y movimiento continuo de apego.' },
+  { numero: 6, title: 'Contrastar para dormir', desc: 'Uso de modos menores y nanas para regular el descanso.' }
+];
+
+function PaqueteRegaloContent({ allTracks }) {
+  const searchParams = useSearchParams();
+  const urlEmail = searchParams.get('email') || '';
+  const urlName = searchParams.get('name') || '';
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [isUnlocked, setIsUnlocked] = useState(false);
-  const [status, setStatus] = useState('idle'); // idle | loading | error
-  const [errorMessage, setErrorMessage] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
-  // Reproductor state
-  const [activeTrackId, setActiveTrackId] = useState(null);
+  // Tabs: 'caja' | 'canciones' | 'recitados' | 'pildoras'
+  const [activeTab, setActiveTab] = useState('caja');
+
+  // Reproductor de audio
+  const [currentTrackIndex, setCurrentTrackIndex] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+
+  // Modal para items bloqueados
+  const [showModal, setShowModal] = useState(false);
+  const [modalTitle, setModalTitle] = useState('');
+
   const audioRef = useRef(null);
 
-  // Comprobar si ya se registró previamente en este dispositivo
+  // Comprobar si ya está desbloqueado
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('musicabalu_paquete_regalo_user');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        if (parsed.email) {
-          setName(parsed.name || '');
-          setEmail(parsed.email || '');
-          setIsUnlocked(true);
-        }
+    const savedUnlocked = localStorage.getItem('musicabalu_caja_unlocked');
+    const savedEmail = localStorage.getItem('musicabalu_caja_email');
+    const savedName = localStorage.getItem('musicabalu_caja_name');
+
+    if (urlEmail || savedUnlocked === 'true' || savedEmail) {
+      setIsUnlocked(true);
+      setEmail(urlEmail || savedEmail || '');
+      setName(urlName || savedName || '');
+
+      // Registrar visita si viene con email
+      if (urlEmail) {
+        fetch('/api/activity', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'VISITA_PAQUETE_REGALO',
+            details: 'Acceso a /paquete-regalo desde email/QR',
+            email: urlEmail
+          })
+        }).catch(() => {});
       }
-    } catch {
-      // Ignorar errores de localStorage
     }
-  }, []);
+  }, [urlEmail, urlName]);
 
-  const handleUnlock = async (e) => {
+  const handleUnlockSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !name) {
-      setErrorMessage('Por favor, indica tu nombre y correo para activar tu regalo.');
-      return;
-    }
+    if (!email) return;
 
-    setStatus('loading');
-    setErrorMessage('');
-
+    setSubmitting(true);
     try {
-      // Registrar lead en la base de datos
       await fetch('/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email }),
+        body: JSON.stringify({ email, name, source: 'paquete-regalo' }),
       });
 
-      // Guardar en localStorage
-      try {
-        localStorage.setItem(
-          'musicabalu_paquete_regalo_user',
-          JSON.stringify({ name, email, date: new Date().toISOString() })
-        );
-      } catch {}
+      await fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'DESBLOQUEO_PAQUETE_REGALO',
+          details: `Activó sus 3 audios de la caja (${name || 'Sin nombre'})`,
+          email
+        })
+      }).catch(() => {});
+
+      localStorage.setItem('musicabalu_caja_unlocked', 'true');
+      localStorage.setItem('musicabalu_caja_email', email);
+      if (name) localStorage.setItem('musicabalu_caja_name', name);
 
       setIsUnlocked(true);
-      setStatus('idle');
     } catch (err) {
       console.error(err);
-      // Permitir desbloqueo incluso si falla el endpoint para no bloquear a la familia
-      setIsUnlocked(true);
-      setStatus('idle');
+      setIsUnlocked(true); // Permitir acceso aunque falle la red
+    } finally {
+      setSubmitting(false);
     }
   };
 
-  const handlePlayTrack = (track) => {
-    if (!audioRef.current) return;
+  const formatTime = (time) => {
+    if (isNaN(time) || !time) return '0:00';
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
 
-    if (activeTrackId === track.id) {
+  const playBoxTrack = (idx) => {
+    if (idx < 0 || idx >= BOX_TRACKS.length) return;
+    const track = BOX_TRACKS[idx];
+    setCurrentTrackIndex(idx);
+
+    if (audioRef.current) {
+      audioRef.current.src = track.src;
+      audioRef.current.currentTime = 0;
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn('Error al reproducir:', err);
+            setIsPlaying(false);
+          });
+      }
+    }
+
+    if (email) {
+      fetch('/api/activity', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'REPRODUCIR_PAQUETE_REGALO',
+          details: track.title,
+          email
+        })
+      }).catch(() => {});
+    }
+  };
+
+  const togglePlayBoxTrack = (idx) => {
+    if (currentTrackIndex === idx && audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+        const playPromise = audioRef.current.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+        }
       }
+      return;
+    }
+    playBoxTrack(idx);
+  };
+
+  const toggleBottomPlay = () => {
+    if (!audioRef.current || currentTrackIndex === null) {
+      playBoxTrack(0);
+      return;
+    }
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
     } else {
-      audioRef.current.src = track.src;
-      audioRef.current.currentTime = 0;
-      setActiveTrackId(track.id);
-      audioRef.current.play().then(() => setIsPlaying(true)).catch(() => {});
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+      }
     }
   };
 
-  const handleTimeUpdate = () => {
-    if (audioRef.current) {
-      setCurrentTime(audioRef.current.currentTime);
-      setDuration(audioRef.current.duration || 0);
+  const handleNext = () => {
+    const nextIdx = currentTrackIndex !== null ? (currentTrackIndex + 1) % BOX_TRACKS.length : 0;
+    playBoxTrack(nextIdx);
+  };
+
+  const handlePrev = () => {
+    if (audioRef.current && audioRef.current.currentTime > 3) {
+      audioRef.current.currentTime = 0;
+      return;
     }
+    const prevIdx = currentTrackIndex !== null ? (currentTrackIndex - 1 + BOX_TRACKS.length) % BOX_TRACKS.length : 0;
+    playBoxTrack(prevIdx);
   };
 
   const handleSeek = (e) => {
-    const time = parseFloat(e.target.value);
+    const target = Number(e.target.value);
     if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setCurrentTime(time);
+      audioRef.current.currentTime = target;
+      setCurrentTime(target);
     }
   };
 
-  const formatTime = (secs) => {
-    if (isNaN(secs) || secs === 0) return '0:00';
-    const m = Math.floor(secs / 60);
-    const s = Math.floor(secs % 60);
-    return `${m}:${s < 10 ? '0' : ''}${s}`;
-  };
+  const currentPlayingTrack = currentTrackIndex !== null ? BOX_TRACKS[currentTrackIndex] : null;
 
-  return (
-    <div style={{ maxWidth: '880px', margin: '0 auto' }}>
-      <audio
-        ref={audioRef}
-        onTimeUpdate={handleTimeUpdate}
-        onEnded={() => setIsPlaying(false)}
-        onPause={() => setIsPlaying(false)}
-        onPlay={() => setIsPlaying(true)}
-      />
+  // Filtrado de pistas bloqueadas según pestaña
+  let lockedTracks = [];
+  if (activeTab === 'canciones') {
+    lockedTracks = (allTracks || []).filter((t) => t.type === 'Canción');
+  } else if (activeTab === 'recitados') {
+    lockedTracks = (allTracks || []).filter((t) => t.type === 'Recitado');
+  }
 
-      {/* Cabecera de Bienvenida */}
-      <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          backgroundColor: '#eff6ff',
-          color: '#0284c7',
-          fontWeight: '800',
-          fontSize: '0.85rem',
-          padding: '6px 16px',
-          borderRadius: '999px',
-          marginBottom: '14px',
-          border: '1.5px solid #bae6fd'
-        }}>
-          <span>🎁</span>
-          <span>Paquete Regalo Oficial Musicabalú</span>
-        </div>
-        <h1 style={{
-          fontSize: 'clamp(2rem, 5vw, 2.6rem)',
-          fontWeight: '900',
-          color: '#0f172a',
-          margin: '0 0 14px 0',
-          fontFamily: 'var(--font-heading)',
-          lineHeight: '1.2'
-        }}>
-          ¡Bienvenida a tu Experiencia Musical en Familia!
-        </h1>
-        <p style={{
-          fontSize: '1.1rem',
-          color: '#475569',
-          maxWidth: '680px',
-          margin: '0 auto',
-          lineHeight: '1.6'
-        }}>
-          Has recibido en tus manos la caja de Musicabalú con los <strong>2 pañuelos de gasa, los 2 huevos sonoros y los 2 saquitos de peso</strong>. 
-          Aquí tienes tus <strong>2 canciones y 1 recitado</strong> exclusivos para jugar con tu peque en casa, 100% libre de pantallas.
-        </p>
-      </div>
-
-      {/* BLOQUE CONDICIONAL: FORMULARIO DE DESBLOQUEO O CONTENIDO DIRECTO */}
-      {!isUnlocked ? (
-        <div style={{
-          backgroundColor: 'white',
-          borderRadius: '24px',
-          padding: '36px 30px',
-          border: '2px solid #FED65E',
-          boxShadow: '0 12px 30px rgba(254, 214, 94, 0.2)',
-          textAlign: 'center',
-          maxWidth: '540px',
-          margin: '0 auto 40px'
-        }}>
-          <div style={{ fontSize: '3rem', marginBottom: '10px' }}>✨</div>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#0f172a', margin: '0 0 8px 0' }}>
-            Activa tu regalo en 1 segundo
-          </h2>
-          <p style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.5', margin: '0 0 24px 0' }}>
-            Indica tu nombre y correo para vincular tu paquete, desbloquear el reproductor y recibir tu enlace para escuchar las canciones siempre que quieras.
+  // PANTALLA 1: Puerta de Entrada Exprés (Captura de Lead sin fricción)
+  if (!isUnlocked) {
+    return (
+      <div style={{ maxWidth: '640px', margin: '40px auto 80px' }}>
+        <div className={styles.gateCard}>
+          <div style={{ fontSize: '3.5rem', marginBottom: '12px' }}>🎁</div>
+          <div className={styles.badgeRegalo}>Tu Caja de Música Familiar</div>
+          <h1 style={{ fontSize: '1.9rem', fontWeight: '900', color: '#0f172a', margin: '0 0 12px 0' }}>
+            ¡Te damos la bienvenida a Musicabalú!
+          </h1>
+          <p style={{ color: '#475569', fontSize: '1rem', lineHeight: '1.6', margin: '0 0 28px 0' }}>
+            Introduce tu nombre y correo electrónico para activar las <strong>2 canciones y 1 recitado</strong> creados especialmente para los instrumentos de tu caja de regalo.
           </p>
 
-          <form onSubmit={handleUnlock} style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <form onSubmit={handleUnlockSubmit}>
             <input
               type="text"
               placeholder="Tu nombre (o el de tu peque)"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '14px 18px',
-                borderRadius: '12px',
-                border: '1.5px solid #cbd5e1',
-                fontSize: '1rem',
-                outline: 'none',
-                boxSizing: 'border-box'
-              }}
+              className={styles.inputField}
             />
-
             <input
               type="email"
-              placeholder="Tu correo electrónico"
+              placeholder="Tu correo electrónico *"
+              required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required
-              style={{
-                width: '100%',
-                padding: '14px 18px',
-                borderRadius: '12px',
-                border: '1.5px solid #cbd5e1',
-                fontSize: '1rem',
-                outline: 'none',
-                boxSizing: 'border-box'
-              }}
+              className={styles.inputField}
             />
-
-            {errorMessage && (
-              <p style={{ color: '#dc2626', fontSize: '0.88rem', margin: '4px 0 0' }}>{errorMessage}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={status === 'loading'}
-              style={{
-                backgroundColor: 'var(--color-cyan, #00B2E3)',
-                color: 'white',
-                border: 'none',
-                padding: '15px 24px',
-                borderRadius: '999px',
-                fontSize: '1.05rem',
-                fontWeight: '800',
-                cursor: 'pointer',
-                boxShadow: '0 6px 18px rgba(0, 178, 227, 0.3)',
-                transition: 'transform 0.15s',
-                marginTop: '6px'
-              }}
-            >
-              {status === 'loading' ? 'Activando tu regalo...' : '🎵 Desbloquear mis canciones ahora'}
+            <button type="submit" disabled={submitting} className={styles.btnSubmitGate}>
+              {submitting ? 'Abriendo tu caja...' : '✨ Entrar y Escuchar mi Música'}
             </button>
           </form>
 
-          <p style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '16px', marginBottom: 0 }}>
-            🔒 Cero spam. Solo utilizaremos tu correo para enviarte el acceso directo a este regalo y noticias de música infantil respetuosa.
+          <p style={{ color: '#94a3b8', fontSize: '0.8rem', marginTop: '16px', marginBottom: 0 }}>
+            🔒 Acceso directo sin contraseñas. Guardamos tu espacio para que siempre puedas volver.
           </p>
         </div>
-      ) : (
-        /* ÁREA REPRODUCTORA Y GUÍAS DE JUEGO */
+      </div>
+    );
+  }
+
+  // PANTALLA 2: Plataforma Completa Integrada (Fórmula Embudo)
+  return (
+    <div>
+      {/* Elemento de audio nativo */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        onTimeUpdate={() => {
+          if (audioRef.current) setCurrentTime(audioRef.current.currentTime);
+        }}
+        onLoadedMetadata={() => {
+          if (audioRef.current) setDuration(audioRef.current.duration);
+        }}
+        onEnded={handleNext}
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+      />
+
+      {/* Hero Bienvenida */}
+      <div className={styles.heroBox}>
+        <div className={styles.badgeRegalo}>🎁 Tu Espacio Musicabalú</div>
+        <h1 className={styles.heroTitle}>
+          {name ? `¡Hola, ${name}!` : '¡Hola, familia!'}
+        </h1>
+        <p className={styles.heroSub}>
+          Aquí tienes las <strong>2 canciones y 1 recitado</strong> diseñados para jugar con los pañuelos, huevos y saquitos de tu caja física. Pulsa cualquier botón y empieza a jugar con tu peque.
+        </p>
+
+        {/* Explicación Pedagógica Gordon MLT */}
+        <div className={styles.gordonCard}>
+          <div className={styles.gordonIcon}>💡</div>
+          <div>
+            <h3 style={{ margin: '0 0 6px 0', fontSize: '1rem', color: '#1e293b', fontWeight: '800' }}>
+              ¿Por qué estas melodías no tienen letras con historias?
+            </h3>
+            <p style={{ margin: 0, fontSize: '0.92rem', color: '#475569', lineHeight: '1.55' }}>
+              En Musicabalú componemos toda la música basándonos en la <strong>Teoría del Aprendizaje Musical (MLT) de Edwin Gordon</strong>. Al liberar al cerebro infantil de la sobrecarga de la palabra y los sintetizadores estridentes, el peque absorbe la entonación y el ritmo puro con total naturalidad, exactamente igual que aprende su idioma materno.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Pestañas de Navegación */}
+      <div className={styles.tabsContainer}>
+        <button
+          onClick={() => setActiveTab('caja')}
+          className={`${styles.tabBtn} ${activeTab === 'caja' ? styles.tabBtnActive : ''}`}
+        >
+          🎁 Mi Caja de Música (3 pistas)
+        </button>
+        <button
+          onClick={() => setActiveTab('canciones')}
+          className={`${styles.tabBtn} ${activeTab === 'canciones' ? styles.tabBtnActive : ''}`}
+        >
+          🎵 Canciones (+25)
+        </button>
+        <button
+          onClick={() => setActiveTab('recitados')}
+          className={`${styles.tabBtn} ${activeTab === 'recitados' ? styles.tabBtnActive : ''}`}
+        >
+          🗣️ Recitados (+14)
+        </button>
+        <button
+          onClick={() => setActiveTab('pildoras')}
+          className={`${styles.tabBtn} ${activeTab === 'pildoras' ? styles.tabBtnActive : ''}`}
+        >
+          🎬 Píldoras MLT
+        </button>
+      </div>
+
+      {/* Banner de desbloqueo Comunidad */}
+      <div className={styles.unlockBanner}>
+        <div style={{ flex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '4px' }}>
+            <span style={{ fontSize: '1.3rem' }}>✨</span>
+            <strong style={{ fontSize: '1.1rem', color: '#0f172a' }}>Comunidad Familiar Musicabalú</strong>
+          </div>
+          <p style={{ margin: 0, fontSize: '0.92rem', color: '#475569', lineHeight: '1.45' }}>
+            ¿Queréis más música para vuestra rutina? Desbloquea más de 50 canciones, nanas, recitados y píldoras en vídeo para disfrutar sin pantallas.
+          </p>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ textAlign: 'right' }}>
+            <span style={{ fontSize: '1.4rem', fontWeight: '900', color: 'var(--color-cyan, #00B2E3)' }}>3,90 €</span>
+            <small style={{ color: '#64748b', fontSize: '0.85rem' }}> / mes</small>
+          </div>
+          <Link href="/tienda/sub_mensual" className={styles.btnDesbloquear}>
+            Desbloquear Todo →
+          </Link>
+        </div>
+      </div>
+
+      {/* CONTENIDO SEGÚN PESTAÑA */}
+
+      {/* 1. PESTAÑA: MI CAJA DE MÚSICA */}
+      {activeTab === 'caja' && (
         <div>
-          {/* Mensaje de bienvenida para usuario activo */}
+          {/* Aviso / Truco para instalar como App */}
           <div style={{
             backgroundColor: '#f0fdf4',
-            border: '1.5px solid #bbf7d0',
+            border: '1.5px solid #86efac',
             borderRadius: '16px',
-            padding: '14px 20px',
+            padding: '14px 18px',
+            marginBottom: '24px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: '28px',
-            flexWrap: 'wrap',
-            gap: '10px'
+            gap: '12px',
+            fontSize: '0.9rem',
+            color: '#166534',
+            lineHeight: '1.5'
           }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-              <span style={{ fontSize: '1.4rem' }}>✅</span>
-              <span style={{ color: '#166534', fontWeight: '700', fontSize: '0.95rem' }}>
-                Regalo desbloqueado para <strong>{name || 'Familia'}</strong> ({email})
-              </span>
+            <span style={{ fontSize: '1.4rem' }}>📱</span>
+            <div>
+              <strong>Consejo para el día a día:</strong> Añade esta página a la pantalla de inicio de tu móvil (tocando <em>Compartir → Añadir a pantalla de inicio</em>) para abrir tu reproductor de Musicabalú con 1 solo toque siempre que vayáis a jugar.
             </div>
-            <span style={{ color: '#15803d', fontSize: '0.82rem', fontWeight: '600' }}>
-              Acceso ilimitado y permanente
-            </span>
           </div>
 
-          {/* LISTA DE LOS 3 AUDIOS CON REPRODUCTOR INTERACTIVO */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '22px', marginBottom: '40px' }}>
-            {TRACKS.map((track) => {
-              const isCurrent = activeTrackId === track.id;
+          {/* Grilla de las 3 pistas de la caja */}
+          <div className={styles.boxTracksGrid}>
+            {BOX_TRACKS.map((track, idx) => {
+              const isThisPlaying = currentTrackIndex === idx && isPlaying;
+              const isSelected = currentTrackIndex === idx;
 
               return (
                 <div
                   key={track.id}
-                  style={{
-                    backgroundColor: 'white',
-                    borderRadius: '20px',
-                    border: `2px solid ${isCurrent ? track.borderColor : '#e2e8f0'}`,
-                    padding: '24px',
-                    boxShadow: isCurrent ? `0 10px 25px -5px ${track.borderColor}33` : '0 4px 14px rgba(0,0,0,0.03)',
-                    transition: 'border-color 0.2s, box-shadow 0.2s'
-                  }}
+                  className={`${styles.boxTrackCard} ${isSelected ? styles.boxTrackCardPlaying : ''}`}
+                  style={{ borderLeft: `6px solid ${track.borderColor}` }}
                 >
-                  {/* Encabezado del audio */}
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '10px', marginBottom: '14px' }}>
+                  <div className={styles.boxTrackHeader}>
                     <div>
-                      <div style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        backgroundColor: track.instrumentBadgeBg,
-                        color: track.instrumentBadgeColor,
-                        padding: '3px 10px',
-                        borderRadius: '999px',
-                        fontSize: '0.78rem',
-                        fontWeight: '800',
-                        marginBottom: '6px'
-                      }}>
-                        <span>{track.instrumentIcon}</span>
-                        <span>{track.instrument}</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                        <span
+                          className={styles.instrumentBadge}
+                          style={{ backgroundColor: track.badgeBg, color: track.badgeColor }}
+                        >
+                          <span>{track.instrumentIcon}</span>
+                          <span>{track.instrument}</span>
+                        </span>
+                        {isSelected && (
+                          <span style={{ fontSize: '0.75rem', fontWeight: '800', color: '#00B2E3' }}>
+                            {isThisPlaying ? '▶️ Sonando' : '⏸️ En pausa'}
+                          </span>
+                        )}
                       </div>
-                      <h3 style={{ fontSize: '1.25rem', fontWeight: '800', color: '#0f172a', margin: '0 0 4px 0' }}>
+                      <h3 style={{ margin: '0 0 4px 0', fontSize: '1.25rem', color: '#0f172a', fontWeight: '900' }}>
                         {track.title}
                       </h3>
-                      <p style={{ fontSize: '0.88rem', color: '#64748b', margin: 0 }}>
+                      <p style={{ margin: 0, fontSize: '0.9rem', color: '#64748b' }}>
                         {track.subtitle}
                       </p>
                     </div>
 
-                    {/* Botón Descargar MP3 */}
-                    <a
-                      href={track.src}
-                      download={track.downloadName}
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '6px',
-                        backgroundColor: '#f8fafc',
-                        color: '#475569',
-                        border: '1px solid #cbd5e1',
-                        padding: '8px 14px',
-                        borderRadius: '10px',
-                        fontSize: '0.82rem',
-                        fontWeight: '700',
-                        textDecoration: 'none',
-                        transition: 'background-color 0.15s'
-                      }}
-                      title="Descargar archivo MP3 para escuchar sin conexión"
-                    >
-                      <span>📥</span>
-                      <span>Descargar MP3</span>
-                    </a>
-                  </div>
-
-                  {/* Reproductor con barra de progreso */}
-                  <div style={{
-                    backgroundColor: '#f8fafc',
-                    borderRadius: '14px',
-                    padding: '14px 18px',
-                    marginBottom: '16px',
-                    border: '1px solid #e2e8f0',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '14px'
-                  }}>
-                    {/* Botón Play/Pause redondo */}
                     <button
-                      onClick={() => handlePlayTrack(track)}
-                      style={{
-                        width: '46px',
-                        height: '46px',
-                        borderRadius: '50%',
-                        backgroundColor: isCurrent && isPlaying ? '#0f172a' : 'var(--color-cyan, #00B2E3)',
-                        color: 'white',
-                        border: 'none',
-                        cursor: 'pointer',
-                        fontSize: '1.2rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
-                        boxShadow: '0 4px 12px rgba(0, 178, 227, 0.25)'
-                      }}
+                      onClick={() => togglePlayBoxTrack(idx)}
+                      className={`${styles.playActionBtn} ${isThisPlaying ? styles.playActionBtnActive : ''}`}
                     >
-                      {isCurrent && isPlaying ? '⏸' : '▶'}
+                      <span>{isThisPlaying ? '⏸️' : '▶️'}</span>
+                      <span>{isThisPlaying ? 'Pausar' : 'Reproducir'}</span>
                     </button>
-
-                    {/* Barra de progreso */}
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px' }}>
-                      <input
-                        type="range"
-                        min="0"
-                        max={isCurrent ? duration || 100 : 100}
-                        value={isCurrent ? currentTime : 0}
-                        onChange={handleSeek}
-                        disabled={!isCurrent}
-                        style={{
-                          width: '100%',
-                          accentColor: 'var(--color-cyan, #00B2E3)',
-                          cursor: isCurrent ? 'pointer' : 'default'
-                        }}
-                      />
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#64748b', fontWeight: '600' }}>
-                        <span>{isCurrent ? formatTime(currentTime) : '0:00'}</span>
-                        <span>{isCurrent && duration ? formatTime(duration) : '--:--'}</span>
-                      </div>
-                    </div>
                   </div>
 
-                  {/* Guía de Juego con el material */}
-                  <div style={{
-                    backgroundColor: '#fffdf5',
-                    border: '1px solid #fed65e',
-                    borderRadius: '12px',
-                    padding: '12px 16px',
-                    fontSize: '0.88rem',
-                    color: '#78350f',
-                    lineHeight: '1.5'
-                  }}>
-                    <strong style={{ color: '#92400e', display: 'block', marginBottom: '3px' }}>
-                      💡 Idea para jugar con tu peque:
-                    </strong>
-                    {track.guide}
+                  {/* Guía Pedagógica de Juego */}
+                  <div className={styles.guideCard}>
+                    <span style={{ fontSize: '1.2rem', lineHeight: '1' }}>✨</span>
+                    <div>
+                      <strong style={{ fontSize: '0.85rem', color: '#1e293b', display: 'block', marginBottom: '2px' }}>
+                        Idea para jugar en casa con {track.instrument.toLowerCase()}:
+                      </strong>
+                      <p style={{ margin: 0, fontSize: '0.88rem', color: '#475569', lineHeight: '1.5' }}>
+                        {track.guide}
+                      </p>
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
 
-          {/* GUÍA DE FILOSOFÍA: POR QUÉ ESTOS MATERIALES */}
-          <div style={{
-            backgroundColor: 'white',
-            borderRadius: '20px',
-            padding: '28px',
-            border: '1.5px solid #e2e8f0',
-            marginBottom: '36px',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.03)'
-          }}>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: '800', color: '#0f172a', margin: '0 0 10px 0' }}>
-              ¿Por qué estos materiales y no juguetes con pilas?
-            </h3>
-            <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: '0 0 14px 0' }}>
-              Los juguetes musicales convencionales tocan melodías automáticas con luces que sobreestimulan el sistema nervioso del bebé sin permitirle participar.
-              Los <strong>pañuelos, huevos y saquitos</strong> son materiales acústicos y abiertos recomendados por la Music Learning Theory de Edwin Gordon:
-            </p>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(230px, 1fr))', gap: '14px' }}>
-              <div style={{ backgroundColor: '#f8fafc', padding: '12px 14px', borderRadius: '10px' }}>
-                <strong style={{ color: '#0f172a', fontSize: '0.9rem', display: 'block', marginBottom: '2px' }}>1. La voz como modelo</strong>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Tu voz o la música cantada sin instrumentos estridentes activa los centros del lenguaje en su cerebro.</span>
-              </div>
-              <div style={{ backgroundColor: '#f8fafc', padding: '12px 14px', borderRadius: '10px' }}>
-                <strong style={{ color: '#0f172a', fontSize: '0.9rem', display: 'block', marginBottom: '2px' }}>2. Movimiento somático</strong>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Sentir el peso, el flujo y el espacio ayuda a coordinar su motricidad y la percepción del ritmo.</span>
-              </div>
-              <div style={{ backgroundColor: '#f8fafc', padding: '12px 14px', borderRadius: '10px' }}>
-                <strong style={{ color: '#0f172a', fontSize: '0.9rem', display: 'block', marginBottom: '2px' }}>3. Conexión de apego</strong>
-                <span style={{ fontSize: '0.82rem', color: '#64748b' }}>Cantar mirándole a los ojos fortalece el vínculo seguro y regula su calma de forma natural.</span>
-              </div>
+          {/* ESCAPARATE DE LA TIENDA: Ampliar la Caja de Instrumentos */}
+          <div className={styles.storeShowcase}>
+            <div style={{ textAlign: 'center', maxWidth: '600px', margin: '0 auto' }}>
+              <span style={{ backgroundColor: '#e2e8f0', color: '#475569', fontSize: '0.75rem', fontWeight: '800', padding: '3px 12px', borderRadius: '999px', textTransform: 'uppercase' }}>
+                Tienda de Instrumentos
+              </span>
+              <h3 style={{ margin: '8px 0 6px 0', fontSize: '1.4rem', color: '#0f172a', fontWeight: '900' }}>
+                🧸 ¿Queréis ampliar la orquesta en casa?
+              </h3>
+              <p style={{ margin: 0, color: '#64748b', fontSize: '0.92rem', lineHeight: '1.5' }}>
+                Seleccionamos instrumentos acústicos de alta calidad, afinados y libres de plásticos estridentes, ideales para las manitas de tu peque.
+              </p>
             </div>
-          </div>
 
-          {/* BANNER COMUNIDAD MUSICABALÚ (EL GANCHO A LA SUSCRIPCIÓN) */}
-          <div style={{
-            backgroundColor: 'linear-gradient(135deg, #00B2E3 0%, #008eb5 100%)',
-            background: 'linear-gradient(135deg, #00B2E3 0%, #008eb5 100%)',
-            color: 'white',
-            borderRadius: '24px',
-            padding: '32px 28px',
-            textAlign: 'center',
-            boxShadow: '0 10px 30px rgba(0, 178, 227, 0.25)',
-            marginBottom: '30px'
-          }}>
-            <span style={{ backgroundColor: 'rgba(255,255,255,0.2)', fontSize: '0.8rem', fontWeight: '800', padding: '4px 12px', borderRadius: '999px', display: 'inline-block', marginBottom: '10px' }}>
-              ⭐ DA UN PASO MÁS EN FAMILIA ⭐
-            </span>
-            <h3 style={{ fontSize: '1.6rem', fontWeight: '900', margin: '0 0 10px 0' }}>
-              ¿Queréis más música viva cada semana?
-            </h3>
-            <p style={{ fontSize: '1rem', opacity: 0.95, maxWidth: '560px', margin: '0 auto 20px', lineHeight: '1.5' }}>
-              Únete a la <strong>Comunidad Musicabalú</strong>: un catálogo vivo con decenas de canciones modales, recitados rítmicos y píldoras en vídeo para adultos con ideas de juego para cada momento del día.
-            </p>
-            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <Link
-                href="/tienda"
-                style={{
-                  backgroundColor: 'white',
-                  color: '#008eb5',
-                  padding: '13px 26px',
-                  borderRadius: '999px',
-                  fontWeight: '800',
-                  fontSize: '0.95rem',
-                  textDecoration: 'none',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                }}
-              >
-                Conocer la Comunidad Musicabalú →
-              </Link>
+            <div className={styles.storeGrid}>
+              <div className={styles.storeItem}>
+                <div style={{ fontSize: '2.4rem', marginBottom: '8px' }}>🔔</div>
+                <h4 style={{ margin: '0 0 6px 0', fontSize: '1.05rem', color: '#0f172a', fontWeight: '800' }}>Campanas Afinadas</h4>
+                <p style={{ margin: '0 0 14px 0', fontSize: '0.85rem', color: '#64748b', lineHeight: '1.4' }}>
+                  Afinación precisa diatónica para descubrir las notas tocando y experimentando.
+                </p>
+                <Link href="/tienda" style={{ color: '#00B2E3', fontWeight: '800', fontSize: '0.9rem', textDecoration: 'none' }}>
+                  Ver en la Tienda →
+                </Link>
+              </div>
+
+              <div className={styles.storeItem}>
+                <div style={{ fontSize: '2.4rem', marginBottom: '8px' }}>🪘</div>
+                <h4 style={{ margin: '0 0 6px 0', fontSize: '1.05rem', color: '#0f172a', fontWeight: '800' }}>Percusión Acústica</h4>
+                <p style={{ margin: '0 0 14px 0', fontSize: '0.85rem', color: '#64748b', lineHeight: '1.4' }}>
+                  Panderetas de madera natural, claves y crótalos respetuosos con su oído.
+                </p>
+                <Link href="/tienda" style={{ color: '#00B2E3', fontWeight: '800', fontSize: '0.9rem', textDecoration: 'none' }}>
+                  Ver en la Tienda →
+                </Link>
+              </div>
+
+              <div className={styles.storeItem}>
+                <div style={{ fontSize: '2.4rem', marginBottom: '8px' }}>🎁</div>
+                <h4 style={{ margin: '0 0 6px 0', fontSize: '1.05rem', color: '#0f172a', fontWeight: '800' }}>Tarjetas Regalo</h4>
+                <p style={{ margin: '0 0 14px 0', fontSize: '0.85rem', color: '#64748b', lineHeight: '1.4' }}>
+                  Regala un año entero de música respetuosa a otra familia amiga.
+                </p>
+                <Link href="/regalo" style={{ color: '#00B2E3', fontWeight: '800', fontSize: '0.9rem', textDecoration: 'none' }}>
+                  Ver Opciones →
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* Pie legal de seguridad */}
-      <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.78rem', lineHeight: '1.5', marginTop: '20px' }}>
-        Aviso de seguridad: Los instrumentos y materiales incluidos en el Paquete Regalo están homologados con marcado CE. 
-        Recomendado para uso exclusivo bajo la supervisión directa y activa de un adulto.
-      </div>
+      {/* 2. PESTAÑA: PÍLDORAS MLT (VÍDEOS) */}
+      {activeTab === 'pildoras' && (
+        <div className={styles.tracksGrid}>
+          {VIDEO_PILLS_PREVIEW.map((p) => (
+            <div
+              key={p.numero}
+              onClick={() => {
+                setModalTitle(`Píldora #${p.numero}: ${p.title}`);
+                setShowModal(true);
+              }}
+              className={`${styles.trackCard} ${styles.trackCardLocked}`}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
+                <span style={{ fontWeight: '800', color: '#64748b', fontSize: '0.85rem' }}>🎬 Píldora #{p.numero}</span>
+                <span className={styles.lockedBadge}>🔒 Comunidad</span>
+              </div>
+              <h4 style={{ margin: '0 0 6px 0', fontSize: '1.05rem', color: '#1e293b', fontWeight: '800' }}>{p.title}</h4>
+              <p style={{ margin: 0, fontSize: '0.88rem', color: '#64748b', lineHeight: '1.4' }}>{p.desc}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* 3. PESTAÑAS: CANCIONES O RECITADOS BLOQUEADOS */}
+      {(activeTab === 'canciones' || activeTab === 'recitados') && (
+        <div className={styles.tracksGrid}>
+          {lockedTracks.map((track) => (
+            <div
+              key={track.title}
+              onClick={() => {
+                setModalTitle(track.title);
+                setShowModal(true);
+              }}
+              className={`${styles.trackCard} ${styles.trackCardLocked}`}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                <span style={{ fontSize: '0.8rem', fontWeight: '700', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                  {track.type}
+                </span>
+                <span className={styles.lockedBadge}>🔒 Comunidad</span>
+              </div>
+
+              <h4 style={{ margin: '0 0 14px 0', fontSize: '1.15rem', color: '#64748b', fontWeight: '800' }}>
+                {track.title}
+              </h4>
+
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: '600' }}>
+                  Toca para desbloquear 🔒
+                </span>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Reproductor Flotante Inferior */}
+      {currentPlayingTrack && (
+        <div className={styles.playerBar}>
+          <div className={styles.playerControls}>
+            <button onClick={handlePrev} className={styles.playerNavBtn} title="Anterior">
+              ⏮
+            </button>
+            <button onClick={toggleBottomPlay} className={styles.playerMainPlayBtn} title={isPlaying ? 'Pausar' : 'Reproducir'}>
+              {isPlaying ? '⏸' : '▶'}
+            </button>
+            <button onClick={handleNext} className={styles.playerNavBtn} title="Siguiente">
+              ⏭
+            </button>
+          </div>
+
+          <div className={styles.playerTrackInfo}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
+              <strong style={{ fontSize: '0.98rem', color: '#0f172a' }}>{currentPlayingTrack.title}</strong>
+              <button
+                onClick={() => {
+                  if (audioRef.current) audioRef.current.pause();
+                  setIsPlaying(false);
+                  setCurrentTrackIndex(null);
+                }}
+                className={styles.playerCloseBtn}
+              >
+                ✖ Cerrar
+              </button>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '11px', color: '#64748b', minWidth: '32px' }}>{formatTime(currentTime)}</span>
+              <input
+                type="range"
+                min={0}
+                max={duration || 100}
+                value={currentTime}
+                onChange={handleSeek}
+                style={{ flex: 1, accentColor: '#00B2E3' }}
+              />
+              <span style={{ fontSize: '11px', color: '#64748b', minWidth: '32px' }}>{formatTime(duration)}</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Bloqueo al tocar una pista cerrada */}
+      {showModal && (
+        <div className={styles.modalOverlay} onClick={() => setShowModal(false)}>
+          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.modalCloseBtn} onClick={() => setShowModal(false)}>×</button>
+            <div style={{ fontSize: '2.8rem', marginBottom: '10px' }}>🔒</div>
+            <h3 style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0f172a', margin: '0 0 10px 0' }}>
+              {modalTitle ? `"${modalTitle}"` : 'Contenido Exclusivo'}
+            </h3>
+            <p style={{ color: '#475569', fontSize: '0.98rem', lineHeight: '1.55', margin: '0 0 20px 0' }}>
+              Esta pista forma parte de la <strong>Comunidad Familiar Musicabalú</strong>. Únete hoy para acceder a todas las canciones, nanas, recitados y píldoras pedagógicas creadas para tu peque.
+            </p>
+
+            <div style={{ backgroundColor: '#f8fafc', padding: '16px', borderRadius: '16px', marginBottom: '22px', textAlign: 'left' }}>
+              <div style={{ fontWeight: '800', color: '#1e293b', marginBottom: '8px', fontSize: '0.92rem' }}>
+                Con tu suscripción tienes:
+              </div>
+              <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.88rem', color: '#475569', lineHeight: '1.6' }}>
+                <li>Acceso ilimitado a más de 40 canciones y recitados (MLT).</li>
+                <li>Nuevos audios y materiales añadidos cada semana.</li>
+                <li>Píldoras formativas para guiar el desarrollo musical en casa.</li>
+                <li>Sin permanencia: cancelas en 1 clic cuando quieras.</li>
+              </ul>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <Link href="/tienda/sub_mensual" className={styles.modalPrimaryBtn}>
+                ✨ Unirme por solo 3,90 € / mes
+              </Link>
+              <Link href="/tienda/sub_anual" className={styles.modalSecondaryLink}>
+                O elige el plan anual por 39 €/año (ahorras 2 meses)
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+export default function PaqueteRegaloClient({ allTracks }) {
+  return (
+    <Suspense fallback={<div style={{ padding: '60px', textAlign: 'center' }}>Cargando tu paquete de música...</div>}>
+      <PaqueteRegaloContent allTracks={allTracks} />
+    </Suspense>
   );
 }

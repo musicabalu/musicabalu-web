@@ -95,16 +95,16 @@ export default function PackagingAdminPage() {
           <span style={{ fontSize: "1.8rem" }}>🎫</span>
           <div>
             <h2 style={{ fontSize: "1.4rem", fontWeight: "900", color: "#0f172a", margin: 0 }}>
-              Estrategia de la Tarjeta Regalo: ¿Registro o Descarga Directa?
+              Estrategia de la Tarjeta Regalo: Modelo Plataforma / Embudo
             </h2>
             <p style={{ margin: 0, color: "#64748b", fontSize: "0.9rem" }}>
-              Cómo convertimos a los receptores del regalo en suscriptores de la Comunidad Musicabalú
+              Cómo convertimos a los receptores del regalo en usuarios habituales de Musicabalú y la Tienda
             </p>
           </div>
         </div>
 
         <p style={{ fontSize: "0.98rem", color: "#334155", lineHeight: "1.65", marginBottom: "20px" }}>
-          El regalo físico (la caja con los pañuelos, huevos y saquitos) suele comprarlo un abuelo, tío o amigo de la familia. <strong>Quien abre la caja no es quien la compró</strong>. Por tanto, la tarjeta regalo actúa como un <strong>&ldquo;Caballo de Troya&rdquo; de captación de leads de altísima calidad</strong>.
+          El regalo físico (la caja con los pañuelos, huevos y saquitos) suele comprarlo un abuelo, tío o amigo de la familia. <strong>Quien abre la caja no es quien la compró</strong>. Por tanto, la tarjeta regalo actúa como un <strong>&ldquo;Caballo de Troya&rdquo; de captación de leads de altísima calidad</strong> que entran a vivir la experiencia dentro de nuestra plataforma.
         </p>
 
         {/* Los 3 pasos del flujo */}
@@ -115,27 +115,27 @@ export default function PackagingAdminPage() {
               <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Escaneo del QR en la tarjeta</strong>
             </div>
             <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
-              El código QR de la tarjeta lleva directamente a <code style={{ color: "#0369a1" }}>musicabalu.com/paquete-regalo</code>. No les pedimos contraseña ni pago: solo su <strong>Nombre y Email</strong> para desbloquear las canciones y guardarlas en su cuenta.
+              El código QR de la tarjeta lleva directamente a <code style={{ color: "#0369a1" }}>musicabalu.com/paquete-regalo</code>. Sin contraseñas complejas: solo escriben su <strong>Nombre y Email</strong> para registrarse y activar las canciones al instante.
             </p>
           </div>
 
           <div style={{ backgroundColor: "#f8fafc", padding: "18px", borderRadius: "14px", border: "1px solid #e2e8f0" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
               <span style={{ backgroundColor: "#00B2E3", color: "white", width: "24px", height: "24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", fontWeight: "800" }}>2</span>
-              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Reproductor Web + Descarga MP3</strong>
+              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Reproductor Web Integrado (Sin MP3 sueltos)</strong>
             </div>
             <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
-              <strong>¡Tienen las dos opciones!</strong> Pueden escuchar directamente desde el reproductor web interactivo del móvil o tableta, y también tienen los botones <strong>&ldquo;Descargar MP3&rdquo;</strong> para guardar los audios en el móvil o coche sin gastar datos.
+              <strong>No permitimos la descarga de archivos MP3 sueltos</strong>. Para escuchar la música abren la plataforma web de Musicabalú (que pueden anclar a la pantalla de inicio del móvil). Así regresan a nuestra web cada vez que juegan en casa.
             </p>
           </div>
 
           <div style={{ backgroundColor: "#f8fafc", padding: "18px", borderRadius: "14px", border: "1px solid #e2e8f0" }}>
             <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "8px" }}>
               <span style={{ backgroundColor: "#00B2E3", color: "white", width: "24px", height: "24px", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.85rem", fontWeight: "800" }}>3</span>
-              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Conversión a Comunidad Musicabalú</strong>
+              <strong style={{ color: "#0f172a", fontSize: "0.95rem" }}>Efecto Escaparate: Comunidad + Tienda</strong>
             </div>
             <p style={{ fontSize: "0.88rem", color: "#64748b", margin: 0, lineHeight: "1.5" }}>
-              Al registrarse, su email entra automáticamente en nuestra lista de correo. En la misma pantalla ven un banner exclusivo: <em>&ldquo;Si os han gustado estas 3 canciones, en la Comunidad Musicabalú tenéis más de 50 canciones y juegos semanales&rdquo;</em> con un código de bienvenida.
+              Sigue el modelo de nuestra página de embudo: ven sus 3 pistas abiertas, pero tienen a la vista las canciones bloqueadas con candado 🔒 de la Comunidad y un escaparate directo con <strong>campanas y percusión de la tienda</strong> para ampliar su set de instrumentos.
             </p>
           </div>
         </div>
@@ -211,7 +211,7 @@ export default function PackagingAdminPage() {
               <ul style={{ margin: 0, paddingLeft: "18px", fontSize: "0.87rem", color: "#475569", lineHeight: "1.6" }}>
                 <li><strong>Código QR grande y contrastado</strong> en el centro.</li>
                 <li>URL visible debajo: <code style={{ color: "#00B2E3", fontWeight: "700" }}>musicabalu.com/paquete-regalo</code></li>
-                <li>Texto: <em>&ldquo;Escanea este código con la cámara de tu móvil para escuchar o descargar las 2 canciones y el recitado creados para los instrumentos de esta caja.&rdquo;</em></li>
+                <li>Texto: <em>&ldquo;Escanea este código con la cámara de tu móvil para activar y escuchar las 2 canciones y el recitado creados para los instrumentos de esta caja.&rdquo;</em></li>
                 <li>Aviso legal en letra pequeña: Marcado CE, instrumentos para uso bajo supervisión de un adulto.</li>
               </ul>
             </div>
