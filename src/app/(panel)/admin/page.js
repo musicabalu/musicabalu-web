@@ -174,10 +174,10 @@ export default async function AdminDashboard() {
             border: "2px solid #D97706",
           },
           {
-            title: "Formaciones (Programas)",
+            title: "Formaciones",
             href: "/admin/formaciones",
             icon: "🎓",
-            desc: "Catálogo (Educadores, CSM Murcia) y ruta",
+            desc: "Hub: EMPI, Conservatorios y Propuestas",
             border: "2px solid #805ad5",
           },
           {
@@ -235,6 +235,20 @@ export default async function AdminDashboard() {
             icon: "💶",
             desc: "Chuletario para cobrar en Stripe",
             border: null,
+          },
+          {
+            title: "Programas para Conservatorios",
+            href: "/admin/formaciones/conservatorios",
+            icon: "🏛️",
+            desc: "Propuesta académica CSM Murcia y temario MLT",
+            border: null,
+          },
+          {
+            title: "Propuestas de Formaciones",
+            href: "/admin/formaciones/propuestas",
+            icon: "📑",
+            desc: "Modelos B2B/B2C, centros privados, CPR y FUNDAE",
+            border: "2px solid #00B2E3",
           },
           {
             title: "Registro de Actividad",

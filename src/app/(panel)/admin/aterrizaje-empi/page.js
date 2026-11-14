@@ -10,7 +10,7 @@ export default function AterrizajeEmpiPage() {
   return (
     <div style={{ maxWidth: "1050px", margin: "0 auto", padding: "30px 20px" }}>
       {/* Navegación de vuelta */}
-      <div style={{ marginBottom: "20px" }}>
+      <div style={{ marginBottom: "20px", display: "flex", gap: "15px", alignItems: "center" }}>
         <Link
           href="/admin"
           style={{
@@ -21,6 +21,18 @@ export default function AterrizajeEmpiPage() {
           }}
         >
           ← Volver al Panel de Control
+        </Link>
+        <span style={{ color: "#cbd5e1" }}>|</span>
+        <Link
+          href="/admin/formaciones"
+          style={{
+            color: "#805ad5",
+            fontWeight: "700",
+            textDecoration: "none",
+            fontSize: "0.95rem",
+          }}
+        >
+          🎓 Ir a Formaciones
         </Link>
       </div>
 
